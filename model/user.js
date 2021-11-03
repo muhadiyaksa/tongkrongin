@@ -26,6 +26,12 @@ const User = mongoose.model("User", {
     type: String,
     required: true,
   },
+  jeniskelamin: {
+    type: String,
+  },
+  kota: {
+    type: String,
+  },
 });
 
 module.exports = User;

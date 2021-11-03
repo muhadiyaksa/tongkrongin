@@ -19,14 +19,14 @@
             <img src="/img/user/muhadiyaksa.png" alt="Foto Profile" class="img-fluid rounded-circle" />
           </div>
           <div class="col-8">
-            <h3 class="text-capitalize"><?= dataUser.nama ?></h3>
-            <h5><?= dataUser.email ?></h5>
+            <h3 class="text-capitalize"><?= user.nama ?></h3>
+            <h5><?= user.email ?></h5>
           </div>
         </div>
       </div>
       <div class="col-md button">
-        <a href="/user/update/<?= dataUser.id?>"> <button class="btn btn-dark rounded-pill edit">Edit Profile</button></a>
-        <a href="/user/password"> <button class="btn btn-dark rounded-pill edit">Edit Password</button></a>
+        <a href="/user/update/<?= user.id?>"> <button class="btn btn-dark rounded-pill edit">Edit Profile</button></a>
+        <a href="/user/password/<?= user.id?>"> <button class="btn btn-dark rounded-pill edit">Edit Password</button></a>
       </div>
     </div>
   </div>

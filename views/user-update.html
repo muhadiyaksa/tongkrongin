@@ -1,8 +1,9 @@
 <section class="user-update">
   <div class="container">
-    <a href="/user" class="text-dark">
-      <h2 class="fw-bold"><i class="bi bi-arrow-left-circle-fill"></i></h2>
+    <a href="/user/<?= user.id ?>" class="text-dark fs-2">
+      <i class="bi bi-arrow-left-circle-fill"></i>
     </a>
+
     <h2 class="fw-bold">Profile</h2>
     <? if (typeof errors != 'undefined') { ?>
     <div class="alert alert-danger" role="alert">
@@ -47,15 +48,19 @@
         <div class="jeniskelamin">
           <label for="jeniskelamin">Jenis Kelamin</label>
           <select id="jeniskelamin" name="jeniskelamin">
-            <option value="-">-</option>
+            <? if (user.jeniskelamin == 'Perempuan') {?>
+            <option><?= user.jeniskelamin || '-' ?></option>
             <option value="Laki-laki">Laki-Laki</option>
+            <? } else { ?>
+            <option><?= user.jeniskelamin || '-' ?></option>
             <option value="Perempuan">Perempuan</option>
+            <? } ?>
           </select>
         </div>
 
         <div class="kota">
           <label for="kota">Kota</label>
-          <input type="text" class="input-update" id="kota" name="kota" placeholder="Kota Domisili Anda" />
+          <input type="text" class="input-update" id="kota" name="kota" value="<?= user.kota ?>" />
           <input type="hidden" value="<?= user.password?>" name="password" />
           <input type="hidden" value="<?= user.passwordChecked?>" name="passwordChecked" />
         </div>

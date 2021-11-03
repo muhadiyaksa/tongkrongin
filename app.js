@@ -76,19 +76,19 @@ app.get("/home", checkAuthenticated, async (req, res) => {
     dataUser,
   });
 });
-// app.get("/user/:iduser", async (req, res) => {
-app.get("/user", async (req, res) => {
-  const dataUser = await req.user;
-  // const contact = await Contact.findOne({ nama: req.params.iduser });
+
+app.get("/user/:id", checkAuthenticated, async (req, res) => {
+  const user = await User.findOne({ id: req.params.id });
   res.render("user-profile", {
     title: "Halaman User",
     layout: "layouts/main-layout-user",
-    dataUser,
+    user,
     msg: req.flash("msg"),
   });
 });
 
-app.get("/user/update/:id", async (req, res) => {
+//Menuju Halaman Edit Profle
+app.get("/user/update/:id", checkAuthenticated, async (req, res) => {
   const user = await User.findOne({ id: req.params.id });
 
   res.render("user-update", {
@@ -98,8 +98,19 @@ app.get("/user/update/:id", async (req, res) => {
   });
 });
 
+//Menuju Halaman Edit Password
+app.get("/user/password/:id", async (req, res) => {
+  const user = await User.findOne({ id: req.params.id });
+
+  res.render("user-password", {
+    title: "Halaman Update",
+    layout: "layouts/main-layout-user",
+    user,
+  });
+});
+
 //Proses Ubah Data
-app.put("/user/update", [check("email", "Email tidak Valid!").isEmail(), check("notelp", "Nomor Handphone Tidak Valid!").isMobilePhone("id-ID")], async (req, res) => {
+app.put("/user/update", [check("notelp", "Nomor Handphone Tidak Valid!").isMobilePhone("id-ID")], async (req, res) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -125,7 +136,7 @@ app.put("/user/update", [check("email", "Email tidak Valid!").isEmail(), check("
       }
     ).then((result) => {
       req.flash("msg", "Data kamu Berhasil diUbah! ");
-      res.redirect("/user");
+      res.redirect("/user/" + req.body.id);
     });
   }
 });

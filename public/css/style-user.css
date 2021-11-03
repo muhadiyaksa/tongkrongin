@@ -12,12 +12,12 @@ section.user-profile {
 section.user-profile h2 {
   margin-bottom: 20px;
 }
-section.user-profile .form-update .identitas {
+section.user-profile .identitas {
   align-items: center;
   padding: 0 15px;
 }
 
-section.user-profile .form-update .identitas h3 {
+section.user-profile .identitas h3 {
   font-weight: 600;
 }
 section.user-profile .button {
@@ -92,6 +92,7 @@ section.user-update .identitas {
 section.user-update input,
 section.user-update select,
 section.user-password input {
+  color: #4f4f4f;
   width: 100%;
   margin-bottom: 13px;
   margin-top: 5px;
@@ -176,7 +177,7 @@ section.user-password .eye img {
     width: 20%;
   }
   section.user-update label {
-    font-size: 20px;
+    font-size: 18px;
   }
   section.user-update input {
     font-size: 18px;
