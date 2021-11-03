@@ -61,15 +61,18 @@ section.riwayat .riwayat-user .tanggal {
 }
 
 /* USER UPDATE */
-section.user-update {
+section.user-update,
+section.user-password {
   color: #4f4f4f;
   margin-top: 30px;
   margin-bottom: 50px;
 }
-section.user-update .simpan {
+section.user-update .simpan,
+section.user-password .simpan {
   text-align: end;
 }
-section.user-update .simpan button {
+section.user-update .simpan button,
+section.user-password .simpan button {
   width: 100%;
 }
 section.user-update label {
@@ -82,7 +85,8 @@ section.user-update .identitas {
   align-items: center;
 }
 section.user-update input,
-section.user-update select {
+section.user-update select,
+section.user-password input {
   width: 100%;
   margin-bottom: 13px;
   margin-top: 5px;
@@ -95,6 +99,19 @@ section.user-update select option {
   width: 90%;
   border: 1px solid #acacac;
   outline: 0;
+}
+
+/* USER PASSWORD  */
+section.user-password h2 {
+  margin-bottom: 30px;
+}
+section.user-password .eye {
+  position: relative;
+}
+section.user-password .eye img {
+  position: absolute;
+  bottom: 24px;
+  right: 25px;
 }
 
 @media (min-width: 992px) {
@@ -112,10 +129,9 @@ section.user-update select option {
   section.riwayat .riwayat-user p {
     font-size: 16px;
   }
-  section.user-update .simpan {
-    text-align: end;
-  }
-  section.user-update .simpan button {
+
+  section.user-update .simpan button,
+  section.user-password .simpan button {
     margin-top: 30px;
     width: 20%;
   }
