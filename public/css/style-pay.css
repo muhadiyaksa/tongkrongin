@@ -1,0 +1,22 @@
+section.pay {
+  margin: 50px 0px;
+  color: #4f4f4f;
+}
+section.pay .kotak {
+  background-color: rgba(112, 112, 112, 0.2);
+  border: 1px solid rgba(112, 112, 112, 0.3);
+  padding: 15px;
+  font-size: 20px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+section.pay .identitas {
+  font-size: 24px;
+  margin-bottom: 30px;
+}
+section.pay .identitas td {
+  padding-right: 30px;
+}
+section.pay .identitas tr td:nth-child(1) {
+  color: #acacac;
+}

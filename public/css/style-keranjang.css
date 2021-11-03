@@ -1,0 +1,90 @@
+section.keranjang {
+  margin: 50px 0px;
+}
+section.keranjang .judul {
+  border-top: 1px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
+  padding: 10px 0px;
+}
+
+.kolomgrid {
+  display: grid;
+  grid-template-columns: 0.5fr 4fr 1.2fr 1.2fr 0.5fr;
+  grid-template-areas: "satu dua tiga empat lima ";
+  justify-content: space-between;
+  align-items: center;
+  margin: 30px 0px;
+}
+.checkbox {
+  grid-area: satu;
+}
+.pesanan {
+  grid-area: dua;
+}
+
+.jumlah {
+  grid-area: tiga;
+}
+.harga {
+  grid-area: empat;
+}
+.hapus {
+  grid-area: lima;
+  text-align: end;
+}
+section.keranjang .makanan .detailjudul {
+  display: none;
+}
+
+@media (max-width: 575.98px) {
+  section.keranjang .judul {
+    display: none;
+  }
+  section.keranjang .makanan {
+    padding-top: 20px;
+    margin-top: 30px;
+  }
+  section.keranjang .makanan .detailjudul {
+    display: block;
+  }
+  section.keranjang .tempat {
+    margin-top: 30px;
+    background-color: #f8f8f8d2;
+    border-radius: 8px;
+    padding-top: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .kolomgrid {
+    grid-template-columns: 0.5fr 2fr 2fr 0.5fr;
+    grid-template-rows: 1fr 0.5fr;
+    grid-template-areas:
+      "satu dua dua dua"
+      "empat empat tiga lima";
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0px;
+    row-gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  section.keranjang .makanan .food {
+    border-top: 1px solid #cccccc;
+    padding-top: 20px;
+  }
+  .kolomgrid .quantity {
+    display: inline-block;
+    grid-area: tiga;
+  }
+  .pesanan img {
+    margin-right: 10px;
+  }
+  .pesanan h4 {
+    font-weight: 600;
+  }
+
+  .hapus img {
+    max-height: 25px;
+    margin-top: -10px;
+  }
+}

@@ -1,0 +1,501 @@
+.container {
+  font-family: "Neucha", cursive;
+}
+
+.buttonPrimary {
+  background-color: white;
+  padding: 10px 35px;
+  border-radius: 8px;
+  border: 0px solid;
+  font-size: 22px;
+  font-weight: 600;
+  color: #4f4f4f;
+  transition: 0.3s;
+}
+.buttonPrimary:hover {
+  color: black;
+  background-color: #f3f3f3;
+}
+/* NAVBAR */
+section.navigasi {
+  box-shadow: 2px 2px 15px rgba(112, 112, 112, 0.2);
+}
+section.navigasi button.userpage,
+section.nav-res button.userpage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 38px;
+  height: 100%;
+  border-radius: 30px;
+}
+section.nav-res button.userpage {
+  width: 30px;
+  margin: 0 -10px;
+  padding: none;
+}
+section.nav-res .logout {
+  display: none;
+}
+.nav-link img {
+  max-height: 24px;
+}
+.nav-link {
+  line-height: 35px;
+}
+.navbar-nav span.batas {
+  min-height: 100%;
+  background-color: #9b9b9b;
+  width: 2px;
+}
+
+.navbar-nav input {
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #4f4f4f;
+  padding-bottom: 0;
+}
+.navbar-nav .notif {
+  position: relative;
+}
+.navbar-nav .notif .bulat {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 10px;
+  background-color: red;
+  top: 10px;
+  right: 20px;
+}
+/* HERO */
+section.hero {
+  height: 450px;
+  background-image: url("../img/bannerHome.png");
+  background-size: cover;
+  position: relative;
+}
+section.hero .content {
+  padding-top: 120px;
+  z-index: 2;
+  color: white;
+}
+section.hero .content p {
+  margin-bottom: 40px;
+}
+.hero::after {
+  z-index: 1;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.288));
+}
+
+/* HIGHLIGHT */
+
+section.highlight {
+  padding-top: 50px;
+  background-color: #1b222c;
+  padding-bottom: 100px;
+  color: white;
+}
+section.highlight .highlight-res {
+  display: none;
+}
+section.highlight .kotak {
+  width: 15px;
+  height: 100%;
+  background-color: white;
+}
+section.highlight .slideCarousel {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  column-gap: 15px;
+}
+section.highlight .slideCarousel .card {
+  color: #ffffff;
+  width: 300px;
+  position: relative;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 10px;
+}
+section.highlight .slideCarousel .card .card-body,
+section.listCafe .isi-list-cafe .card .card-body {
+  z-index: 2;
+  position: absolute;
+  bottom: 0;
+}
+section.highlight .slideCarousel .card::after,
+section.listCafe .isi-list-cafe .card::after {
+  z-index: 1;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1));
+}
+section.highlight button {
+  background-color: #ffffff !important;
+  z-index: 999;
+
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  margin-top: 100px;
+  margin: 100px -25px;
+}
+
+/* FEATURES (include ULASAN)*/
+section.features {
+  padding-top: 80px;
+}
+section.features .kotak,
+section.ulasan .kotak,
+section.about .kotak,
+section.listCafe .kotak {
+  width: 15px;
+  height: 100%;
+  background-color: #4f4f4f;
+}
+section.features .cards,
+section.ulasan .isiUlasan {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas:
+    "satu dua tiga"
+    "empat lima enam";
+  justify-content: space-between;
+  gap: 20px;
+}
+section.features .cards img {
+  max-height: 50px;
+}
+section.features .cards .card:nth-child(1),
+section.ulasan .isiUlasan .card:nth-child(1) {
+  grid-area: satu;
+}
+section.features .cards .card:nth-child(2),
+section.ulasan .isiUlasan .card:nth-child(2) {
+  grid-area: dua;
+}
+section.features .cards .card:nth-child(3),
+section.ulasan .isiUlasan .card:nth-child(3) {
+  grid-area: tiga;
+}
+section.features .cards .card:nth-child(4),
+section.ulasan .isiUlasan .card:nth-child(4) {
+  grid-area: empat;
+}
+section.features .cards .card:nth-child(5),
+section.ulasan .isiUlasan .card:nth-child(5) {
+  grid-area: lima;
+}
+section.features .cards .card:nth-child(6),
+section.ulasan .isiUlasan .card:nth-child(6) {
+  grid-area: enam;
+}
+
+/* INFO PANEL */
+section.panel {
+  background-color: #1b222c;
+  color: white;
+  padding: 40px 0px;
+  margin-top: 100px;
+}
+section.panel .content {
+  margin: 80px 0px;
+}
+
+section.panel .kotak {
+  margin-left: auto;
+  background-image: url("../img/panelImg.png");
+  background-size: cover;
+  width: 50%;
+  height: 100%;
+  position: relative;
+}
+section.panel .kotak::after {
+  overflow: hidden;
+  z-index: 100;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  background-image: linear-gradient(to top, rgba(10, 31, 21, 0.5), rgba(0, 0, 0, 0.1));
+}
+
+/* ULASAN */
+section.ulasan {
+  margin-top: 80px;
+}
+section.ulasan .isiUlasan {
+  margin-top: 50px;
+}
+section.ulasan .isiUlasan .image {
+  position: relative;
+}
+section.ulasan .isiUlasan .image::after {
+  z-index: 1;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  background-image: linear-gradient(to top, rgba(10, 31, 21, 0.5), rgba(0, 0, 0, 0.1));
+}
+section.ulasan .isiUlasan .card .card-body {
+  z-index: 10;
+}
+
+/* ABOUT */
+section.about {
+  margin: 100px 0px;
+}
+section.about .image {
+  margin-right: auto;
+  background-image: url("../img/about.png");
+  background-size: cover;
+  width: 80%;
+  height: 500px;
+  position: relative;
+  border-radius: 10px;
+}
+section.about .konten {
+  margin-top: 120px;
+}
+
+/* footer */
+section.footer {
+  background-color: #1b222c;
+  color: white;
+  padding-top: 50px;
+}
+section.footer .footergrid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  grid-template-areas: "judul sa sa kontak navigasi";
+}
+section.footer .judul {
+  grid-area: judul;
+}
+section.footer .kontak {
+  grid-area: kontak;
+}
+section.footer .navigasi {
+  grid-area: navigasi;
+}
+section.footer a {
+  text-decoration: none;
+  color: #ffffff;
+}
+section.nav-res {
+  display: none;
+}
+
+@media (max-width: 575.98px) {
+  .buttonPrimary {
+    padding: 5px 15px;
+    font-size: 16px;
+  }
+  .nav-link {
+    margin: 0 -4px;
+  }
+  section.hero {
+    height: 270px;
+  }
+  section.hero .content {
+    padding-top: 45px;
+    text-align: center;
+  }
+  section.hero .content h1 {
+    font-size: 24px;
+    font-weight: 600;
+  }
+  section.hero .content p {
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+  section.highlight .carousel {
+    display: none;
+  }
+  section.highlight .highlight-res {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    font-size: 14px;
+  }
+  section.highlight .highlight-res .res-row {
+    margin-bottom: 20px;
+    border: 1px solid rgba(212, 212, 212, 0.2);
+    padding: 10px 5px;
+    border-radius: 8px;
+  }
+  section.highlight .highlight-res .button {
+    font-size: 14px;
+  }
+  section.features .cards,
+  section.ulasan .isiUlasan {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "satu dua"
+      "tiga empat"
+      "lima enam";
+  }
+  section.panel .row {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  section.panel .row .content {
+    text-align: center;
+    margin: 10px 0;
+  }
+  section.panel .row .content h1 {
+    border-bottom: 1px solid white;
+    padding-bottom: 10px;
+  }
+  section.panel .row .content p {
+    font-size: 14px;
+  }
+  section.panel .kotak {
+    margin: auto;
+    background-position-y: bottom;
+    width: 50%;
+    height: 170px;
+    border-radius: 8px;
+    position: relative;
+  }
+  section.about {
+    margin-top: 80px;
+    margin-bottom: 30px;
+  }
+  section.about .image {
+    margin: 0 auto;
+    height: 200px;
+    width: 95%;
+  }
+  section.about .konten {
+    margin: 20px 10px;
+  }
+}
+
+@media (max-width: 991.98px) {
+  /* BAGIAN NAVBAR */
+  section.nav-res {
+    display: block;
+    padding: 15px;
+  }
+  section.nav-res .kolomgrid {
+    display: grid;
+    grid-template-columns: 3fr 0.5fr 0.5fr 0.5fr;
+    grid-template-areas: "satu  dua tiga empat";
+    align-items: center;
+    gap: 0px;
+    margin: 0;
+  }
+  section.nav-res .kolomgrid .search {
+    grid-area: satu;
+    position: relative;
+  }
+  section.nav-res .kolomgrid .search a {
+    position: absolute;
+    right: -8px;
+    top: -6px;
+    z-index: 1;
+  }
+  section.nav-res .kolomgrid .keranjang {
+    grid-area: dua;
+    text-align: end;
+    position: relative;
+  }
+
+  section.nav-res .kolomgrid .notifikasi {
+    grid-area: tiga;
+    text-align: end;
+    position: relative;
+  }
+  section.nav-res .kolomgrid .user {
+    grid-area: empat;
+    text-align: end;
+  }
+  section.nav-res .kolomgrid .keranjang .bulat,
+  section.nav-res .kolomgrid .notifikasi .bulat {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    right: 10px;
+    top: 10px;
+    background-color: red;
+    border-radius: 10px;
+  }
+
+  section.navigasi .secondary {
+    display: none;
+  }
+
+  /* HERO */
+
+  section.hero .content .buttonPrimary {
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+  /* HIGHLIGHT */
+  section.highlight h3.judul {
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  section.highlight p.subjudul {
+    font-size: 14px;
+    border-left: 2px solid white;
+    padding-left: 10px;
+  }
+
+  section.highlight .carousel .card {
+    height: 300px;
+    font-size: 14px;
+    border: 1px solid #9b9b9b;
+    overflow: hidden;
+  }
+  section.highlight .carousel button {
+    position: absolute;
+    top: 10%;
+  }
+  section.highlight .carousel .card .card-body {
+    text-align: center;
+    padding-left: 7px;
+    background-color: #1b222c;
+  }
+
+  /* FEATURES */
+  section.features p.subjudul,
+  section.ulasan p.subjudul,
+  section.about p.subjudul,
+  section.listCafe p.subjudul,
+  section.panel p.subjudul {
+    font-size: 14px;
+    border-left: 2px solid #4f4f4f;
+    padding-left: 10px;
+  }
+
+  /* BAGIAN FOOTER */
+  section.footer {
+    font-size: 14px;
+  }
+  section.footer .judul {
+    text-align: center;
+  }
+  section.footer .footergrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: "judul judul" "kontak navigasi";
+  }
+}

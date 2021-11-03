@@ -1,0 +1,172 @@
+<section class="makanan">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-7">
+        <h3 class="text-capitalize fw-bold">pilihan menu cafe</h3>
+        <div class="jumlahpesanan mb-4">
+          <div class="row">
+            <div class="col-auto"><span class="fw-bold">0</span> Pesanan Dalam Keranjang</div>
+            <div class="col bayar">
+              <a href="/cart" class="fw-bold">Lihat <i class="bi bi-arrow-right-circle"></i></a>
+            </div>
+          </div>
+        </div>
+        <? for(let i=0; i<4; i++)
+        { ?>
+        <a href="#">
+          <div class="menu">
+            <div class="image">
+              <img src="/img/food1.png" alt="food 1" class="img-fluid" />
+            </div>
+            <div class="makanan">
+              <h4>Shushi dan Bakmi</h4>
+              <span>Shushi dengan daging premium ditambah bakmi kuah dengan toping lengkap</span>
+            </div>
+            <h3 class="tersedia">Tersedia</h3>
+            <h3 class="pesan" number="<?= i?>">Pesan</h3>
+            <input type="hidden" value="40000" class="value-harga" />
+            <h3 class="harga">Rp 40.000</h3>
+            <div class="quantity">
+              <input type="hidden" value="0" class="quantity-value" />
+              <h2><i class="bi bi-dash-circle kurang" number="<?= i?>"></i> <span> 0 </span> <i class="bi bi-plus-circle text-success tambah" number="<?= i?>"></i></h2>
+            </div>
+          </div>
+        </a>
+        <? } ?>
+      </div>
+
+      <div class="col-md-5 pesanan">
+        <ul class="list-group">
+          <li class="list-group-item kolompesanan">Pesanan Anda</li>
+          <li class="list-group-item">
+            <h4>Booking Tempat</h4>
+            <div class="kapasitas">
+              <div class="row">
+                <div class="col-md-3">
+                  <img src="/icon/conversation.png" alt="kapasitas" class="img-fluid" />
+                </div>
+                <div class="col-md-6">
+                  <h4>Kapasitas 1-3 Orang</h4>
+                  <span>Rp. 10.000</span>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <h4>Paket Makanan</h4>
+            <div class="kapasitas">
+              <div class="row">
+                <div class="col-3">
+                  <img src="/img/food2.png" alt="food 2" class="img-fluid" />
+                </div>
+                <div class="col-auto">
+                  <h4>Burger Dan Kentang</h4>
+                  <span>Rp. 10.000</span>
+                </div>
+                <div class="col my-auto text-end">
+                  <h4><i class="bi bi-dash-circle"></i><span> 1 </span> <i class="bi bi-plus-circle text-success"></i></h4>
+                </div>
+              </div>
+            </div>
+            <div class="kapasitas">
+              <div class="row">
+                <div class="col-3">
+                  <img src="/img/food2.png" alt="food 2" class="img-fluid" />
+                </div>
+                <div class="col-auto">
+                  <h4>Burger Dan Kentang</h4>
+                  <span>Rp. 10.000</span>
+                </div>
+                <div class="col my-auto text-end">
+                  <h4><i class="bi bi-dash-circle"></i><span> 1 </span> <i class="bi bi-plus-circle text-success"></i></h4>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-center my-4">
+              <a href="#" class="btn btn-secondary px-4 text-light fs-4">Konfirmasi</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 
+<a href="#">
+  <div class="kapasitas">
+    <div class="row">
+      <div class="col-md-4">
+        <img src="/img/food2.png" alt="food 2" class="img-fluid" />
+      </div>
+      <div class="col-md-5">
+        <h4>Burger dan Kentang</h4>
+        <span>Shushi dengan daging premium ditambah bakmi kuah dengan toping lengkap</span>
+      </div>
+      <div class="col-md-3 text-end">
+        <h5>Tersedia</h5>
+        <h3>Rp 30.000</h3>
+      </div>
+    </div>
+  </div>
+</a>
+<a href="#">
+  <div class="kapasitas">
+    <div class="row">
+      <div class="col-md-4">
+        <img src="/img/food3.png" alt="food 3" class="img-fluid" />
+      </div>
+      <div class="col-md-5">
+        <h4>Coffee Latte</h4>
+        <span>Shushi dengan daging premium ditambah bakmi kuah dengan toping lengkap</span>
+      </div>
+      <div class="col-md-3 text-end">
+        <h5>Tersedia</h5>
+        <h3>Rp 30.000</h3>
+      </div>
+    </div>
+  </div>
+</a>
+<a href="#">
+  <div class="kapasitas">
+    <div class="row">
+      <div class="col-md-4">
+        <img src="/img/food4.png" alt="food 4" class="img-fluid" />
+      </div>
+      <div class="col-md-5">
+        <h4>Sate Taichan</h4>
+        <span>Shushi dengan daging premium ditambah bakmi kuah dengan toping lengkap</span>
+      </div>
+      <div class="col-md-3 text-end">
+        <h5>Tersedia</h5>
+        <h3>Rp 30.000</h3>
+      </div>
+    </div>
+  </div>
+</a> -->
+
+<!-- //------------------------------------------------------------------------------- -->
+<!-- 
+<div class="kapasitas">
+  <div class="row">
+    <div class="col-md">
+      <img src="/img/food2.png" alt="food 2" class="img-fluid" />
+    </div>
+    <div class="col-md">
+      <h4>Burger Dan Kentang</h4>
+      <span>Rp. 10.000</span>
+    </div>
+  </div>
+</div>
+<div class="kapasitas">
+  <div class="row">
+    <div class="col-md-3">
+      <img src="/img/food4.png" alt="food 4" class="img-fluid" />
+    </div>
+    <div class="col-md-6">
+      <h4>Sate Taichan</h4>
+      <span>Rp. 10.000</span>
+    </div>
+  </div>
+</div> -->

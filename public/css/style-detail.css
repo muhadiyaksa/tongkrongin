@@ -1,0 +1,155 @@
+section.deskripsi {
+  margin: 50px 0px;
+}
+section.deskripsi .image {
+  position: relative;
+  overflow: hidden;
+  width: 420px;
+  border-radius: 10px;
+}
+section.deskripsi .image .kotak::after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  background-image: linear-gradient(to top, rgba(20, 53, 0, 0.6), rgba(27, 34, 44, 0.1));
+}
+section.deskripsi .fasilitas {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 18px;
+}
+section.deskripsi .fasilitas img {
+  max-height: 30px;
+  margin-bottom: 5px;
+}
+section.deskripsi .fasilitas .kotak {
+  text-align: center;
+  border-radius: 8px;
+  padding: 12px 5px;
+  background-color: rgba(112, 112, 112, 0.05);
+  border: 1px solid rgba(112, 112, 112, 0.3);
+}
+section.tempatduduk a,
+section.makanan a {
+  text-decoration: none;
+  color: #4f4f4f;
+}
+section.tempatduduk .kapasitas {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1.5fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "icon kategori  tersedia"
+    "icon kategori  harga";
+  background-color: rgba(112, 112, 112, 0.05);
+  border: 1px solid rgba(128, 118, 118, 0.3);
+  border-radius: 8px;
+  padding: 10px 10px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: 0.4s;
+}
+section.tempatduduk .kapasitas .pesan-tempat {
+  display: none;
+}
+section.tempatduduk .kapasitas:hover {
+  background-color: white;
+}
+section.tempatduduk .kapasitas .icon {
+  grid-area: icon;
+}
+section.tempatduduk .kapasitas .kategori {
+  grid-area: kategori;
+}
+section.tempatduduk .kapasitas .kategori h4 {
+  font-weight: 600;
+}
+section.tempatduduk .kapasitas .tersedia {
+  grid-area: tersedia;
+  text-align: end;
+  color: #4fc816;
+  font-weight: 600;
+}
+section.tempatduduk .kapasitas .harga {
+  grid-area: harga;
+  text-align: end;
+}
+
+section.tempatduduk .kapasitas h5,
+section.makanan .kapasitas h5 {
+  color: #4fc816;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.modal {
+  font-family: "Neucha", cursive;
+}
+.modal .kotak {
+  width: 100%;
+  background-color: rgba(112, 112, 112, 0.05);
+  border: 1px solid rgba(112, 112, 112, 0.3);
+  border-radius: 2px;
+  padding: 9px 10px;
+}
+
+@media (max-width: 575.98px) {
+  section.deskripsi .image {
+    width: 100%;
+    height: 100%;
+    display: grid;
+  }
+  section.deskripsi h1 {
+    font-weight: 600;
+  }
+  section.deskripsi h5 {
+    font-size: 16px;
+  }
+  section.deskripsi h3 {
+    font-size: 22px;
+    font-weight: 600;
+  }
+  section.deskripsi .fasilitas {
+    margin-top: 5px;
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: 10px;
+  }
+  section.tempatduduk .kapasitas {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 0.5fr;
+    grid-template-areas:
+      "icon kategori kategori"
+      "icon kategori kategori"
+      "harga harga pesan";
+  }
+  section.tempatduduk .kapasitas .pesan-tempat {
+    display: block;
+    background-color: #94ff8a;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 18px;
+    padding: 5px 0px;
+    grid-area: pesan;
+    align-self: flex-end;
+  }
+  section.tempatduduk .kapasitas .kategori span {
+    font-size: 12px;
+  }
+  section.tempatduduk .kapasitas .kategori h4 {
+    font-weight: 600;
+  }
+  section.tempatduduk .kapasitas .tersedia,
+  section.tempatduduk .kapasitas .harga {
+    padding-top: 10px;
+    align-self: end;
+    font-weight: 600;
+    text-align: start;
+    padding-left: 15px;
+  }
+  section.tempatduduk .kapasitas .tersedia {
+    color: #4fc816;
+    display: none;
+  }
+}

@@ -1,0 +1,77 @@
+<section class="keranjang">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h2>Detail Pesanan</h2>
+      </div>
+      <div class="col text-end">
+        <a href="" class="btn btn-dark text-light">Tambah Pesanan</a>
+      </div>
+    </div>
+    <div class="row mt-4 judul">
+      <div class="col-md-1"></div>
+      <div class="col-md-6">Pesanan</div>
+      <div class="col-md-2">Jumlah</div>
+      <div class="col-md-2">Harga</div>
+      <div class="col-md-1"></div>
+    </div>
+
+    <div class="kolomgrid mt-4 tempat">
+      <div class="checkbox">
+        <input type="checkbox" class="form-check-input" />
+      </div>
+      <div class="pesanan">
+        <div class="row">
+          <div class="col-3 text-center my-auto">
+            <img src="/icon/conversation.png" alt="kapasitas" />
+          </div>
+          <div class="col-9">
+            <h4>Kapasitas 1-3 Orang</h4>
+            <span>Fasilitas yang didapat tempat duduk sebanyak Max. 3 bangku</span>
+          </div>
+        </div>
+      </div>
+      <div class="jumlah"><h3>Qty : 1</h3></div>
+      <div class="harga"><h4>Rp 30.000</h4></div>
+      <div class="hapus"><img src="/icon/trash.png" alt="" /></div>
+    </div>
+
+    <div class="makanan">
+      <h3 class="detailjudul">Detail Pesanan Makanan</h3>
+      <? for( let i = 0; i < 4; i++ ) { ?>
+      <div class="kolomgrid food">
+        <div class="checkbox">
+          <input type="checkbox" class="form-check-input" />
+        </div>
+        <div class="pesanan">
+          <div class="row">
+            <div class="col-3 text-center my-auto">
+              <img src="/img/food2.png" alt="food" class="img-fluid" />
+            </div>
+            <div class="col-9">
+              <h4>Burger dan Kentang</h4>
+              <span>Burger Ayam dengan Kentang Goreng Ukuran Medium</span>
+            </div>
+          </div>
+        </div>
+        <div class="harga">
+          <input type="hidden" value="30000" class="value-harga" />
+          <input type="hidden" value="" class="value-harga-tambah" />
+          <h4>Rp 30.000</h4>
+        </div>
+        <div class="quantity-cart">
+          <input type="hidden" value="1" class="quantity-value" />
+          <h2><i class="bi bi-dash-circle kurang-cart" number="<?= i?>"></i> <span> 1 </span> <i class="bi bi-plus-circle text-success tambah-cart" number="<?= i?>"></i></h2>
+        </div>
+        <div class="hapus"><img src="/icon/trash.png" alt="" /></div>
+      </div>
+      <? } ?>
+    </div>
+
+    <div class="garis border-1 border-bottom"></div>
+    <div class="total text-end mt-4">
+      <h3>Total Pesanan <span>Rp 350.000</span></h3>
+      <a href="" class="btn btn-dark text-light px-3 fs-4 mt-3">Bayar Sekarang</a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,69 @@
+<!-- https://www.saidalfaruq.net/artikel/upload-file-menggunakan-drag-dan-drop-dengan-javascript-dan-php-s7y6fz8z -->
+<!-- https://www.w3schools.com/nodejs/nodejs_uploadfiles.asp -->
+<section class="pay">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-7">
+        <h2 class="mb-4">Pembayaran</h2>
+        <h4 class="mb-3">Total : <span class="fw-bold">Rp 385.000</span> Tanggal Pemesanan: <span>15 Oktober 2021</span></h4>
+        <div class="kotak">
+          <i class="bi bi-exclamation-circle-fill me-3"></i>
+          <h5 class="d-inline-block">Pembayaran dilakukan sebelum <span>15 Oktober 2021 , 18:00 WIB</span></h5>
+        </div>
+        <div class="identitas">
+          <table>
+            <tr>
+              <td>Nama Rekening</td>
+              <td>:</td>
+              <td><span>PT. Tongkrongin</span></td>
+            </tr>
+            <tr>
+              <td>Nomor Rekening</td>
+              <td>:</td>
+              <td><span>8821923190124</span></td>
+            </tr>
+          </table>
+        </div>
+        <a href="" class="text-dark" data-bs-toggle="modal" data-bs-target="#gantiBank"><i class="bi bi-box-arrow-in-down-left"></i> Ubah Akun Bank</a>
+      </div>
+      <div class="col-md-5 text-center pt-5">
+        <img src="/img/bcalogo.png" alt="BCA logo" />
+        <button class="btn btn-dark fs-4 px-4 py-2 mt-4" data-bs-toggle="modal" data-bs-target="#uploadBukti">Unggah Bukti Pembayaran</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Modal Ganti Pilihan Bank -->
+<div class="modal fade" id="gantiBank" tabindex="-1" aria-labelledby="gantiBankLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="gantiBankLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">...</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Upload Bukti-->
+<div class="modal fade" id="uploadBukti" tabindex="-1" aria-labelledby="uploadBuktiLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="uploadBuktiLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">...</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

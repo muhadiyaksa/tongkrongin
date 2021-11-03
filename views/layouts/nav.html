@@ -1,0 +1,79 @@
+<section class="navigasi">
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container-fluid">
+        <a class="navbar-brand fw-bold fs-3" href="/">Tongkrongin</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav mx-auto colorPrimary">
+            <a class="nav-link active me-4" aria-current="page" href="/">Beranda</a>
+            <a class="nav-link me-4" href="/contact">Fasilitas</a>
+            <a class="nav-link me-4" href="/ulasan">Ulasan</a>
+            <a class="nav-link" href="/about">Tentang Kami</a>
+          </div>
+          <div class="navbar-nav ms-auto secondary">
+            <form method="post" action="/cafe" class="nav-link me-2">
+              <input type="text" placeholder="Find Your Cafe" aria-label="Recipient's username" aria-describedby="button-addon2" />
+            </form>
+            <a class="nav-link active me-3" type="button" id="button-addon2" aria-current="page" href="/"><img src="/icon/searchIcon.png" alt="search" /></a>
+            <div class="notif">
+              <a class="nav-link me-3" href="/cart"><img src="/icon/chartIcon.png" alt="cart" /></a>
+              <div class="bulat"></div>
+            </div>
+            <div class="notif">
+              <a class="nav-link me-3" href="/ulasan"><img src="/icon/notifIcon.png" alt="notif" /></a>
+              <div class="bulat"></div>
+            </div>
+            <span class="batas"></span>
+
+            <? if (dataUser) {?>
+            <a class="nav-link ms-3" href="/user/<?= dataUser.email?>">
+              <button class="btn btn-outline-secondary userpage"><i class="bi bi-person"></i></button>
+            </a>
+            <form action="/logout?_method=DELETE" method="post" class="nav-link">
+              <button class="btn btn-outline-0" type="submit">logout</button>
+            </form>
+            <? } else {?>
+            <a class="nav-link ms-3" href="/login"><button class="btn btn-outline-secondary">Masuk</button> </a>
+            <? }?>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="nav-res">
+  <div class="container">
+    <div class="kolomgrid">
+      <div class="search">
+        <form method="post" action="/cafe" class="w-100">
+          <input type="text" class="form-control" placeholder="Find Your Cafe" aria-label="Recipient's username" aria-describedby="button-addon2" />
+        </form>
+        <a class="nav-link" type="button" id="button-addon2" aria-current="page" href="/"><img src="/icon/searchIcon.png" alt="search" /></a>
+      </div>
+      <div class="keranjang">
+        <a class="nav-link" href="/cart"><img src="/icon/chartIcon.png" alt="chart" /></a>
+        <div class="bulat"></div>
+      </div>
+      <div class="notifikasi">
+        <a class="nav-link" href="/ulasan"><img src="/icon/notifIcon.png" alt="notif" /></a>
+        <div class="bulat"></div>
+      </div>
+      <div class="user">
+        <? if (dataUser) {?>
+        <a class="nav-link m-0" href="/user/<?= dataUser.email?>">
+          <button class="btn btn-outline-secondary userpage"><i class="bi bi-person"></i></button>
+        </a>
+        <form action="/logout?_method=DELETE" method="post" class="nav-link logout">
+          <button class="btn btn-outline-0" type="submit">logout</button>
+        </form>
+        <? } else {?>
+        <a class="nav-link" href="/login"><button class="btn btn-outline-secondary">Masuk</button> </a>
+        <? }?>
+      </div>
+    </div>
+  </div>
+</section>
