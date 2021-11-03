@@ -29,7 +29,7 @@
             <span class="batas"></span>
 
             <? if (dataUser) {?>
-            <a class="nav-link ms-3" href="/user/<?= dataUser.email?>">
+            <a class="nav-link ms-3" href="/user">
               <button class="btn btn-outline-secondary userpage"><i class="bi bi-person"></i></button>
             </a>
             <form action="/logout?_method=DELETE" method="post" class="nav-link">
@@ -64,7 +64,7 @@
       </div>
       <div class="user">
         <? if (dataUser) {?>
-        <a class="nav-link m-0" href="/user/<?= dataUser.email?>">
+        <a class="nav-link m-0" href="/user">
           <button class="btn btn-outline-secondary userpage"><i class="bi bi-person"></i></button>
         </a>
         <form action="/logout?_method=DELETE" method="post" class="nav-link logout">

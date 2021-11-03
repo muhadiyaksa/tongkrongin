@@ -78,26 +78,66 @@ app.get("/home", checkAuthenticated, async (req, res) => {
 });
 // app.get("/user/:iduser", async (req, res) => {
 app.get("/user", async (req, res) => {
+  const dataUser = await req.user;
   // const contact = await Contact.findOne({ nama: req.params.iduser });
   res.render("user-profile", {
     title: "Halaman User",
     layout: "layouts/main-layout-user",
+    dataUser,
+    msg: req.flash("msg"),
   });
 });
 
 app.get("/user/update", async (req, res) => {
   // const contact = await Contact.findOne({ nama: req.params.iduser });
+  const dataUser = await req.user;
   res.render("user-update", {
-    title: "Halaman User",
+    title: "Halaman Update",
     layout: "layouts/main-layout-user",
+    dataUser,
   });
 });
 
+//Proses Ubah Data
+app.put("/user/update", [check("email", "Email tidak Valid!").isEmail(), check("notelp", "Nomor Handphone Tidak Valid!").isMobilePhone("id-ID")], async (req, res) => {
+  const errors = validationResult(req);
+  const dataUser = await req.user;
+  if (!errors.isEmpty()) {
+    res.render("user-update", {
+      title: "Halaman Update",
+      layout: "layouts/main-layout-user",
+      errors: errors.array(),
+      contact: req.body,
+      dataUser,
+    });
+  } else {
+    User.updateOne(
+      { id: req.body.id },
+      {
+        $set: {
+          nama: req.body.nama,
+          email: req.body.email,
+          notelp: req.body.notelp,
+          password: req.body.password,
+          passwordChecked: req.body.passwordChecked,
+          jeniskelamin: req.body.jeniskelamin,
+          kota: req.body.kota,
+        },
+      }
+    ).then((result) => {
+      req.flash("msg", "Data kamu Berhasil diUbah! ");
+      res.redirect("/user");
+    });
+  }
+});
+
 app.get("/user/password", async (req, res) => {
+  const dataUser = await req.user;
   // const contact = await Contact.findOne({ nama: req.params.iduser });
   res.render("user-password", {
     title: "Halaman User",
     layout: "layouts/main-layout-user",
+    dataUser,
   });
 });
 

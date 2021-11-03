@@ -1,6 +1,17 @@
 <section class="user-profile">
   <div class="container">
+    <a href="/home" class="text-dark">
+      <h2 class="fw-bold"><i class="bi bi-arrow-left-circle-fill"></i></h2>
+    </a>
     <h2 class="fw-bold">Profile</h2>
+
+    <? if(msg.length !== 0) {?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <?= msg  ?>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <? } ?>
+
     <div class="row">
       <div class="col-md">
         <div class="row identitas">
@@ -8,14 +19,14 @@
             <img src="/img/user/muhadiyaksa.png" alt="Foto Profile" class="img-fluid rounded-circle" />
           </div>
           <div class="col-8">
-            <h3>Muhamad Adi Yaksa</h3>
-            <h5>muhadiyaksa@gmail.com</h5>
+            <h3 class="text-capitalize"><?= dataUser.nama ?></h3>
+            <h5><?= dataUser.email ?></h5>
           </div>
         </div>
       </div>
       <div class="col-md button">
-        <button class="btn btn-dark rounded-pill edit">Edit Profile</button>
-        <button class="btn btn-dark rounded-pill edit">Edit Password</button>
+        <a href="/user/update"> <button class="btn btn-dark rounded-pill edit">Edit Profile</button></a>
+        <a href="/user/password"> <button class="btn btn-dark rounded-pill edit">Edit Password</button></a>
       </div>
     </div>
   </div>

@@ -4,18 +4,20 @@
   box-sizing: border-box;
 }
 section.user-profile {
-  margin-top: 50px;
+  margin-top: 30px;
+
   color: #4f4f4f;
 }
+
 section.user-profile h2 {
   margin-bottom: 20px;
-  text-align: center;
 }
-section.user-profile .identitas {
+section.user-profile .form-update .identitas {
   align-items: center;
   padding: 0 15px;
 }
-section.user-profile .identitas h3 {
+
+section.user-profile .form-update .identitas h3 {
   font-weight: 600;
 }
 section.user-profile .button {
@@ -34,7 +36,6 @@ section.riwayat {
 section.riwayat h2 {
   border-top: 2px solid rgba(112, 112, 112, 0.3);
   padding-top: 30px;
-  text-align: center;
 }
 section.riwayat .riwayat-user {
   display: flex;
@@ -81,6 +82,10 @@ section.user-update label {
 section.user-update .nama {
   align-self: flex-end;
 }
+section.user-update label span {
+  color: red;
+  font-weight: 400;
+}
 section.user-update .identitas {
   align-items: center;
 }
@@ -94,11 +99,43 @@ section.user-password input {
   border-radius: 8px;
   border: 1px solid rgba(112, 112, 112, 0.3);
   padding-right: 30px;
+  background-color: white;
 }
 section.user-update select option {
   width: 90%;
   border: 1px solid #acacac;
   outline: 0;
+}
+section.user-update .form-update {
+  display: grid;
+  row-gap: 5px;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "identitas "
+    "nama"
+    "email"
+    "notelp"
+    "jeniskelamin"
+    "kota";
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+section.user-update .form-update .identitas {
+  grid-area: identitas;
+}
+section.user-update .form-update .nama {
+  grid-area: nama;
+}
+section.user-update .form-update .email {
+  grid-area: email;
+}
+section.user-update .form-update .notelp {
+  grid-area: notelp;
+}
+section.user-update .form-update .jeniskelamin {
+  grid-area: jeniskelamin;
+}
+section.user-update .form-update .kota {
+  grid-area: kota;
 }
 
 /* USER PASSWORD  */
@@ -134,5 +171,34 @@ section.user-password .eye img {
   section.user-password .simpan button {
     margin-top: 30px;
     width: 20%;
+  }
+  section.user-update label {
+    font-size: 20px;
+  }
+  section.user-update input {
+    font-size: 18px;
+  }
+  section.user-update .form-update {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "identitas nama"
+      "email notelp"
+      "jeniskelamin kota";
+    grid-template-rows: 1fr 1fr 1fr;
+    column-gap: 20px;
+
+    row-gap: 0px;
+  }
+  section.user-update .form-update .email {
+    align-self: center;
+  }
+  section.user-update .form-update .notelp {
+    align-self: center;
+  }
+  section.user-update .form-update .jeniskelamin {
+    grid-area: jeniskelamin;
+  }
+  section.user-update .form-update .kota {
+    grid-area: kota;
   }
 }
