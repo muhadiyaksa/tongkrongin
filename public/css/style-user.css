@@ -128,6 +128,9 @@ section.user-update .form-update .nama {
 section.user-update .form-update .email {
   grid-area: email;
 }
+section.user-update .form-update .email input {
+  background-color: #f1f1f1;
+}
 section.user-update .form-update .notelp {
   grid-area: notelp;
 }

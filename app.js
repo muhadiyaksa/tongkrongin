@@ -88,27 +88,26 @@ app.get("/user", async (req, res) => {
   });
 });
 
-app.get("/user/update", async (req, res) => {
-  // const contact = await Contact.findOne({ nama: req.params.iduser });
-  const dataUser = await req.user;
+app.get("/user/update/:id", async (req, res) => {
+  const user = await User.findOne({ id: req.params.id });
+
   res.render("user-update", {
     title: "Halaman Update",
     layout: "layouts/main-layout-user",
-    dataUser,
+    user,
   });
 });
 
 //Proses Ubah Data
 app.put("/user/update", [check("email", "Email tidak Valid!").isEmail(), check("notelp", "Nomor Handphone Tidak Valid!").isMobilePhone("id-ID")], async (req, res) => {
   const errors = validationResult(req);
-  const dataUser = await req.user;
+
   if (!errors.isEmpty()) {
     res.render("user-update", {
       title: "Halaman Update",
       layout: "layouts/main-layout-user",
       errors: errors.array(),
-      contact: req.body,
-      dataUser,
+      user: req.body,
     });
   } else {
     User.updateOne(

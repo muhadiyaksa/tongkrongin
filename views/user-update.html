@@ -28,19 +28,20 @@
         </div>
 
         <div class="nama">
-          <input type="hidden" value="<?= dataUser.id ?>" name="id" />
+          <input type="hidden" value="<?= user.id ?>" name="id" />
           <label for="nama">Nama Lengkap <span>*</span></label>
-          <input type="text" class="input-update text-capitalize" id="nama" name="nama" value="<?= dataUser.nama ?>" />
+          <input type="text" class="input-update text-capitalize" id="nama" name="nama" value="<?= user.nama ?>" />
         </div>
 
         <div class="email">
           <label for="email">Email <span>*</span></label>
-          <input type="email" disabled="true" class="input-update" id="email" name="email" value="<?= dataUser.email ?>" />
+          <input type="hidden" name="email" value="<?= user.email ?>" />
+          <input type="email" disabled="true" class="input-update" id="email" name="email2" value="<?= user.email ?>" />
         </div>
 
         <div class="notelp">
           <label for="notelp">Nomor Telepon <span>*</span></label>
-          <input type="number" class="input-update" id="notelp" name="notelp" value="<?= dataUser.notelp ?>" />
+          <input type="number" class="input-update" id="notelp" name="notelp" value="<?= user.notelp ?>" />
         </div>
 
         <div class="jeniskelamin">
@@ -55,8 +56,8 @@
         <div class="kota">
           <label for="kota">Kota</label>
           <input type="text" class="input-update" id="kota" name="kota" placeholder="Kota Domisili Anda" />
-          <input type="hidden" value="<?= dataUser.password?>" name="password" />
-          <input type="hidden" value="<?= dataUser.passwordChecked?>" name="passwordChecked" />
+          <input type="hidden" value="<?= user.password?>" name="password" />
+          <input type="hidden" value="<?= user.passwordChecked?>" name="passwordChecked" />
         </div>
       </div>
       <div class="simpan">
