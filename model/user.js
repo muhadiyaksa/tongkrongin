@@ -32,6 +32,9 @@ const User = mongoose.model("User", {
   kota: {
     type: String,
   },
+  fotoprofil: {
+    type: String,
+  },
 });
 
 module.exports = User;

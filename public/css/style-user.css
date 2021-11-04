@@ -102,6 +102,26 @@ section.user-password input {
   padding-right: 30px;
   background-color: white;
 }
+section.user-update .input-file {
+  border: 0px;
+}
+section.user-update .input-file::-webkit-file-upload-button {
+  display: none;
+}
+section.user-update .input-file::before {
+  content: "Ganti Foto Profil";
+  display: inline-block;
+  background-color: #f1f1f1;
+  border: 1px solid rgba(112, 112, 112, 0.3);
+  border-radius: 8px;
+  padding: 5px 8px;
+  margin-right: 20px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  font-weight: 500;
+}
 section.user-update select option {
   width: 90%;
   border: 1px solid #acacac;

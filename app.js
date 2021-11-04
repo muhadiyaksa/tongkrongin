@@ -16,6 +16,10 @@ const flash = require("express-flash");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 
+const formidable = require("formidable");
+const fs = require("fs");
+const mv = require("mv");
+
 require("./utils/db");
 const User = require("./model/user");
 // const user = async () => {
@@ -79,10 +83,12 @@ app.get("/home", checkAuthenticated, async (req, res) => {
 
 app.get("/user/:id", async (req, res) => {
   const user = await User.findOne({ id: req.params.id });
+  const dataUser = await req.user;
   res.render("user-profile", {
     title: "Halaman User",
     layout: "layouts/main-layout-user",
     user,
+    dataUser,
     msg: req.flash("msg"),
   });
 });
@@ -90,11 +96,12 @@ app.get("/user/:id", async (req, res) => {
 //Menuju Halaman Edit Profle
 app.get("/user/update/:id", async (req, res) => {
   const user = await User.findOne({ id: req.params.id });
-
+  const dataUser = await req.user;
   res.render("user-update", {
     title: "Halaman Update",
     layout: "layouts/main-layout-user",
     user,
+    dataUser,
   });
 });
 
@@ -121,6 +128,7 @@ app.put("/user/update", [check("notelp", "Nomor Handphone Tidak Valid!").isMobil
           passwordChecked: req.body.passwordChecked,
           jeniskelamin: req.body.jeniskelamin,
           kota: req.body.kota,
+          fotoprofil: req.body.filetoupload,
         },
       }
     ).then((result) => {
@@ -133,11 +141,12 @@ app.put("/user/update", [check("notelp", "Nomor Handphone Tidak Valid!").isMobil
 //Menuju Halaman Edit Password
 app.get("/user/password/:id", async (req, res) => {
   const user = await User.findOne({ id: req.params.id });
-
+  const dataUser = await req.user;
   res.render("user-password", {
     title: "Halaman Update",
     layout: "layouts/main-layout-user",
     user,
+    dataUser,
   });
 });
 
