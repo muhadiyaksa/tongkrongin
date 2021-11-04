@@ -5,9 +5,17 @@ const passwordChecked = document.getElementById("passwordChecked");
 showPassword.forEach((el, i) => {
   el.addEventListener("click", function () {
     if (i == 0) {
-      password.setAttribute("type", text);
+      if (password.type == "password") {
+        password.setAttribute("type", "text");
+      } else {
+        password.setAttribute("type", "password");
+      }
     } else {
-      passwordChecked.setAttribute("type", text);
+      if (passwordChecked.type == "password") {
+        passwordChecked.setAttribute("type", "text");
+      } else {
+        passwordChecked.setAttribute("type", "password");
+      }
     }
   });
 });
