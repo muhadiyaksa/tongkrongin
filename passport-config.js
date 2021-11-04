@@ -10,7 +10,7 @@ function initialize(passport, getUserByEmail, getUserById) {
     }
 
     try {
-      const match = await bcrypt.compare(password, user.password);
+      const match = await bcrypt.compare(password, user.passwordChecked);
       if (match == true) {
         return done(null, user);
       } else {

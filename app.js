@@ -77,7 +77,7 @@ app.get("/home", checkAuthenticated, async (req, res) => {
   });
 });
 
-app.get("/user/:id", checkAuthenticated, async (req, res) => {
+app.get("/user/:id", async (req, res) => {
   const user = await User.findOne({ id: req.params.id });
   res.render("user-profile", {
     title: "Halaman User",
@@ -88,21 +88,10 @@ app.get("/user/:id", checkAuthenticated, async (req, res) => {
 });
 
 //Menuju Halaman Edit Profle
-app.get("/user/update/:id", checkAuthenticated, async (req, res) => {
+app.get("/user/update/:id", async (req, res) => {
   const user = await User.findOne({ id: req.params.id });
 
   res.render("user-update", {
-    title: "Halaman Update",
-    layout: "layouts/main-layout-user",
-    user,
-  });
-});
-
-//Menuju Halaman Edit Password
-app.get("/user/password/:id", async (req, res) => {
-  const user = await User.findOne({ id: req.params.id });
-
-  res.render("user-password", {
     title: "Halaman Update",
     layout: "layouts/main-layout-user",
     user,
@@ -141,15 +130,58 @@ app.put("/user/update", [check("notelp", "Nomor Handphone Tidak Valid!").isMobil
   }
 });
 
-app.get("/user/password", async (req, res) => {
-  const dataUser = await req.user;
-  // const contact = await Contact.findOne({ nama: req.params.iduser });
+//Menuju Halaman Edit Password
+app.get("/user/password/:id", async (req, res) => {
+  const user = await User.findOne({ id: req.params.id });
+
   res.render("user-password", {
-    title: "Halaman User",
+    title: "Halaman Update",
     layout: "layouts/main-layout-user",
-    dataUser,
+    user,
   });
 });
+
+//Proses Ubah Data
+app.put(
+  "/user/password",
+  check("password").isLength({ min: 8 }).withMessage("Minimal Panjang Karakter adalah 8").matches(/\d/).withMessage("Harus Berisi Nomor"),
+  body("passwordChecked").custom((value, { req }) => {
+    if (value !== req.body.password) {
+      throw new Error("Konfirmasi Password tidak sama dengan Password Utama");
+    }
+    return true;
+  }),
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.render("user-password", {
+        title: "Halaman Password",
+        layout: "layouts/main-layout-user",
+        errors: errors.array(),
+        user: req.body,
+      });
+    } else {
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      const hashedPasswordChecked = await bcrypt.hash(req.body.passwordChecked, 10);
+      User.updateOne(
+        { id: req.body.id },
+        {
+          $set: {
+            nama: req.body.nama,
+            email: req.body.email,
+            notelp: req.body.notelp,
+            password: hashedPassword,
+            passwordChecked: hashedPasswordChecked,
+          },
+        }
+      ).then((result) => {
+        req.flash("msg", "Password kamu Berhasil diUbah! ");
+        res.redirect("/user/" + req.body.id);
+      });
+    }
+  }
+);
 
 //Halaman Cafe
 app.get("/cafe", async (req, res) => {
@@ -233,7 +265,7 @@ app.post(
     }),
     check("email", "Email tidak Valid!").isEmail(),
     check("notelp", "Nomor Handphone Tidak Valid!").isMobilePhone("id-ID"),
-    body("password").isLength({ min: 5 }),
+    check("password").isLength({ min: 8 }).withMessage("Password Minimal Karakter adalah 8").matches(/\d/).withMessage("Password Harus Berisi Nomor"),
     body("passwordChecked").custom((value, { req }) => {
       if (value !== req.body.password) {
         throw new Error("Konfirmasi Password tidak sama dengan Password Utama");
@@ -253,14 +285,14 @@ app.post(
         errors: errors.array(),
       });
     } else {
-      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      // const hashedPassword = await bcrypt.hash(req.body.password, 10);
       const hashedPasswordChecked = await bcrypt.hash(req.body.passwordChecked, 10);
       const dataMasuk = {
         id: Date.now().toString(),
         nama: req.body.nama.toLowerCase(),
         email: req.body.email,
         notelp: req.body.notelp,
-        password: hashedPassword,
+        password: req.body.password,
         passwordChecked: hashedPasswordChecked,
       };
       User.insertMany(dataMasuk, (error, result) => {
