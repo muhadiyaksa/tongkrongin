@@ -5,6 +5,7 @@ if (process.env.NODE_ENV !== "production") {
 const express = require("express");
 const ejs = require("ejs");
 const expressLayouts = require("express-ejs-layouts");
+const upload = require("express-fileupload");
 
 const { body, validationResult, check } = require("express-validator");
 const methodOverride = require("method-override");
@@ -12,13 +13,14 @@ const methodOverride = require("method-override");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const flash = require("express-flash");
-
+// const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 
-const formidable = require("formidable");
+// const formidable = require("formidable");
 const fs = require("fs");
-const mv = require("mv");
+const busboy = require("connect-busboy");
+// const mv = require("mv");
 
 require("./utils/db");
 const User = require("./model/user");
@@ -47,6 +49,9 @@ app.engine("html", ejs.renderFile);
 app.use(expressLayouts); //Third-party middleware
 app.use(express.static("public")); //Built in middleware
 app.use(express.urlencoded({ extended: true })); //Built In Middleware
+app.use(upload());
+app.use(busboy());
+// app.use(express.bodyParser());
 
 //konfigurasi flash
 app.use(cookieParser(process.env.SESSION_SECRET));
@@ -103,6 +108,32 @@ app.get("/user/update/:id", async (req, res) => {
     user,
     dataUser,
   });
+});
+
+app.get("/foto", async (req, res) => {
+  const dataUser = await req.user;
+  res.render("coba", {
+    title: "Halaman Coba",
+    layout: "layouts/main-layout-user",
+    dataUser,
+  });
+});
+
+app.post("/foto", (req, res) => {
+  const namaFile = req.files.file.name;
+  if (req.files.file) {
+    var file = req.files.file;
+    var fileName = file.name;
+
+    file.mv(__dirname + "/public/img/user/" + fileName, function (err) {
+      if (err) {
+        res.send(err);
+      } else {
+        req.flash("msg", "Data kamu Berhasil diUbah! ");
+        res.redirect("/user/" + req.body.id);
+      }
+    });
+  }
 });
 
 //Proses Ubah Data

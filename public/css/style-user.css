@@ -1,4 +1,4 @@
-*a {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -173,6 +173,52 @@ section.user-password .eye img {
   position: absolute;
   bottom: 24px;
   right: 25px;
+}
+
+/* MODAL STYLE */
+
+.modal .konten-upload {
+  border: 2px dashed #777777;
+  text-align: center;
+  padding: 35px 40px;
+  border-radius: 8px;
+}
+.modal .konten-upload.active {
+  border: 2px solid #777777;
+  background-color: #f7f7f7;
+}
+.modal .konten-upload img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.modal .konten-upload p {
+  color: #808080;
+  font-size: 12px;
+}
+.modal .notif {
+  margin-top: 15px;
+  font-size: 12px;
+}
+.modal label,
+.modal .kirim button {
+  cursor: pointer;
+  background-color: #4f4f4f;
+  padding: 5px 50px;
+  color: white;
+  border-radius: 8px;
+  border: none;
+}
+.modal .kirim {
+  text-align: center;
+  margin-top: 20px;
+}
+.modal #upload-photo {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
 }
 
 @media (min-width: 992px) {
