@@ -20,39 +20,7 @@ showPassword.forEach((el, i) => {
   });
 });
 
-// const dropArea = document.querySelector(".konten-upload");
-// const notifArea = dropArea.querySelector(".notif");
-// const input = dropArea.querySelector("input.input-upload");
-// const button = dropArea.querySelector("button.upload-photo");
-// console.log(dropArea);
-// let file;
-
-// button.onclick = () => {
-//   input.click();
-// };
-
-// input.addEventListener("change", function (e) {
-//   e.preventDefault();
-//   file = this.files[0];
-//   showFile();
-// });
-
-// dropArea.addEventListener("dragover", function (e) {
-//   e.preventDefault();
-//   dropArea.classList.add("active");
-// });
-
-// dropArea.addEventListener("dragleave", function (e) {
-//   e.preventDefault();
-//   dropArea.classList.remove("active");
-// });
-
-// dropArea.addEventListener("drop", function (e) {
-//   e.preventDefault();
-
-//   file = e.dataTransfer.files[0];
-//   showFile();
-// });
+//--------------------------------------------------------------
 
 const dropArea = document.querySelector(".konten-upload");
 const notifArea = document.querySelector(".notif-area");
@@ -62,7 +30,7 @@ const hasilFile = dropArea.querySelector(".hasil-file");
 const h2DropArea = dropArea.querySelector("h2");
 const pDropArea = dropArea.querySelector("p");
 const labelDropArea = dropArea.querySelector("label");
-const kirimInput = document.querySelector(".kirim input");
+
 let file;
 
 input.addEventListener("dragover", function (e) {
@@ -74,12 +42,6 @@ input.addEventListener("dragleave", function (e) {
   e.preventDefault();
   dropArea.classList.remove("active");
 });
-
-// input.addEventListener("drop", function (e) {
-//   e.preventDefault();
-//   file = e.dataTransfer.files;
-//   showFile();
-// });
 
 input.addEventListener("change", function (e) {
   e.preventDefault();
@@ -131,28 +93,6 @@ function showFile(input) {
   }
 }
 
-function showFileMore1() {
-  let card = "";
-  for (let i = 0; i < file.length; i++) {
-    let fileType = file[i].type;
-    let validExtensions = ["image/jpg", "image/jpeg", "image/png"];
-    if (validExtensions.includes(fileType)) {
-      hasilFile.style.display = "block";
-      h2DropArea.style.display = "none";
-      pDropArea.style.display = "none";
-      labelDropArea.style.display = "none";
-      notifArea.style.display = "none";
-      let cards = (card += resultFile(file[i].name));
-      hasilFile.innerHTML = cards;
-      console.log(file[i].name);
-      console.log(file[i].type);
-    } else {
-      notifArea.style.display = "block";
-      notifArea.innerHTML = notifError();
-    }
-  }
-}
-
 function resultFile(namafile) {
   return `<div class="alert alert-secondary tampil-file" role="alert">
             <div class="row">
@@ -165,68 +105,27 @@ function resultFile(namafile) {
             </div>
           </div>`;
 }
-// function showFile() {
-//   let fileType = file.type;
-//   let validExtensions = ["image/jpg", "image/jpeg", "image/png"];
-//   if (validExtensions.includes(fileType)) {
-//     let fileReader = new FileReader();
-//     fileReader.onload = () => {
-//       let fileURL = fileReader.result;
-//       let imgTag = `<img src="${fileURL}" alt="">`;
-//       dropArea.innerHTML = imgTag;
-//     };
-//     fileReader.readAsDataURL(file);
-//   } else {
-//     notifArea.innerHTML = notifError();
-//   }
-// }
 
-// document.addEventListener("dragover", function (e) {
-//   if (e.target.classList.contains("konten-upload")) {
-//     e.preventDefault();
-//     dropArea.classList.add("active");
-//   }
-// });
-// document.addEventListener("dragleave", function (e) {
-//   if (e.target.classList.contains("konten-upload")) {
-//     e.preventDefault();
-//     dropArea.classList.remove("active");
-//   }
-// });
-
-// document.addEventListener("drop", function (e) {
-//   if (e.target.classList.contains("konten-upload")) {
-//     e.preventDefault();
-
-//     file = e.dataTransfer.files;
-//     showFile();
-//   }
-// });
-
-// document.addEventListener("change", function (e) {
-//   if (e.target.classList.contains("input-upload")) {
-//     file = this.files;
-//     showFile();
-//   }
-// });
-
-// function notifError() {
-//   return `<div class="alert alert-danger" role="alert">
-//             Format File harus PNG , JPG atau JPEG
-//           </div>`;
-// }
-// function showFile() {
-//   let fileType = file.type;
-//   let validExtensions = ["image/jpg", "image/jpeg", "image/png"];
-//   if (validExtensions.includes(fileType)) {
-//     let fileReader = new FileReader();
-//     fileReader.onload = () => {
-//       let fileURL = fileReader.result;
-//       let imgTag = `<img src="${fileURL}" alt="">`;
-//       dropArea.innerHTML = imgTag;
-//     };
-//     fileReader.readAsDataURL(file);
-//   } else {
-//     notifArea.innerHTML = notifError();
+// CADANGAN
+// ----------------------------
+// function showFileMore1() {
+//   let card = "";
+//   for (let i = 0; i < file.length; i++) {
+//     let fileType = file[i].type;
+//     let validExtensions = ["image/jpg", "image/jpeg", "image/png"];
+//     if (validExtensions.includes(fileType)) {
+//       hasilFile.style.display = "block";
+//       h2DropArea.style.display = "none";
+//       pDropArea.style.display = "none";
+//       labelDropArea.style.display = "none";
+//       notifArea.style.display = "none";
+//       let cards = (card += resultFile(file[i].name));
+//       hasilFile.innerHTML = cards;
+//       console.log(file[i].name);
+//       console.log(file[i].type);
+//     } else {
+//       notifArea.style.display = "block";
+//       notifArea.innerHTML = notifError();
+//     }
 //   }
 // }

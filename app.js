@@ -9,6 +9,7 @@ const upload = require("express-fileupload");
 
 const { body, validationResult, check } = require("express-validator");
 const methodOverride = require("method-override");
+const { unlinkSync } = require("fs");
 
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
@@ -18,7 +19,7 @@ const bcrypt = require("bcrypt");
 const passport = require("passport");
 
 // const formidable = require("formidable");
-const fs = require("fs");
+
 const busboy = require("connect-busboy");
 // const mv = require("mv");
 
@@ -107,15 +108,7 @@ app.get("/user/update/:id", async (req, res) => {
     layout: "layouts/main-layout-user",
     user,
     dataUser,
-  });
-});
-
-app.get("/foto", checkAuthenticated, async (req, res) => {
-  const dataUser = await req.user;
-  res.render("coba", {
-    title: "Halaman Coba",
-    layout: "layouts/main-layout-user",
-    dataUser,
+    msg: req.flash("msg"),
   });
 });
 
@@ -128,8 +121,24 @@ app.post("/foto", (req, res) => {
       if (err) {
         res.send(err);
       } else {
-        req.flash("msg", "Data kamu Berhasil diUbah! ");
-        res.redirect("/user/" + req.body.id);
+        User.updateOne(
+          { id: req.body.id },
+          {
+            $set: {
+              nama: req.body.nama,
+              email: req.body.email,
+              notelp: req.body.notelp,
+              password: req.body.password,
+              passwordChecked: req.body.passwordChecked,
+              fotoprofil: fileName,
+              fotoprofilLama: req.body.fotoprofilLama,
+            },
+          }
+        ).then((result) => {
+          unlinkSync(__dirname + "/public/img/user/" + req.body.fotoprofilLama);
+          req.flash("msg", "Foto Profil kamu Berhasil diUbah! ");
+          res.redirect("/user/update/" + req.body.id);
+        });
       }
     });
   }

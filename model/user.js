@@ -35,6 +35,9 @@ const User = mongoose.model("User", {
   fotoprofil: {
     type: String,
   },
+  fotoprofilLama: {
+    type: String,
+  },
 });
 
 module.exports = User;
