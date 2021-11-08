@@ -110,7 +110,7 @@ app.get("/user/update/:id", async (req, res) => {
   });
 });
 
-app.get("/foto", async (req, res) => {
+app.get("/foto", checkAuthenticated, async (req, res) => {
   const dataUser = await req.user;
   res.render("coba", {
     title: "Halaman Coba",
@@ -120,7 +120,6 @@ app.get("/foto", async (req, res) => {
 });
 
 app.post("/foto", (req, res) => {
-  const namaFile = req.files.file.name;
   if (req.files.file) {
     var file = req.files.file;
     var fileName = file.name;
