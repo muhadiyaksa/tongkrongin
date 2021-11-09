@@ -137,7 +137,6 @@ section.user-update .input-file::before {
   margin-right: 20px;
   outline: none;
   white-space: nowrap;
-  -webkit-user-select: none;
   cursor: pointer;
   font-weight: 500;
 }

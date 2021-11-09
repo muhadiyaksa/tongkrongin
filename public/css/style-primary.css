@@ -123,6 +123,9 @@ section.highlight .slideCarousel .card {
   border: none;
   border-radius: 10px;
 }
+section.highlight .slideCarousel .card p {
+  font-size: 14px;
+}
 section.highlight .slideCarousel .card .card-body,
 section.listCafe .isi-list-cafe .card .card-body {
   z-index: 2;
@@ -138,7 +141,7 @@ section.listCafe .isi-list-cafe .card::after {
   height: 100%;
   position: absolute;
   bottom: 0;
-  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1));
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.2));
 }
 section.highlight button {
   background-color: #ffffff !important;

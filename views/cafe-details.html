@@ -1,37 +1,24 @@
 <section class="deskripsi">
+  <input type="hidden" class="id-cafe" value="<?= caves.idCafe ?>" />
   <div class="container">
     <div class="row">
       <div class="col-md-5">
         <div class="image">
-          <img src="/img/cafedetail1.png" alt="cafe detail1" class="img-fluid" />
+          <img src="/img/<?= caves.gambar[1].namaGambar ?>" alt="cafe detail1" class="img-fluid" />
           <div class="kotak"></div>
         </div>
       </div>
       <div class="col-md-7 pt-5">
-        <h1>Seatap Coffee and Space</h1>
-        <h5>Arundina, Jl. Lap. Tembak No.A10, RT.1/RW.11, Cibubur, Kec. Ciracas, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13720</h5>
+        <h1><?= caves.nama ?></h1>
+        <h5><?= caves.alamat ?></h5>
         <h3 class="mt-4">Fasilitas</h3>
         <div class="fasilitas">
+          <? caves.fasilitas.forEach((el)=>{ ?>
           <div class="kotak">
-            <img src="/icon/foodIcon.png" alt="food Icon" class="img-fluid" />
-            <span class="d-block">Makanan</span>
+            <img src="/icon/<?= el.fasilitasIcon ?>" alt="<?= el.fasilitasJudul ?>" class="img-fluid" />
+            <span class="d-block"><?= el.fasilitasJudul ?></span>
           </div>
-          <div class="kotak">
-            <img src="/icon/waterIcon.png" alt="water Icon" class="img-fluid" />
-            <span class="d-block">Minuman</span>
-          </div>
-          <div class="kotak">
-            <img src="/icon/wifiIcon.png" alt="wifi Icon" class="img-fluid" />
-            <span class="d-block">Wifi</span>
-          </div>
-          <div class="kotak">
-            <img src="/icon/toiletIcon.png" alt="toilet Icon" class="img-fluid" />
-            <span class="d-block">Toilet</span>
-          </div>
-          <div class="kotak">
-            <img src="/icon/parkirIcon.png" alt="parkir Icon" class="img-fluid" />
-            <span class="d-block">Parkir</span>
-          </div>
+          <? }) ?>
         </div>
         <div class="row mt-4">
           <div class="col-auto">
@@ -55,51 +42,31 @@
   <div class="container">
     <h3 class="text-capitalize fw-bold">pilihan kapasitas pesanan anda</h3>
     <p><span class="fw-bold">0</span> Pesanan Dalam Keranjang</p>
-    <a href="#" data-bs-toggle="modal" data-bs-target="#formPesan">
-      <div class="kapasitas">
-        <div class="icon text-center my-auto">
-          <img src="/icon/conversation.png" alt="kapasitas" class="img-fluid" />
-        </div>
-        <div class="kategori">
-          <h4>Kapasitas 1-3 Orang</h4>
-          <span>Fasilitas yang didapat tempat duduk sebanyak 3 bangku, freewifi, dekat dengan tempat foto, lokasi starategis untuk melihat sekeling cafe</span>
-        </div>
-        <h3 class="tersedia">Tersedia</h3>
-        <h3 class="pesan-tempat">Pesan</h3>
 
-        <h3 class="harga">Rp 10.000</h3>
+    <? capacities.kapasitas.forEach((el)=>{ ?>
+    <div class="kapasitas" data-bs-toggle="modal" data-bs-target="#formPesan">
+      <div class="overlay" kategori="<?= el.kapKategori ?>" jumlah="<?= el.jumlah ?>" harga="<?= el.harga ?>"></div>
+      <div class="icon text-center my-auto">
+        <img src="/icon/conversation.png" alt="kapasitas" class="img-fluid" />
       </div>
-    </a>
-    <a href="#" data-bs-toggle="modal" data-bs-target="#formPesan">
-      <div class="kapasitas">
-        <div class="icon text-center my-auto">
-          <img src="/icon/conversation.png" alt="kapasitas" class="img-fluid" />
-        </div>
-        <div class="kategori">
-          <h4>Kapasitas 4-6 Orang</h4>
-          <span>Fasilitas yang didapat tempat duduk sebanyak 3 bangku, freewifi, dekat dengan tempat foto, lokasi starategis untuk melihat sekeling cafe</span>
-        </div>
-        <h3 class="tersedia">Tersedia</h3>
-        <h3 class="pesan-tempat">Pesan</h3>
-
-        <h3 class="harga">Rp 20.000</h3>
+      <div class="kategori">
+        <h4>
+          Kapasitas
+          <?= el.kapKategori ?>
+          Orang
+        </h4>
+        <span><?= el.deskripsi ?></span>
       </div>
-    </a>
-    <a href="#" data-bs-toggle="modal" data-bs-target="#formPesan">
-      <div class="kapasitas">
-        <div class="icon text-center my-auto">
-          <img src="/icon/conversation.png" alt="kapasitas" class="img-fluid" />
-        </div>
-        <div class="kategori">
-          <h4>Kapasitas 7-12 Orang</h4>
-          <span>Fasilitas yang didapat tempat duduk sebanyak 3 bangku, freewifi, dekat dengan tempat foto, lokasi starategis untuk melihat sekeling cafe</span>
-        </div>
-        <h3 class="tersedia">Tersedia</h3>
-        <h3 class="pesan-tempat">Pesan</h3>
-
-        <h3 class="harga">Rp 30.000</h3>
-      </div>
-    </a>
+      <input type="hidden" class="total-kapasitas" value="<?= el.jumlah ?>" />
+      <h3 class="tersedia">Tersedia</h3>
+      <h3 class="pesan-tempat">Pesan</h3>
+      <input type="hidden" class="harga-kapasitas" value="<?= el.harga ?>" />
+      <h3 class="harga">
+        Rp.
+        <?= el.harga ?>
+      </h3>
+    </div>
+    <? }) ?>
   </div>
 </section>
 
@@ -111,29 +78,29 @@
         <h5 class="modal-title fs-4" id="formPesanLabel">Form Pemesanan</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <form action="">
+      <form action="/cafe/details" method="post">
+        <div class="modal-body">
           <div class="mb-3">
             <label for="kapasitas" class="form-label">Kapasitas</label>
             <div class="kotak">1-3 Orang</div>
           </div>
           <div class="mb-3">
             <label for="namapemesan" class="form-label">Nama</label>
-            <input type="text" class="form-control" id="namapemesan" />
+            <input type="text" class="form-control" id="namapemesan" required />
           </div>
           <div class="mb-3">
             <label for="tanggal" class="form-label">Tanggal</label>
-            <input type="date" class="form-control" id="tanggal" />
+            <input type="date" class="form-control" id="tanggal" required />
           </div>
           <div class="mb-3">
             <label for="jam" class="form-label">Jam</label>
-            <input type="time" class="form-control" id="jam" aria-describedby="emailHelp" />
+            <input type="time" class="form-control" id="jam" aria-describedby="emailHelp" required />
           </div>
-        </form>
-      </div>
-      <div class="mx-auto mb-4">
-        <a href="/cafe/details/food"><button type="button" class="btn btn-secondary px-4 fs-4">Simpan</button></a>
-      </div>
+        </div>
+        <div class="mx-auto mb-4 text-center">
+          <button type="submit" class="btn btn-secondary px-4 fs-4">Simpan</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

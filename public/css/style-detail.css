@@ -51,6 +51,15 @@ section.tempatduduk .kapasitas {
   margin-bottom: 20px;
   cursor: pointer;
   transition: 0.4s;
+  position: relative;
+  overflow: hidden;
+}
+section.tempatduduk .kapasitas .overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
 }
 section.tempatduduk .kapasitas .pesan-tempat {
   display: none;

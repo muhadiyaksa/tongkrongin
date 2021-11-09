@@ -25,6 +25,8 @@ const busboy = require("connect-busboy");
 
 require("./utils/db");
 const User = require("./model/user");
+const Cafe = require("./model/cafe");
+const Capacity = require("./model/capacity");
 // const user = async () => {
 //   return await User.find();
 // };
@@ -71,23 +73,28 @@ app.use(passport.session());
 app.use(methodOverride("_method"));
 
 //Menu Home
-app.get("/", checkNotAuthenticatedSecond, (req, res) => {
+app.get("/", checkNotAuthenticatedSecond, async (req, res) => {
+  const caves = await Cafe.find();
   res.render("index", {
     layout: "layouts/main-layout-primary",
     title: "Tongkrongin",
     dataUser: null,
+    caves,
   });
 });
+
 app.get("/home", checkAuthenticated, async (req, res) => {
   const dataUser = await req.user;
+  const caves = await Cafe.find();
   res.render("index", {
     layout: "layouts/main-layout-primary",
     title: "Tongkrongin",
     dataUser,
+    caves,
   });
 });
 
-app.get("/user/:id", async (req, res) => {
+app.get("/user/:id", checkAuthenticated, async (req, res) => {
   const user = await User.findOne({ id: req.params.id });
   const dataUser = await req.user;
   res.render("user-profile", {
@@ -100,7 +107,7 @@ app.get("/user/:id", async (req, res) => {
 });
 
 //Menuju Halaman Edit Profle
-app.get("/user/update/:id", async (req, res) => {
+app.get("/user/update/:id", checkAuthenticated, async (req, res) => {
   const user = await User.findOne({ id: req.params.id });
   const dataUser = await req.user;
   res.render("user-update", {
@@ -178,7 +185,7 @@ app.put("/user/update", [check("notelp", "Nomor Handphone Tidak Valid!").isMobil
 });
 
 //Menuju Halaman Edit Password
-app.get("/user/password/:id", async (req, res) => {
+app.get("/user/password/:id", checkAuthenticated, async (req, res) => {
   const user = await User.findOne({ id: req.params.id });
   const dataUser = await req.user;
   res.render("user-password", {
@@ -242,13 +249,16 @@ app.get("/cafe", async (req, res) => {
 });
 
 //Halaman Cafe Details (SEMENTARA)
-app.get("/cafe/details", async (req, res) => {
-  // const contact = findContact(req.params.nama);
+app.get("/cafe/details/:id", async (req, res) => {
+  const caves = await Cafe.findOne({ idCafe: req.params.id });
+  const capacities = await Capacity.findOne({ idCafe: req.params.id });
   const dataUser = await req.user;
   res.render("cafe-details", {
-    layout: "layouts/main-layout-list",
+    layout: "layouts/main-layout-booking",
     title: "Detail Cafe",
     dataUser,
+    caves,
+    capacities,
   });
 });
 
@@ -257,7 +267,7 @@ app.get("/cafe/details/food", checkAuthenticated, async (req, res) => {
   // const contact = findContact(req.params.nama);
   const dataUser = await req.user;
   res.render("cafe-food", {
-    layout: "layouts/main-layout-list",
+    layout: "layouts/main-layout-booking",
     title: "Detail Food",
     dataUser,
   });
@@ -267,8 +277,18 @@ app.get("/cafe/details/food", checkAuthenticated, async (req, res) => {
 app.get("/cart", async (req, res) => {
   const dataUser = await req.user;
   res.render("keranjang", {
-    layout: "layouts/main-layout-list",
+    layout: "layouts/main-layout-pay",
     title: "Keranjang",
+    dataUser,
+  });
+});
+
+//Halaman Checkout
+app.get("/cart", async (req, res) => {
+  const dataUser = await req.user;
+  res.render("pay", {
+    layout: "layouts/main-layout-pay",
+    title: "Checkout",
     dataUser,
   });
 });
