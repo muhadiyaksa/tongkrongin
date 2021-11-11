@@ -2,6 +2,7 @@ const hargaKapasitas = document.querySelector(".kapasitas h3.harga");
 const valueHargaKapasitas = document.querySelector(".kapasitas input.harga-kapasitas");
 const idCafe = document.querySelector("input.id-cafe");
 const kapKategori = document.querySelector(".modal .kotak");
+const inputKategori = document.querySelector("input.kapkategori");
 
 function tampilHarga(harga) {
   const hasilHarga = formatRupiah(harga, "Rp. ");
@@ -14,7 +15,10 @@ document.addEventListener("click", function (e) {
     const jumlah = e.target.getAttribute("jumlah");
     const kategori = e.target.getAttribute("kategori");
 
+    inputKategori.value = kategori;
     kapKategori.innerHTML = `${kategori} Orang`;
+
+    console.log(inputKategori.value);
   }
 });
 

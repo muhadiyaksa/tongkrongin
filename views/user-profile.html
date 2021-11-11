@@ -1,3 +1,20 @@
+<? if(!user) {?>
+  <section class="wrong">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <img src="/img/wrong.png" alt="Wrong" class="img-fluid" />
+          <a href=""></a>
+        </div>
+        <div class="col-md-6 my-auto">
+          <h1 class="fw-bold text-secondary">Ups!, Data User tersebut Tidak Ada!</h1>
+          <h4 class="text-secondary mb-4">kamu aboleh akses akun user lain yaa!^_^</h4>
+          <a href="/user/<?= dataUser.id ?>" class="fw-bold text-secondary">Kembali Ke Halaman</a>.
+        </div>
+      </div>
+    </div>
+  </section>
+<? } else { ?>
 <section class="user-profile">
   <div class="container">
     <a href="/home" class="text-dark">
@@ -59,7 +76,7 @@
     </div>
   </div>
 </section>
-
+<? } ?>
 
 <!-- ERROR HANDLING -->
 <div class="error-handling-area">

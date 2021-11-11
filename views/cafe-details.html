@@ -1,3 +1,20 @@
+<? if(!caves) {?>
+<section class="wrong">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <img src="/img/wrong.png" alt="Wrong" class="img-fluid" />
+        <a href=""></a>
+      </div>
+      <div class="col-md-6 my-auto">
+        <h1 class="fw-bold text-secondary">Ups!, Data Cafe tidak ada.</h1>
+        <h5 class="text-secondary mb-4">Cari Cafe yang lain yuk!</h5>
+        <a href="/cafe" class="fw-bold text-secondary">Kembali Ke Halaman</a>.
+      </div>
+    </div>
+  </div>
+</section>
+<? } else { ?>
 <section class="deskripsi">
   <input type="hidden" class="id-cafe" value="<?= caves.idCafe ?>" />
   <div class="container">
@@ -69,7 +86,7 @@
     <? }) ?>
   </div>
 </section>
-
+<? } ?>
 <!-- Modal -->
 <div class="modal fade" id="formPesan" tabindex="-1" aria-labelledby="formPesanLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -79,6 +96,11 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form action="/cafe/details" method="post">
+        <input type="hidden" name="idcafe" value="<?= caves.idCafe ?>" />
+        <input type="hidden" name="iduser" value="<?= (dataUser) ? dataUser.id : '' ?>" />
+        <input type="hidden" name="kapkategori" class="kapkategori" value="" />
+        <input type="hidden" name="kapkategorilama" class="kapkategorilama" value="<?= (formCapacities) ? formCapacities.kapKategori : '' ?>" />
+
         <div class="modal-body">
           <div class="mb-3">
             <label for="kapasitas" class="form-label">Kapasitas</label>
@@ -86,15 +108,15 @@
           </div>
           <div class="mb-3">
             <label for="namapemesan" class="form-label">Nama</label>
-            <input type="text" class="form-control" id="namapemesan" required />
+            <input type="text" class="form-control" id="namapemesan" name="namapemesan" required />
           </div>
           <div class="mb-3">
             <label for="tanggal" class="form-label">Tanggal</label>
-            <input type="date" class="form-control" id="tanggal" required />
+            <input type="date" class="form-control" id="tanggal" name="tanggalpesan" required />
           </div>
           <div class="mb-3">
             <label for="jam" class="form-label">Jam</label>
-            <input type="time" class="form-control" id="jam" aria-describedby="emailHelp" required />
+            <input type="time" class="form-control" id="jam" name="jampesan" aria-describedby="emailHelp" required />
           </div>
         </div>
         <div class="mx-auto mb-4 text-center">
