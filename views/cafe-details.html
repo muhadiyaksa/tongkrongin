@@ -60,7 +60,7 @@
     <h3 class="text-capitalize fw-bold">pilihan kapasitas pesanan anda</h3>
     <p><span class="fw-bold">0</span> Pesanan Dalam Keranjang</p>
 
-    <? capacities.kapasitas.forEach((el)=>{ ?>
+    <? capacities.forEach((el)=>{ ?>
     <div class="kapasitas" data-bs-toggle="modal" data-bs-target="#formPesan">
       <div class="overlay" kategori="<?= el.kapKategori ?>" jumlah="<?= el.jumlah ?>" harga="<?= el.harga ?>"></div>
       <div class="icon text-center my-auto">
@@ -96,7 +96,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form action="/cafe/details" method="post">
-        <input type="hidden" name="idcafe" value="<?= caves.idCafe ?>" />
+        <input type="hidden" name="idcafe" value="<?= (caves) ? caves.idCafe : '' ?>" />
         <input type="hidden" name="iduser" value="<?= (dataUser) ? dataUser.id : '' ?>" />
         <input type="hidden" name="kapkategori" class="kapkategori" value="" />
         <input type="hidden" name="kapkategorilama" class="kapkategorilama" value="<?= (formCapacities) ? formCapacities.kapKategori : '' ?>" />

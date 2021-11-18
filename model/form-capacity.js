@@ -23,6 +23,9 @@ const FormCapacity = mongoose.model("FormCapacity", {
   jamPesan: {
     type: String,
   },
+  harga: {
+    type: String,
+  },
 });
 
 module.exports = FormCapacity;

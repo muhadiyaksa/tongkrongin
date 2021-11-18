@@ -29,6 +29,7 @@ const Cafe = require("./model/cafe");
 const Capacity = require("./model/capacity");
 const FormCapacity = require("./model/form-capacity");
 const Food = require("./model/food");
+const FormFood = require("./model/form-food");
 // const user = async () => {
 //   return await User.find();
 // };
@@ -74,7 +75,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride("_method"));
 
-//Menu Home
+//Halaman Landing
 app.get("/", checkNotAuthenticatedSecond, async (req, res) => {
   const caves = await Cafe.find();
   res.render("index", {
@@ -85,6 +86,7 @@ app.get("/", checkNotAuthenticatedSecond, async (req, res) => {
   });
 });
 
+//Halaman Home
 app.get("/home", checkAuthenticated, async (req, res) => {
   const dataUser = await req.user;
   const caves = await Cafe.find();
@@ -96,6 +98,7 @@ app.get("/home", checkAuthenticated, async (req, res) => {
   });
 });
 
+//Halaman User
 app.get("/user/:id", checkAuthenticated, async (req, res) => {
   const user = await User.findOne({ id: req.params.id });
   const dataUser = await req.user;
@@ -111,6 +114,7 @@ app.get("/user/:id", checkAuthenticated, async (req, res) => {
 //Menuju Halaman Edit Profle
 app.get("/user/update/:id", checkAuthenticated, async (req, res) => {
   const user = await User.findOne({ id: req.params.id });
+
   const dataUser = await req.user;
   res.render("user-update", {
     title: "Halaman Update",
@@ -273,7 +277,7 @@ app.post("/cafe", async (req, res) => {
 //Halaman Cafe Details (SEMENTARA)
 app.get("/cafe/details/:id", async (req, res) => {
   const caves = await Cafe.findOne({ idCafe: req.params.id });
-  const capacities = await Capacity.findOne({ idCafe: req.params.id });
+  const capacities = await Capacity.find({ idCafe: req.params.id });
   const dataUser = await req.user;
   var formCapacities;
   if (dataUser) {
@@ -292,6 +296,8 @@ app.get("/cafe/details/:id", async (req, res) => {
 });
 
 app.post("/cafe/details", async (req, res) => {
+  const capacities = await Capacity.findOne({ idCafe: req.body.idcafe, kapKategori: req.body.kapkategori });
+
   const dataMasuk = {
     idCafe: req.body.idcafe,
     idUser: req.body.iduser,
@@ -299,6 +305,7 @@ app.post("/cafe/details", async (req, res) => {
     namaPemesan: req.body.namapemesan.toLowerCase(),
     tanggalPesan: req.body.tanggalpesan,
     jamPesan: req.body.jampesan,
+    harga: capacities.harga,
   };
   // console.log(req.body.kapkategorilama);
   if (req.body.kapkategorilama) {
@@ -315,15 +322,43 @@ app.post("/cafe/details", async (req, res) => {
 });
 
 //Halaman Pesan
-app.get("/cafe/food/:idCafe", checkAuthenticated, async (req, res) => {
+app.get("/cafe/food/:idCafe", async (req, res) => {
   const foods = await Food.find({ idCafe: req.params.idCafe });
   const dataUser = await req.user;
+  var formCapacities;
+  if (dataUser) {
+    formCapacities = await FormCapacity.findOne({ idUser: dataUser.id });
+  } else {
+    formCapacities = null;
+  }
   res.render("cafe-food", {
     layout: "layouts/main-layout-booking",
     title: "Detail Food",
     dataUser,
     foods,
+    formCapacities,
   });
+});
+
+app.post("/cafe/food", (req, res) => {
+  function datamasuk(el) {
+    let dataMasuk;
+    return (dataMasuk = {
+      idCafe: req.body.idcafe[el],
+      idUser: req.body.iduser[el],
+      idMenu: req.body.idmenu[el],
+      quantity: req.body.quantity[el],
+      harga: req.body.harga[el],
+    });
+  }
+
+  for (let i = 0; i < req.body.idcafe.length; i++) {
+    FormFood.insertMany(datamasuk(i), (error, result) => {
+      if (error) throw error;
+      console.log(datamasuk(i));
+    });
+  }
+  res.redirect("/cart");
 });
 
 //Halaman Keranjang
