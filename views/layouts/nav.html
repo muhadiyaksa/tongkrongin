@@ -20,7 +20,11 @@
             <a class="nav-link active me-3" type="button" id="button-addon2" aria-current="page" href="/"><img src="/icon/searchIcon.png" alt="search" /></a>
             <div class="notif">
               <a class="nav-link me-3" href="/cart"><img src="/icon/chartIcon.png" alt="cart" /></a>
+              <? if(formCapacities){ ?>
               <div class="bulat"></div>
+              <? } else { ?>
+              <span></span>
+              <? } ?>
             </div>
             <div class="notif">
               <a class="nav-link me-3" href="/notif"><img src="/icon/notifIcon.png" alt="notif" /></a>

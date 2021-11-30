@@ -78,9 +78,11 @@ app.use(methodOverride("_method"));
 //Halaman Landing
 app.get("/", checkNotAuthenticatedSecond, async (req, res) => {
   const caves = await Cafe.find();
+
   res.render("index", {
     layout: "layouts/main-layout-primary",
     title: "Tongkrongin",
+    formCapacities: null,
     dataUser: null,
     caves,
   });
@@ -90,11 +92,16 @@ app.get("/", checkNotAuthenticatedSecond, async (req, res) => {
 app.get("/home", checkAuthenticated, async (req, res) => {
   const dataUser = await req.user;
   const caves = await Cafe.find();
+
+  if (dataUser) {
+    formCapacities = await FormCapacity.findOne({ idUser: dataUser.id });
+  }
   res.render("index", {
     layout: "layouts/main-layout-primary",
     title: "Tongkrongin",
     dataUser,
     caves,
+    formCapacities,
   });
 });
 
@@ -102,26 +109,33 @@ app.get("/home", checkAuthenticated, async (req, res) => {
 app.get("/user/:id", checkAuthenticated, async (req, res) => {
   const user = await User.findOne({ id: req.params.id });
   const dataUser = await req.user;
+  if (dataUser) {
+    formCapacities = await FormCapacity.findOne({ idUser: dataUser.id });
+  }
   res.render("user-profile", {
     title: "Halaman User",
     layout: "layouts/main-layout-user",
     user,
     dataUser,
     msg: req.flash("msg"),
+    formCapacities,
   });
 });
 
 //Menuju Halaman Edit Profle
 app.get("/user/update/:id", checkAuthenticated, async (req, res) => {
   const user = await User.findOne({ id: req.params.id });
-
   const dataUser = await req.user;
+  if (dataUser) {
+    formCapacities = await FormCapacity.findOne({ idUser: dataUser.id });
+  }
   res.render("user-update", {
     title: "Halaman Update",
     layout: "layouts/main-layout-user",
     user,
     dataUser,
     msg: req.flash("msg"),
+    formCapacities,
   });
 });
 
@@ -194,11 +208,15 @@ app.put("/user/update", [check("notelp", "Nomor Handphone Tidak Valid!").isMobil
 app.get("/user/password/:id", checkAuthenticated, async (req, res) => {
   const user = await User.findOne({ id: req.params.id });
   const dataUser = await req.user;
+  if (dataUser) {
+    formCapacities = await FormCapacity.findOne({ idUser: dataUser.id });
+  }
   res.render("user-password", {
     title: "Halaman Update",
     layout: "layouts/main-layout-user",
     user,
     dataUser,
+    formCapacities,
   });
 });
 
@@ -248,11 +266,15 @@ app.put(
 app.get("/cafe", async (req, res) => {
   const dataUser = await req.user;
   const caves = await Cafe.find();
+  if (dataUser) {
+    formCapacities = await FormCapacity.findOne({ idUser: dataUser.id });
+  }
   res.render("cafe", {
     layout: "layouts/main-layout-list",
     title: "List Cafe",
     dataUser,
     caves,
+    formCapacities,
   });
 });
 
@@ -297,6 +319,7 @@ app.get("/cafe/details/:id", async (req, res) => {
 
 app.post("/cafe/details", async (req, res) => {
   const capacities = await Capacity.findOne({ idCafe: req.body.idcafe, kapKategori: req.body.kapkategori });
+  const formFoods = await FormFood.find({ idCafe: req.body.idcafe, idUser: req.body.iduser });
 
   const dataMasuk = {
     idCafe: req.body.idcafe,
@@ -309,10 +332,18 @@ app.post("/cafe/details", async (req, res) => {
   };
   // console.log(req.body.kapkategorilama);
   if (req.body.kapkategorilama) {
-    FormCapacity.deleteOne({ idUser: req.body.iduser, idCafe: req.body.idcafe, kapKategori: req.body.kapkategorilama }).then((result) => {
-      FormCapacity.insertMany(dataMasuk, (error, result) => {
-        res.redirect("/cafe/food/" + req.body.idcafe);
-      });
+    FormCapacity.deleteOne({ idUser: req.body.iduser }).then((result) => {
+      if (formFoods) {
+        FormFood.deleteMany({ idUser: req.body.iduser }).then((error, result) => {
+          FormCapacity.insertMany(dataMasuk, (error, result) => {
+            res.redirect("/cafe/food/" + req.body.idcafe);
+          });
+        });
+      } else {
+        FormCapacity.insertMany(dataMasuk, (error, result) => {
+          res.redirect("/cafe/food/" + req.body.idcafe);
+        });
+      }
     });
   } else {
     FormCapacity.insertMany(dataMasuk, (error, result) => {
@@ -325,61 +356,171 @@ app.post("/cafe/details", async (req, res) => {
 app.get("/cafe/food/:idCafe", async (req, res) => {
   const foods = await Food.find({ idCafe: req.params.idCafe });
   const dataUser = await req.user;
-  var formCapacities;
+  let formCapacities, formFoods;
+  let formFoodsResult = [];
   if (dataUser) {
     formCapacities = await FormCapacity.findOne({ idUser: dataUser.id });
+    if (formCapacities) {
+      formFoods = await FormFood.find({ idCafe: formCapacities.idCafe, idUser: dataUser.id });
+
+      let idMenuFood = foods.map((el) => el.idMenu);
+      let idMenuForm = formFoods.map((el) => el.idMenu);
+
+      let idMix = [...idMenuFood, ...idMenuForm];
+      formFoodsResult = idMix.sort((a, b) => a - b);
+    }
   } else {
     formCapacities = null;
   }
+
+  let pembanding = [];
+  let noDuplicate = [];
+  for (let i = 0; i < formFoodsResult.length; i++) {
+    pembanding.push(formFoodsResult[i]);
+    if (pembanding[i - 1]) {
+      if (formFoodsResult[i + 1]) {
+        if (formFoodsResult[i] !== pembanding[i - 1] && formFoodsResult[i] !== formFoodsResult[i + 1]) {
+          noDuplicate.push(formFoodsResult[i]);
+        }
+      } else {
+        if (formFoodsResult[i] !== pembanding[i - 1]) {
+          noDuplicate.push(formFoodsResult[i]);
+        }
+      }
+    }
+  }
+
+  let hslFormFoods = noDuplicate.map((el) => foods.find((food) => food.idMenu == el));
   res.render("cafe-food", {
     layout: "layouts/main-layout-booking",
     title: "Detail Food",
     dataUser,
     foods,
     formCapacities,
+    formFoods,
+    hslFormFoods,
   });
 });
 
 app.post("/cafe/food", (req, res) => {
   function datamasuk(el) {
-    let dataMasuk;
-    return (dataMasuk = {
+    return {
       idCafe: req.body.idcafe[el],
       idUser: req.body.iduser[el],
       idMenu: req.body.idmenu[el],
       quantity: req.body.quantity[el],
       harga: req.body.harga[el],
-    });
+    };
   }
 
-  for (let i = 0; i < req.body.idcafe.length; i++) {
-    FormFood.insertMany(datamasuk(i), (error, result) => {
-      if (error) throw error;
-      console.log(datamasuk(i));
+  const dataMasuk = {
+    idCafe: req.body.idcafe,
+    idUser: req.body.iduser,
+    idMenu: req.body.idmenu,
+    quantity: req.body.quantity,
+    harga: req.body.harga,
+  };
+
+  let reqUser;
+  let lenMore = [];
+  let dataReq = [];
+  try {
+    reqUser = [req.body.idmenu];
+
+    reqUser.forEach((el) => {
+      let len = [];
+      el.forEach((item) => {
+        len.push(item);
+      });
+      lenMore = [...len];
     });
+
+    for (let i = 0; i < lenMore.length; i++) {
+      let hsl = datamasuk(i);
+      dataReq.push(hsl);
+    }
+  } catch {
+    reqUser = [req.body.idMenu];
   }
-  res.redirect("/cart");
+
+  //Berhasil
+  if (lenMore.length > 1 && reqUser.length === 1) {
+    try {
+      FormFood.insertMany(dataReq);
+      res.redirect("/cart");
+    } catch (e) {
+      console.error(e);
+    }
+  } else if (lenMore.length === 0 && reqUser.length === 1) {
+    FormFood.insertMany(dataMasuk, (error, result) => {
+      res.redirect("/cart");
+    });
+  } else {
+    res.redirect("/cart");
+  }
+
+  // //Gagal
+  // if (lenMore.length > 1) {
+  //   try {
+  //     FormFood.insertMany(dataReq);
+  //     res.redirect("/cart");
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // }
+  // if (reqUser.length == 1) {
+  //   FormFood.insertMany(dataMasuk, (error, result) => {
+  //     res.redirect("/cart");
+  //   });
+  // }
 });
 
 //Halaman Keranjang
 app.get("/cart", async (req, res) => {
   const dataUser = await req.user;
+  let formCapacities, formFoods, capacities, foods, caves;
+  //PR cara buat nemuin IDcafe nya
+  if (dataUser) {
+    formCapacities = await FormCapacity.findOne({ idUser: dataUser.id });
+    if (formCapacities) {
+      formFoods = await FormFood.find({ idCafe: formCapacities.idCafe, idUser: dataUser.id });
+      foods = await Food.find({ idCafe: formCapacities.idCafe });
+      caves = await Cafe.findOne({ idCafe: formCapacities.idCafe });
+      capacities = await Capacity.findOne({ idCafe: formCapacities.idCafe, idUser: req.user.id, kapKategori: formCapacities.kapKategori });
+    }
+  } else {
+    formCapacities = null;
+  }
+
   res.render("keranjang", {
     layout: "layouts/main-layout-pay",
     title: "Keranjang",
+    formFoods,
+    formCapacities,
     dataUser,
+    capacities,
+    foods,
+    caves,
+  });
+});
+
+app.delete("/cart", (req, res) => {
+  FormCapacity.deleteOne({ idUser: req.body.iduser }).then((result) => {
+    FormFood.deleteMany({ idUser: req.body.iduser }).then((error, result) => {
+      res.redirect("/cart");
+    });
   });
 });
 
 //Halaman Checkout
-app.get("/cart", async (req, res) => {
-  const dataUser = await req.user;
-  res.render("pay", {
-    layout: "layouts/main-layout-pay",
-    title: "Checkout",
-    dataUser,
-  });
-});
+// app.get("/cart", async (req, res) => {
+//   const dataUser = await req.user;
+//   res.render("pay", {
+//     layout: "layouts/main-layout-pay",
+//     title: "Checkout",
+//     dataUser,
+//   });
+// });
 
 app.get("/login", checkNotAuthenticated, (req, res) => {
   res.render("login", {

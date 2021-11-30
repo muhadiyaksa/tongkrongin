@@ -5,17 +5,25 @@
         <h2>Detail Pesanan</h2>
       </div>
       <div class="col text-end">
-        <a href="" class="btn btn-dark text-light">Tambah Pesanan</a>
+        <? if(capacities) { ?>
+        <a href="/cafe/food/<?= capacities.idCafe ?>" class="btn btn-dark text-light">Tambah </a>
+        <? } else {?>
+        <a href="/cafe" class="btn btn-dark text-light">Tambah Pesanan</a>
+        <? } ?>
       </div>
     </div>
     <div class="row mt-4 judul">
-      <div class="col-md-1"></div>
-      <div class="col-md-6">Pesanan</div>
-      <div class="col-md-2">Jumlah</div>
-      <div class="col-md-2">Harga</div>
-      <div class="col-md-1"></div>
+      <div class="col-1"></div>
+      <div class="col-6">Pesanan</div>
+      <div class="col-2">Jumlah</div>
+      <div class="col-2">Harga</div>
+      <div class="col-1"></div>
     </div>
+    <input type="hidden" value="<?= (capacities) ? capacities.kapKategori : "kosong" ?>" class="isi-keranjang" />
+    <? if(!capacities) { ?>
+    <div class="kolomgrid mt-4 tempat"></div>
 
+    <? } else {?>
     <div class="kolomgrid mt-4 tempat">
       <div class="checkbox">
         <input type="checkbox" class="form-check-input" />
@@ -23,22 +31,42 @@
       <div class="pesanan">
         <div class="row">
           <div class="col-3 text-center my-auto">
-            <img src="/icon/conversation.png" alt="kapasitas" />
+            <img src="/icon/conversation.png" alt="kapasitas" class="img-fluid" />
           </div>
           <div class="col-9">
-            <h4>Kapasitas 1-3 Orang</h4>
-            <span>Fasilitas yang didapat tempat duduk sebanyak Max. 3 bangku</span>
+            <h4>
+              Kapasitas
+              <?= capacities.kapKategori ?>
+              Orang
+            </h4>
+            <p>
+              Loc.
+              <?= (caves) ? caves.nama : '' ?>
+            </p>
           </div>
         </div>
       </div>
       <div class="jumlah"><h3>Qty : 1</h3></div>
-      <div class="harga"><h4>Rp 30.000</h4></div>
-      <div class="hapus"><img src="/icon/trash.png" alt="" /></div>
+      <div class="harga">
+        <h4>
+          Rp.
+          <?= capacities.harga ?>
+        </h4>
+      </div>
+      <div class="hapus"><img src="/icon/trash.png" alt="" data-bs-toggle="modal" data-bs-target="#confirmDelete" /></div>
     </div>
+    <? } ?>
 
+    <? if(!formFoods) { ?>
+    <div class="kolomgrid mt-4 tempat">
+      <!-- <p>Ups Kamu Belum Memesan Apapun</p> -->
+    </div>
+    <? } else {?>
     <div class="makanan">
       <h3 class="detailjudul">Detail Pesanan Makanan</h3>
-      <? for( let i = 0; i < 4; i++ ) { ?>
+      <? formFoods.forEach((el,i)=>{ ?>
+      <? foods.forEach(food=>{ ?>
+      <? if(el.idMenu == food.idMenu ){ ?>
       <div class="kolomgrid food">
         <div class="checkbox">
           <input type="checkbox" class="form-check-input" />
@@ -46,32 +74,61 @@
         <div class="pesanan">
           <div class="row">
             <div class="col-3 text-center my-auto">
-              <img src="/img/food2.png" alt="food" class="img-fluid" />
+              <img src="/img/<?= food.gambar ?>" alt="food" class="img-fluid" />
             </div>
             <div class="col-9">
-              <h4>Burger dan Kentang</h4>
-              <span>Burger Ayam dengan Kentang Goreng Ukuran Medium</span>
+              <h4>
+                <?= food.namaMenu ?>
+              </h4>
+              <p>
+                <?=  food.deskripsi ?>
+              </p>
             </div>
           </div>
         </div>
         <div class="harga">
-          <input type="hidden" value="30000" class="value-harga" />
+          <input type="hidden" value="<?= el.harga ?>" class="value-harga" />
           <input type="hidden" value="" class="value-harga-tambah" />
-          <h4>Rp 30.000</h4>
+          <h4>
+            Rp
+            <?= el.harga ?>
+          </h4>
         </div>
         <div class="quantity-cart">
-          <input type="hidden" value="1" class="quantity-value" />
-          <h2><i class="bi bi-dash-circle kurang-cart" number="<?= i?>"></i> <span> 1 </span> <i class="bi bi-plus-circle text-success tambah-cart" number="<?= i?>"></i></h2>
+          <input type="hidden" value="<?= el.quantity ?>" class="quantity-value" />
+          <h3>
+            <i class="bi bi-dash-square kurang-cart" number="<?= i?>"></i> <span class="px-2"> <?= el.quantity ?></span> <i class="bi bi-plus-square text-success tambah-cart" number="<?= i?>"></i>
+          </h3>
         </div>
-        <div class="hapus"><img src="/icon/trash.png" alt="" /></div>
+        <div class="hapus"><img src="/icon/trash.png" alt="" class="img-fluid" /></div>
       </div>
       <? } ?>
+      <? }) ?>
+      <? }) ?>
     </div>
-
+    <? } ?>
     <div class="garis border-1 border-bottom"></div>
     <div class="total text-end mt-4">
-      <h3>Total Pesanan <span>Rp 350.000</span></h3>
-      <a href="" class="btn btn-dark text-light px-3 fs-4 mt-3">Bayar Sekarang</a>
+      <h3>Total : <span>Rp 350.000</span></h3>
+      <input href="" class="btn btn-dark text-light px-3 mt-3" type="submit" value="Bayar Sekarang" />
     </div>
   </div>
 </section>
+
+<!-- Modal -->
+<div class="modal fade" id="confirmDelete" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body text-center my-0">
+        <h1><i class="bi bi-exclamation-circle"></i></h1>
+        <h4>Apakah Kamu Yakin?</h4>
+        <p class="mb-5">Apabila Kapasitas Tempat ini dihapus , maka semua Menu makanan yang sudah dipilih akan juga terhapus</p>
+        <form action="/cart?_method=DELETE" method="post" class="d-inline">
+          <input type="hidden" name="iduser" value="<?=  dataUser.id ?>" />
+          <input type="submit" class="btn btn-danger" value="Hapus" />
+        </form>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

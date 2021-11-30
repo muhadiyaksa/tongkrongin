@@ -1,90 +1,187 @@
+body {
+  color: #474747;
+}
 section.keranjang {
   margin: 50px 0px;
 }
+
 section.keranjang .judul {
+  display: none;
   border-top: 1px solid #cccccc;
   border-bottom: 1px solid #cccccc;
   padding: 10px 0px;
 }
 
-.kolomgrid {
+section.keranjang .makanan {
+  padding-top: 20px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+section.keranjang .tempat {
+  margin-top: 30px;
+  background-color: #f8f8f8d2;
+  border-radius: 8px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+section.keranjang .kolomgrid {
   display: grid;
-  grid-template-columns: 0.5fr 4fr 1.2fr 1.2fr 0.5fr;
-  grid-template-areas: "satu dua tiga empat lima ";
+  grid-template-columns: 0.5fr 2fr 2fr 0.5fr;
+  grid-template-rows: 1fr 0.5fr;
+  grid-template-areas:
+    "satu dua dua dua"
+    "empat empat tiga lima";
   justify-content: space-between;
   align-items: center;
-  margin: 30px 0px;
+  margin: 10px 0px;
+  row-gap: 10px;
+  align-items: center;
 }
-.checkbox {
+
+section.keranjang .checkbox {
   grid-area: satu;
 }
-.pesanan {
+section.keranjang .pesanan {
+  color: #474747;
   grid-area: dua;
 }
 
-.jumlah {
+section.keranjang .jumlah {
   grid-area: tiga;
+  margin-left: auto;
+  padding-right: 20px;
 }
-.harga {
+section.keranjang .harga {
+  padding-left: 5px;
   grid-area: empat;
 }
-.hapus {
+section.keranjang .hapus {
+  padding-right: 5px;
   grid-area: lima;
   text-align: end;
+  margin-top: -5px;
+}
+section.keranjang .hapus img {
+  cursor: pointer;
 }
 section.keranjang .makanan .detailjudul {
+  display: block;
+}
+section.keranjang .makanan .food {
+  border-top: 1px solid #cccccc;
+  padding-top: 20px;
+}
+section.keranjang .kolomgrid .quantity-cart {
+  display: inline-block;
+  grid-area: tiga;
+  justify-self: end;
+  padding-right: 20px;
+}
+
+section.keranjang .pesanan h4 {
+  font-weight: 600;
+}
+section.keranjang .pesanan span {
+  font-size: 13px;
+}
+
+section.keranjang .hapus img {
+  max-height: 25px;
+  margin-top: -10px;
+}
+
+section.keranjang .total {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background-color: #f5f5f5;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "total bayar";
+  align-items: center;
+  border-radius: 20px 20px 0px 0px;
+  padding: 0px 20px;
+  box-shadow: 2px 0px 15px rgba(163, 163, 163, 0.2);
+}
+section.keranjang .total h3 {
+  font-weight: 600;
+  font-size: 20px;
+  grid-area: total;
+  text-align: start;
+}
+section.keranjang .total input {
+  grid-area: bayar;
+  width: 80%;
+  margin-bottom: 20px;
+  margin-left: auto;
+}
+section.footer {
   display: none;
 }
 
-@media (max-width: 575.98px) {
+@media (min-width: 768px) {
   section.keranjang .judul {
-    display: none;
-  }
-  section.keranjang .makanan {
-    padding-top: 20px;
-    margin-top: 30px;
-  }
-  section.keranjang .makanan .detailjudul {
-    display: block;
-  }
-  section.keranjang .tempat {
-    margin-top: 30px;
-    background-color: #f8f8f8d2;
-    border-radius: 8px;
-    padding-top: 20px;
-    padding-left: 5px;
-    padding-right: 5px;
-  }
-  .kolomgrid {
-    grid-template-columns: 0.5fr 2fr 2fr 0.5fr;
-    grid-template-rows: 1fr 0.5fr;
-    grid-template-areas:
-      "satu dua dua dua"
-      "empat empat tiga lima";
-    justify-content: space-between;
-    align-items: center;
-    margin: 10px 0px;
-    row-gap: 10px;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  section.keranjang .makanan .food {
-    border-top: 1px solid #cccccc;
-    padding-top: 20px;
-  }
-  .kolomgrid .quantity {
-    display: inline-block;
-    grid-area: tiga;
-  }
-  .pesanan img {
-    margin-right: 10px;
-  }
-  .pesanan h4 {
-    font-weight: 600;
+    display: flex;
+    flex-direction: row;
+    font-size: 18px;
   }
 
-  .hapus img {
-    max-height: 25px;
-    margin-top: -10px;
+  section.keranjang .makanan .detailjudul {
+    display: none;
+  }
+  section.keranjang .pesanan p:nth-child(2) {
+    font-size: 18px;
+    padding-right: 100px;
+  }
+
+  section.keranjang .kolomgrid {
+    grid-template-columns: 0.5fr 4fr 1.2fr 1.2fr 0.5fr;
+    grid-template-areas: "satu dua tiga empat lima ";
+    grid-template-rows: 1fr;
+    justify-content: space-between;
+    align-items: center;
+    margin: 30px 0px;
+  }
+  section.keranjang .kolomgrid .quantity-cart {
+    justify-self: start;
+  }
+  section.keranjang .total {
+    position: relative;
+    background-color: white;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+      "null total"
+      "null bayar";
+    box-shadow: none;
+    margin-bottom: 100px;
+  }
+  section.keranjang .total h3 {
+    font-weight: 600;
+    font-size: 28px;
+    text-align: end;
+  }
+  section.keranjang .total input {
+    width: 50%;
+  }
+  section.keranjang .jumlah {
+    margin-left: 0px;
+  }
+  section.footer {
+    display: block;
   }
 }
+/* 
+@media (max-width: 575.98px) {
+ 
+  
+ 
+  
+  
+  
+  
+} */

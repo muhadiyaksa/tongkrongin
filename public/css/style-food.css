@@ -11,18 +11,34 @@ section.makanan .menu {
 }
 section.makanan .menu {
   background-color: rgba(112, 112, 112, 0.05);
+  transition: 0.3s;
+}
+.foodactive {
+  border-left: 6px solid #94ff8a !important;
+  box-sizing: border-box !important;
 }
 section.makanan .kapasitas {
   background-color: #e7ffe1;
 }
 section.makanan .menu {
   display: grid;
+  position: relative;
   grid-template-columns: 1.2fr 1.5fr 0.8fr;
   grid-template-rows: 1fr 0.5fr 0.5fr;
   grid-template-areas:
     "image makanan  tersedia"
     "image makanan  tersedia"
     "image harga  pesan";
+}
+section.makanan .menu .overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  right: 0;
+  background-color: rgba(104, 104, 104, 0.2);
+  z-index: 1;
 }
 
 section.makanan .menu .image {
@@ -49,7 +65,8 @@ section.makanan .menu .pesan {
   border: none;
   font-size: 18px;
   padding: 5px 0px;
-
+  animation-name: muncul;
+  animation-duration: 0.3s;
   align-self: flex-start;
   margin: 0px 5px;
 }
@@ -73,6 +90,31 @@ section.makanan .menu .quantity {
   display: none;
   text-align: end;
 }
+
+@keyframes muncul {
+  0% {
+    opacity: 0;
+    width: 20%;
+  }
+  100% {
+    opacity: 1;
+    width: 100%;
+  }
+}
+
+@keyframes geser {
+  to {
+    opacity: 1;
+    width: 100%;
+  }
+}
+
+.geser {
+  opacity: 0.2;
+  width: 10%;
+  animation: geser 0.5s forwards;
+}
+
 @media (max-width: 768px) {
   section.makanan .pesanan {
     display: none;
@@ -82,10 +124,6 @@ section.makanan .menu .quantity {
 @media (max-width: 575.98px) {
   section.makanan {
     margin: 20px 0px;
-  }
-
-  section.makanan .menu {
-    border-left: 3px solid #2fe41e;
   }
 
   section.makanan .menu {
