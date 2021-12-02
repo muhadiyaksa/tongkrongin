@@ -1,3 +1,20 @@
+<? if(foods.length === 0) {?>
+<section class="wrong">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <img src="/img/wrong.png" alt="Wrong" class="img-fluid" />
+        <a href=""></a>
+      </div>
+      <div class="col-md-6 my-auto">
+        <h1 class="fw-bold text-secondary">Ups!, Data Id Cafe tidak ada.</h1>
+        <h5 class="text-secondary mb-4">Kembali Ke Keranjang ajah</h5>
+        <a href="/cart" class="fw-bold text-secondary">Kembali Ke Halaman</a>.
+      </div>
+    </div>
+  </div>
+</section>
+<? } else { ?>
 <section class="makanan">
   <div class="container">
     <div class="row">
@@ -49,6 +66,7 @@
         <? } ?>
 
         <? }else{ ?>
+
         <? foods.forEach((food, i)=>{ ?>
         <div class="menu">
           <div class="image">
@@ -71,6 +89,7 @@
           </div>
         </div>
         <? }) ?>
+
         <? } ?>
       </div>
 
@@ -140,7 +159,7 @@
     </div>
   </div>
 </section>
-
+<? } ?>
 <!-- 
 <a href="#">
   <div class="kapasitas">

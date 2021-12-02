@@ -356,22 +356,21 @@ app.post("/cafe/details", async (req, res) => {
 app.get("/cafe/food/:idCafe", async (req, res) => {
   const foods = await Food.find({ idCafe: req.params.idCafe });
   const dataUser = await req.user;
-  let formCapacities, formFoods;
-  let formFoodsResult = [];
+  let formCapacities, formFoods, idMenuFood, idMenuForm;
   if (dataUser) {
     formCapacities = await FormCapacity.findOne({ idUser: dataUser.id });
     if (formCapacities) {
       formFoods = await FormFood.find({ idCafe: formCapacities.idCafe, idUser: dataUser.id });
 
-      let idMenuFood = foods.map((el) => el.idMenu);
-      let idMenuForm = formFoods.map((el) => el.idMenu);
-
-      let idMix = [...idMenuFood, ...idMenuForm];
-      formFoodsResult = idMix.sort((a, b) => a - b);
+      idMenuFood = foods.map((el) => el.idMenu);
+      idMenuForm = formFoods.map((el) => el.idMenu);
     }
   } else {
     formCapacities = null;
   }
+  let idMix = [...idMenuFood, ...idMenuForm];
+
+  let formFoodsResult = idMix.sort((a, b) => a - b);
 
   let pembanding = [];
   let noDuplicate = [];
@@ -387,10 +386,13 @@ app.get("/cafe/food/:idCafe", async (req, res) => {
           noDuplicate.push(formFoodsResult[i]);
         }
       }
+    } else {
+      noDuplicate.push(formFoodsResult[i]);
     }
   }
 
   let hslFormFoods = noDuplicate.map((el) => foods.find((food) => food.idMenu == el));
+
   res.render("cafe-food", {
     layout: "layouts/main-layout-booking",
     title: "Detail Food",
@@ -458,21 +460,6 @@ app.post("/cafe/food", (req, res) => {
   } else {
     res.redirect("/cart");
   }
-
-  // //Gagal
-  // if (lenMore.length > 1) {
-  //   try {
-  //     FormFood.insertMany(dataReq);
-  //     res.redirect("/cart");
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // }
-  // if (reqUser.length == 1) {
-  //   FormFood.insertMany(dataMasuk, (error, result) => {
-  //     res.redirect("/cart");
-  //   });
-  // }
 });
 
 //Halaman Keranjang
@@ -509,6 +496,12 @@ app.delete("/cart", (req, res) => {
     FormFood.deleteMany({ idUser: req.body.iduser }).then((error, result) => {
       res.redirect("/cart");
     });
+  });
+});
+
+app.delete("/cart/food", (req, res) => {
+  FormFood.deleteOne({ idUser: req.body.iduser, idMenu: req.body.idmenu, idCafe: req.body.idcafe }).then((error, result) => {
+    res.redirect("/cart");
   });
 });
 

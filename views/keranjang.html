@@ -6,9 +6,9 @@
       </div>
       <div class="col text-end">
         <? if(capacities) { ?>
-        <a href="/cafe/food/<?= capacities.idCafe ?>" class="btn btn-dark text-light">Tambah </a>
+        <a href="/cafe/food/<?= capacities.idCafe ?>" class="btn btn-dark text-light px-4">Tambah Pesanan</a>
         <? } else {?>
-        <a href="/cafe" class="btn btn-dark text-light">Tambah Pesanan</a>
+        <a href="/cafe" class="btn btn-dark text-light px-4">Tambah Pesanan</a>
         <? } ?>
       </div>
     </div>
@@ -100,7 +100,14 @@
             <i class="bi bi-dash-square kurang-cart" number="<?= i?>"></i> <span class="px-2"> <?= el.quantity ?></span> <i class="bi bi-plus-square text-success tambah-cart" number="<?= i?>"></i>
           </h3>
         </div>
-        <div class="hapus"><img src="/icon/trash.png" alt="" class="img-fluid" /></div>
+        <div class="hapus">
+          <form action="/cart/food?_method=DELETE" method="post" class="d-inline">
+            <input type="hidden" name="iduser" value="<?=  dataUser.id ?>" />
+            <input type="hidden" name="idmenu" value="<?=  food.idMenu ?>" />
+            <input type="hidden" name="idcafe" value="<?=  food.idCafe ?>" />
+            <button type="submit" class="btn p-0"><img src="/icon/trash.png" alt="Hapus" class="img-fluid" /></button>
+          </form>
+        </div>
       </div>
       <? } ?>
       <? }) ?>

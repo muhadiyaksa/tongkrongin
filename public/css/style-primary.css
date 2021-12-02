@@ -81,6 +81,10 @@ section.hero .content {
 }
 section.hero .content p {
   margin-bottom: 40px;
+  font-size: 18px;
+}
+section.hero .content h1 {
+  font-weight: 700;
 }
 .hero::after {
   z-index: 1;
@@ -90,7 +94,7 @@ section.hero .content p {
   height: 100%;
   position: absolute;
   bottom: 0;
-  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.288));
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4));
 }
 
 /* HIGHLIGHT */
@@ -309,6 +313,9 @@ section.nav-res {
     padding: 5px 15px;
     font-size: 16px;
   }
+  section.hero .content p {
+    display: none;
+  }
   .nav-link {
     margin: 0 -4px;
   }
@@ -322,12 +329,17 @@ section.nav-res {
   section.hero .content h1 {
     font-size: 24px;
     font-weight: 600;
+    margin-bottom: 30px;
   }
+
   section.hero .content p {
     font-size: 14px;
     margin-bottom: 15px;
   }
   section.highlight .carousel {
+    display: none;
+  }
+  section.highlight p.subjudul {
     display: none;
   }
   section.highlight .highlight-res {
@@ -450,6 +462,7 @@ section.nav-res {
     font-size: 14px;
     padding: 10px 15px;
   }
+
   /* HIGHLIGHT */
   section.highlight h3.judul {
     margin-bottom: 10px;
