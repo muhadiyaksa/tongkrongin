@@ -10,44 +10,50 @@ const wadahHarga = document.querySelectorAll(".makanan .harga h4");
 const valueHargaCart = document.querySelectorAll("input.value-harga");
 const valueHargaTambahCart = document.querySelectorAll("input.value-harga-tambah");
 
-document.addEventListener("click", function (e) {
-  if (e.target.classList.contains("tambah-cart")) {
-    e.preventDefault();
-    const targetNumber = e.target.getAttribute("number");
-    tombolKurangCart[targetNumber].classList.add("kurang-cart");
+const checkForPrice = document.querySelectorAll("input.check-for-price");
+const checkForCapacity = document.querySelector("input.check-capacity");
 
-    const hasilTambah = Number(quantityCartValue[targetNumber].value) + 1;
-    quantityCartValue[targetNumber].value = hasilTambah;
-
-    const totalHarga = Number(hasilTambah) * Number(valueHargaCart[targetNumber].value);
-    valueHargaTambahCart[targetNumber].value = totalHarga;
-
-    const rupiah = formatRupiah(totalHarga.toString(), "Rp ");
-    wadahHarga[targetNumber].innerHTML = `${rupiah}`;
-    wadahQuantityCart[targetNumber].innerHTML = `${quantityCartValue[targetNumber].value}`;
-  }
-
-  if (e.target.classList.contains("kurang-cart")) {
-    e.preventDefault();
-    const targetNumber = e.target.getAttribute("number");
-    const hasilKurang = Number(quantityCartValue[targetNumber].value) - 1;
-
-    const totalHargaKurang = Number(valueHargaCart[targetNumber].value) * hasilKurang;
-    valueHargaTambahCart[targetNumber].value = totalHargaKurang;
-
-    const rupiah = formatRupiah(totalHargaKurang.toString(), "Rp. ");
-
-    if (hasilKurang === 1) {
-      e.target.classList.remove("kurang-cart");
-      quantityCartValue[targetNumber].value = 1;
-      wadahHarga[targetNumber].innerHTML = `${rupiah}`;
-      wadahQuantityCart[targetNumber].innerHTML = `${quantityCartValue[targetNumber].value}`;
-    } else {
-      quantity[targetNumber].value = hasilKurang;
-      wadahHarga[targetNumber].innerHTML = `${rupiah}`;
-      wadahQuantityCart[targetNumber].innerHTML = `${quantityCartValue[targetNumber].value}`;
+console.log(checkForCapacity);
+checkForPrice.forEach((el) => {
+  el.addEventListener("change", function (e) {
+    e.preventDefault;
+    if (!checkForCapacity.checked) {
+      checkForCapacity.click();
     }
-  }
+  });
+});
+
+document.addEventListener("click", function (e) {
+  // if (e.target.classList.contains("tambah-cart")) {
+  //   e.preventDefault();
+  //   const targetNumber = e.target.getAttribute("number");
+  //   tombolKurangCart[targetNumber].classList.add("kurang-cart");
+  //   const hasilTambah = Number(quantityCartValue[targetNumber].value) + 1;
+  //   quantityCartValue[targetNumber].value = hasilTambah;
+  //   const totalHarga = Number(hasilTambah) * Number(valueHargaCart[targetNumber].value);
+  //   valueHargaTambahCart[targetNumber].value = totalHarga;
+  //   const rupiah = formatRupiah(totalHarga.toString(), "Rp ");
+  //   wadahHarga[targetNumber].innerHTML = `${rupiah}`;
+  //   wadahQuantityCart[targetNumber].innerHTML = `${quantityCartValue[targetNumber].value}`;
+  // }
+  // if (e.target.classList.contains("kurang-cart")) {
+  //   e.preventDefault();
+  //   const targetNumber = e.target.getAttribute("number");
+  //   const hasilKurang = Number(quantityCartValue[targetNumber].value) - 1;
+  //   const totalHargaKurang = Number(valueHargaCart[targetNumber].value) * hasilKurang;
+  //   valueHargaTambahCart[targetNumber].value = totalHargaKurang;
+  //   const rupiah = formatRupiah(totalHargaKurang.toString(), "Rp. ");
+  //   if (hasilKurang === 1) {
+  //     e.target.classList.remove("kurang-cart");
+  //     quantityCartValue[targetNumber].value = 1;
+  //     wadahHarga[targetNumber].innerHTML = `${rupiah}`;
+  //     wadahQuantityCart[targetNumber].innerHTML = `${quantityCartValue[targetNumber].value}`;
+  //   } else {
+  //     quantity[targetNumber].value = hasilKurang;
+  //     wadahHarga[targetNumber].innerHTML = `${rupiah}`;
+  //     wadahQuantityCart[targetNumber].innerHTML = `${quantityCartValue[targetNumber].value}`;
+  //   }
+  // }
 });
 
 /* Fungsi formatRupiah */

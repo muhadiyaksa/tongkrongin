@@ -7,6 +7,8 @@ const quantity = document.querySelectorAll("section.makanan .menu .quantity-valu
 const wadahQuantity = document.querySelectorAll("section.makanan .menu .quantity h2 span");
 const wadahCart = document.querySelector(".wadahCart");
 
+const buttonCart = document.querySelector(".pesanan input.addtocart");
+
 //Data Food (Dalam Array)
 const foodImg = document.querySelectorAll(".menu .image img");
 const foodName = document.querySelectorAll(".menu .makanan h4");
@@ -17,6 +19,9 @@ let cartsArray = [];
 let foodObject;
 
 document.addEventListener("click", function (e) {
+  if (e.target.classList.contains("addtocartres")) {
+    buttonCart.click();
+  }
   if (e.target.classList.contains("pesan")) {
     e.preventDefault();
     e.target.style.display = "none";
@@ -196,7 +201,7 @@ function cart(idcafe, iduser, idmenu, img, name, price, qty, target, totalPrice,
                 <img src="${img}" alt="food 2" class="img-fluid" />
               </div>
               <div class="col-auto ">
-                <h4>${name}</h4>
+                <h4><span>${name}</span></h4>
                 <span class="harga" >Rp. ${price}</span>
               </div>
               <div class="col my-auto text-end qty">

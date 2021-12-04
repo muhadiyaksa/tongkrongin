@@ -371,7 +371,7 @@ app.get("/cafe/food/:idCafe", async (req, res) => {
   let idMix = [...idMenuFood, ...idMenuForm];
 
   let formFoodsResult = idMix.sort((a, b) => a - b);
-
+  console.log(formFoodsResult);
   let pembanding = [];
   let noDuplicate = [];
   for (let i = 0; i < formFoodsResult.length; i++) {
@@ -387,7 +387,9 @@ app.get("/cafe/food/:idCafe", async (req, res) => {
         }
       }
     } else {
-      noDuplicate.push(formFoodsResult[i]);
+      if (pembanding[i] !== formFoodsResult[i + 1]) {
+        noDuplicate.push(formFoodsResult[i]);
+      }
     }
   }
 
@@ -505,6 +507,29 @@ app.delete("/cart/food", (req, res) => {
   });
 });
 
+app.put("/cart/qtymin", async (req, res) => {
+  let formFoods = await FormFood.findOne({ idCafe: req.body.idcafe, idUser: req.body.iduser, idMenu: req.body.idmenu });
+  let foods = await Food.findOne({ idCafe: req.body.idcafe, idMenu: req.body.idmenu });
+
+  let qtyUpdate = Number(formFoods.quantity) - 1;
+  let priceUpdate = Number(formFoods.harga) - Number(foods.harga);
+
+  FormFood.updateOne(
+    {
+      idUser: req.body.iduser,
+      idCafe: req.body.idcafe,
+      idMenu: req.body.idmenu,
+    },
+    {
+      $set: {
+        quantity: qtyUpdate.toString(),
+        harga: priceUpdate.toString(),
+      },
+    }
+  ).then((result) => {
+    res.redirect("/cart");
+  });
+});
 //Halaman Checkout
 // app.get("/cart", async (req, res) => {
 //   const dataUser = await req.user;

@@ -26,7 +26,7 @@
     <? } else {?>
     <div class="kolomgrid mt-4 tempat">
       <div class="checkbox">
-        <input type="checkbox" class="form-check-input" />
+        <input type="checkbox" class="form-check-input check-capacity" />
       </div>
       <div class="pesanan">
         <div class="row">
@@ -69,7 +69,7 @@
       <? if(el.idMenu == food.idMenu ){ ?>
       <div class="kolomgrid food">
         <div class="checkbox">
-          <input type="checkbox" class="form-check-input" />
+          <input type="checkbox" class="form-check-input check-for-price" />
         </div>
         <div class="pesanan">
           <div class="row">
@@ -94,11 +94,20 @@
             <?= el.harga ?>
           </h4>
         </div>
-        <div class="quantity-cart">
-          <input type="hidden" value="<?= el.quantity ?>" class="quantity-value" />
-          <h3>
-            <i class="bi bi-dash-square kurang-cart" number="<?= i?>"></i> <span class="px-2"> <?= el.quantity ?></span> <i class="bi bi-plus-square text-success tambah-cart" number="<?= i?>"></i>
-          </h3>
+        <div class="quantity-cart d-flex">
+          <form method="post" action="/cart/qtymin?_method=PUT">
+            <input type="hidden" name="iduser" value="<?=  dataUser.id ?>" />
+            <input type="hidden" name="idmenu" value="<?=  food.idMenu ?>" />
+            <input type="hidden" name="idcafe" value="<?=  food.idCafe ?>" />
+            <button type="submit" class="btn p-0 fs-3"><i class="bi bi-dash-square kurang-cart" number="<?= i?>"></i></button>
+          </form>
+          <span class="fs-3 px-3"><?= el.quantity ?></span>
+          <form method="post" action="/cart/qtyplus?_method=PUT">
+            <input type="hidden" name="iduser" value="<?=  dataUser.id ?>" />
+            <input type="hidden" name="idmenu" value="<?=  food.idMenu ?>" />
+            <input type="hidden" name="idcafe" value="<?=  food.idCafe ?>" />
+            <button type="submit" class="btn p-0 fs-3"><i class="bi bi-plus-square kurang-cart" number="<?= i?>"></i></button>
+          </form>
         </div>
         <div class="hapus">
           <form action="/cart/food?_method=DELETE" method="post" class="d-inline">
@@ -116,7 +125,7 @@
     <? } ?>
     <div class="garis border-1 border-bottom"></div>
     <div class="total text-end mt-4">
-      <h3>Total : <span>Rp 350.000</span></h3>
+      <h3>Total : <span>-</span></h3>
       <input href="" class="btn btn-dark text-light px-3 mt-3" type="submit" value="Bayar Sekarang" />
     </div>
   </div>

@@ -1,5 +1,5 @@
 section.makanan {
-  margin: 50px 0px;
+  margin: 20px 0px;
 }
 section.makanan .kapasitas,
 section.makanan .menu {
@@ -18,27 +18,19 @@ section.makanan .menu {
   box-sizing: border-box !important;
 }
 section.makanan .kapasitas {
+  color: #4f4f4f;
   background-color: #e7ffe1;
 }
 section.makanan .menu {
+  color: #4f4f4f;
   display: grid;
   position: relative;
-  grid-template-columns: 1.2fr 1.5fr 0.8fr;
-  grid-template-rows: 1fr 0.5fr 0.5fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 0.6fr;
   grid-template-areas:
-    "image makanan  tersedia"
-    "image makanan  tersedia"
-    "image harga  pesan";
-}
-section.makanan .menu .overlay {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-  left: 0;
-  right: 0;
-  background-color: rgba(104, 104, 104, 0.2);
-  z-index: 1;
+    "image makanan makanan"
+    "image makanan  makanan"
+    "harga null  pesan";
 }
 
 section.makanan .menu .image {
@@ -48,8 +40,12 @@ section.makanan .menu .makanan {
   grid-area: makanan;
   padding-left: 10px;
 }
+section.makanan .menu .makanan h4 {
+  font-weight: 600;
+}
+
 section.makanan .menu .tersedia {
-  display: block;
+  display: none;
   grid-area: tersedia;
   text-align: end;
   color: #2fe41e;
@@ -69,26 +65,59 @@ section.makanan .menu .pesan {
   animation-duration: 0.3s;
   align-self: flex-start;
   margin: 0px 5px;
+  margin-top: 10px;
 }
+
+section.makanan .menu .quantity {
+  grid-area: pesan;
+  align-self: flex-end;
+  text-align: end;
+  font-size: 18px;
+  margin-top: 10px;
+}
+
 section.makanan .menu .harga {
+  font-size: 18px;
   grid-area: harga;
+  margin-top: 10px;
+  font-weight: 600;
   text-align: start;
   align-self: flex-end;
 }
 
 section.makanan .pesanan {
-  display: block;
+  display: none;
 }
 
 section.makanan .kolompesanan {
   background-color: rgba(112, 112, 112, 0.3);
 }
+section.makanan .jumlahpesanan {
+  background-color: #94ff8a;
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid rgba(128, 118, 118, 0.3);
+  border-radius: 8px;
+  margin-bottom: auto;
+}
+
 section.makanan .jumlahpesanan .bayar {
-  display: none;
+  display: block;
+  color: white;
+  text-align: end;
+  text-decoration: underline;
 }
 section.makanan .menu .quantity {
   display: none;
   text-align: end;
+}
+section.makanan .menu .quantity span {
+  font-size: 22px;
+  padding: 0px 10px;
+}
+
+section.makanan .menu span {
+  font-size: 14px;
 }
 
 @keyframes muncul {
@@ -115,66 +144,57 @@ section.makanan .menu .quantity {
   animation: geser 0.5s forwards;
 }
 
-@media (max-width: 768px) {
-  section.makanan .pesanan {
-    display: none;
-  }
-}
-
-@media (max-width: 575.98px) {
-  section.makanan {
-    margin: 20px 0px;
-  }
-
-  section.makanan .menu {
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 0.6fr;
-    grid-template-areas:
-      "image makanan makanan"
-      "image makanan  makanan"
-      "harga null  pesan";
-  }
+@media (min-width: 768px) {
   section.makanan .jumlahpesanan {
-    background-color: #94ff8a;
+    background-color: white;
     width: 100%;
     padding: 10px 15px;
-    border: 1px solid rgba(128, 118, 118, 0.3);
-    border-radius: 8px;
-    margin-bottom: auto;
   }
-  section.makanan .jumlahpesanan .bayar {
-    display: block;
-    color: white;
-    text-align: end;
-    text-decoration: underline;
+
+  section.makanan {
+    margin: 50px 0px;
   }
-  section.makanan .menu .quantity {
-    grid-area: pesan;
-    align-self: flex-end;
-    text-align: end;
-    font-size: 18px;
+  section.makanan .menu {
+    grid-template-columns: 1.2fr 1.5fr 0.8fr;
+    grid-template-rows: 1fr 0.5fr 0.5fr;
+    grid-template-areas:
+      "image makanan  tersedia"
+      "image makanan  tersedia"
+      "image harga  pesan";
   }
-  section.makanan .menu .quantity span {
-    font-size: 22px;
-    padding: 0px 10px;
-  }
+
   section.makanan .menu .harga {
     text-align: start;
     align-self: flex-end;
-    padding-top: 10px;
-    font-weight: 600;
+    font-size: 22px;
+    padding-left: 10px;
   }
   section.makanan .menu .tersedia {
-    padding-top: 10px;
+    display: block;
+  }
+  section.makanan .kapasitas h4 {
+    font-size: 18px;
+    font-size: 600;
+  }
+  section.makanan .pesanan {
+    display: block;
+  }
+  section.makanan .jumlahpesanan .bayar {
     display: none;
   }
-  section.makanan .menu span {
-    font-size: 14px;
+  section.makanan .menu .makanan span {
+    font-size: 16px;
   }
 }
-@media (max-width: 991.98px) {
+@media (min-width: 992px) {
   section.makanan .menu .harga {
     font-size: 20px;
     font-weight: 600;
+  }
+  section.makanan .kapasitas h4 {
+    font-size: 22px;
+  }
+  section.makanan .menu .makanan h4 {
+    font-size: 24px;
   }
 }
