@@ -26,7 +26,7 @@
     <? } else {?>
     <div class="kolomgrid mt-4 tempat">
       <div class="checkbox">
-        <input type="checkbox" class="form-check-input check-capacity" />
+        <input type="checkbox" class="form-check-input check-capacity" value="<?= capacities.harga ?>" />
       </div>
       <div class="pesanan">
         <div class="row">
@@ -48,6 +48,7 @@
       </div>
       <div class="jumlah"><h3>Qty : 1</h3></div>
       <div class="harga">
+        <input type="hidden" value="<?= capacities.harga ?>" class="value-harga-tempat" />
         <h4>
           Rp.
           <?= capacities.harga ?>
@@ -69,7 +70,7 @@
       <? if(el.idMenu == food.idMenu ){ ?>
       <div class="kolomgrid food">
         <div class="checkbox">
-          <input type="checkbox" class="form-check-input check-for-price" />
+          <input type="checkbox" class="form-check-input check-for-price" value="<?= [el.idCafe , el.idMenu , el.harga , i] ?>" />
         </div>
         <div class="pesanan">
           <div class="row">
@@ -88,10 +89,8 @@
         </div>
         <div class="harga">
           <input type="hidden" value="<?= el.harga ?>" class="value-harga" />
-          <input type="hidden" value="" class="value-harga-tambah" />
           <h4>
-            Rp
-            <?= el.harga ?>
+            <?= el.harga?>
           </h4>
         </div>
         <div class="quantity-cart d-flex">
@@ -99,14 +98,15 @@
             <input type="hidden" name="iduser" value="<?=  dataUser.id ?>" />
             <input type="hidden" name="idmenu" value="<?=  food.idMenu ?>" />
             <input type="hidden" name="idcafe" value="<?=  food.idCafe ?>" />
-            <button type="submit" class="btn p-0 fs-3"><i class="bi bi-dash-square kurang-cart" number="<?= i?>"></i></button>
+            <button type="submit" class="btn p-0 fs-3 qty-min"><i class="bi bi-dash-square kurang-cart" number="<?= i?>"></i></button>
           </form>
           <span class="fs-3 px-3"><?= el.quantity ?></span>
+          <input type="hidden" class="quantity-food" value="<?= el.quantity ?>" />
           <form method="post" action="/cart/qtyplus?_method=PUT">
             <input type="hidden" name="iduser" value="<?=  dataUser.id ?>" />
             <input type="hidden" name="idmenu" value="<?=  food.idMenu ?>" />
             <input type="hidden" name="idcafe" value="<?=  food.idCafe ?>" />
-            <button type="submit" class="btn p-0 fs-3"><i class="bi bi-plus-square kurang-cart" number="<?= i?>"></i></button>
+            <button type="submit" class="btn p-0 fs-3" id="qtyPlus"><i class="bi bi-plus-square kurang-cart" number="<?= i?>"></i></button>
           </form>
         </div>
         <div class="hapus">
@@ -125,8 +125,9 @@
     <? } ?>
     <div class="garis border-1 border-bottom"></div>
     <div class="total text-end mt-4">
-      <h3>Total : <span>-</span></h3>
+      <h3>Total : Rp. <span>-</span></h3>
       <input href="" class="btn btn-dark text-light px-3 mt-3" type="submit" value="Bayar Sekarang" />
+      <a href="/pay">Bayar</a>
     </div>
   </div>
 </section>

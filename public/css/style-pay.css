@@ -2,21 +2,61 @@ section.pay {
   margin: 50px 0px;
   color: #4f4f4f;
 }
+section.header {
+  box-shadow: 2px 2px 15px rgba(112, 112, 112, 0.2);
+  padding: 15px 0px;
+}
+section.header h2 {
+  margin: 0;
+  color: #4f4f4f;
+}
+
 section.pay .kotak {
+  display: grid;
+  grid-template-columns: "0.1fr 1fr 1fr 1fr";
+  grid-template-areas: "icon info null null";
   background-color: rgba(112, 112, 112, 0.2);
   border: 1px solid rgba(112, 112, 112, 0.3);
   padding: 15px;
-  font-size: 20px;
   border-radius: 8px;
+  margin-top: 30px;
   margin-bottom: 10px;
 }
+section.pay .kotak h5 {
+  font-family: "Poppins", sans-serif;
+  grid-area: info;
+  font-size: 14px;
+  margin-bottom: 0;
+  align-self: center;
+  justify-content: start;
+}
+section.pay .kotak i {
+  grid-area: icon;
+  font-size: 20px;
+}
 section.pay .identitas {
-  font-size: 24px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
   margin-bottom: 30px;
 }
-section.pay .identitas td {
-  padding-right: 30px;
-}
+
 section.pay .identitas tr td:nth-child(1) {
   color: #acacac;
+  padding-right: 30px;
+}
+section.pay .identitas tr td:nth-child(2) {
+  padding-right: 10px;
+}
+
+@media (min-width: 768px) {
+  section.pay .kotak h5 {
+    font-size: 16px;
+  }
+  section.pay .kotak i {
+    grid-area: icon;
+    font-size: 20px;
+  }
+  section.pay .identitas {
+    font-size: 16px;
+  }
 }

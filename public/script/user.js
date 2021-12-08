@@ -24,29 +24,30 @@ showPassword.forEach((el, i) => {
 
 const dropArea = document.querySelector(".konten-upload");
 const notifArea = document.querySelector(".notif-area");
-const input = dropArea.querySelector("input.upload-photo");
+let input, hasilFile, h2DropArea, pDropArea, labelDropArea, file;
+if (dropArea) {
+  input = dropArea.querySelector("input.upload-photo");
 
-const hasilFile = dropArea.querySelector(".hasil-file");
-const h2DropArea = dropArea.querySelector("h2");
-const pDropArea = dropArea.querySelector("p");
-const labelDropArea = dropArea.querySelector("label");
+  hasilFile = dropArea.querySelector(".hasil-file");
+  h2DropArea = dropArea.querySelector("h2");
+  pDropArea = dropArea.querySelector("p");
+  labelDropArea = dropArea.querySelector("label");
 
-let file;
+  input.addEventListener("dragover", function (e) {
+    e.preventDefault();
+    dropArea.classList.add("active");
+  });
 
-input.addEventListener("dragover", function (e) {
-  e.preventDefault();
-  dropArea.classList.add("active");
-});
+  input.addEventListener("dragleave", function (e) {
+    e.preventDefault();
+    dropArea.classList.remove("active");
+  });
 
-input.addEventListener("dragleave", function (e) {
-  e.preventDefault();
-  dropArea.classList.remove("active");
-});
-
-input.addEventListener("change", function (e) {
-  e.preventDefault();
-  showFile(this);
-});
+  input.addEventListener("change", function (e) {
+    e.preventDefault();
+    showFile(this);
+  });
+}
 
 function notifError() {
   return `<div class="alert alert-danger" role="alert">
@@ -83,8 +84,6 @@ function showFile(input) {
           console.log(input.files[0].name);
         };
         reader.readAsDataURL(input.files[0]);
-
-        console.log(input.value);
       } else {
         notifArea.style.display = "block";
         notifArea.innerHTML = notifError();

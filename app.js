@@ -465,10 +465,10 @@ app.post("/cafe/food", (req, res) => {
 });
 
 //Halaman Keranjang
-app.get("/cart", async (req, res) => {
+app.get("/cart", checkAuthenticated, async (req, res) => {
   const dataUser = await req.user;
   let formCapacities, formFoods, capacities, foods, caves;
-  //PR cara buat nemuin IDcafe nya
+
   if (dataUser) {
     formCapacities = await FormCapacity.findOne({ idUser: dataUser.id });
     if (formCapacities) {
@@ -482,7 +482,7 @@ app.get("/cart", async (req, res) => {
   }
 
   res.render("keranjang", {
-    layout: "layouts/main-layout-pay",
+    layout: "layouts/main-layout-cart",
     title: "Keranjang",
     formFoods,
     formCapacities,
@@ -530,15 +530,39 @@ app.put("/cart/qtymin", async (req, res) => {
     res.redirect("/cart");
   });
 });
-//Halaman Checkout
-// app.get("/cart", async (req, res) => {
-//   const dataUser = await req.user;
-//   res.render("pay", {
-//     layout: "layouts/main-layout-pay",
-//     title: "Checkout",
-//     dataUser,
-//   });
-// });
+
+app.put("/cart/qtyplus", async (req, res) => {
+  let formFoods = await FormFood.findOne({ idCafe: req.body.idcafe, idUser: req.body.iduser, idMenu: req.body.idmenu });
+  let foods = await Food.findOne({ idCafe: req.body.idcafe, idMenu: req.body.idmenu });
+
+  let qtyUpdate = Number(formFoods.quantity) + 1;
+  let priceUpdate = Number(formFoods.harga) + Number(foods.harga);
+
+  FormFood.updateOne(
+    {
+      idUser: req.body.iduser,
+      idCafe: req.body.idcafe,
+      idMenu: req.body.idmenu,
+    },
+    {
+      $set: {
+        quantity: qtyUpdate.toString(),
+        harga: priceUpdate.toString(),
+      },
+    }
+  ).then((result) => {
+    res.redirect("/cart");
+  });
+});
+
+app.get("/pay", checkAuthenticated, async (req, res) => {
+  let dataUser = await req.user;
+  res.render("pay", {
+    layout: "layouts/main-layout-pay",
+    title: "Form Pembayaran",
+    dataUser,
+  });
+});
 
 app.get("/login", checkNotAuthenticated, (req, res) => {
   res.render("login", {

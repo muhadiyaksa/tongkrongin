@@ -1,7 +1,6 @@
 .container {
   font-family: "Neucha", cursive;
 }
-
 .buttonPrimary {
   background-color: white;
   padding: 10px 35px;
@@ -29,6 +28,7 @@ section.nav-res button.userpage {
   height: 100%;
   border-radius: 30px;
 }
+
 section.nav-res button.userpage {
   width: 30px;
   margin: 0 -10px;
@@ -80,8 +80,10 @@ section.hero .content {
   color: white;
 }
 section.hero .content p {
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
   margin-bottom: 40px;
-  font-size: 18px;
+  font-size: 16px;
 }
 section.hero .content h1 {
   font-weight: 700;
@@ -127,7 +129,10 @@ section.highlight .slideCarousel .card {
   border: none;
   border-radius: 10px;
 }
+
 section.highlight .slideCarousel .card p {
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
   font-size: 14px;
 }
 section.highlight .slideCarousel .card .card-body,
@@ -161,6 +166,10 @@ section.highlight button {
 /* FEATURES (include ULASAN)*/
 section.features {
   padding-top: 80px;
+}
+section.features .card .card-text {
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
 }
 section.features .kotak,
 section.ulasan .kotak,
@@ -218,6 +227,10 @@ section.panel {
 section.panel .content {
   margin: 80px 0px;
 }
+section.panel .content p {
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
+}
 
 section.panel .kotak {
   margin-left: auto;
@@ -245,10 +258,21 @@ section.ulasan {
 }
 section.ulasan .isiUlasan {
   margin-top: 50px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
+}
+section.ulasan .isiUlasan .card .card-text {
+  font-size: 14px;
+}
+section.ulasan .isiUlasan .card .card-title {
+  font-size: 16px;
 }
 section.ulasan .isiUlasan .image {
   position: relative;
+  overflow: hidden;
+  border-radius: 10px 10px 0px 0px;
 }
+
 section.ulasan .isiUlasan .image::after {
   z-index: 1;
   content: "";
@@ -257,7 +281,10 @@ section.ulasan .isiUlasan .image::after {
   height: 100%;
   position: absolute;
   bottom: 0;
-  background-image: linear-gradient(to top, rgba(10, 31, 21, 0.5), rgba(0, 0, 0, 0.1));
+  background-image: linear-gradient(to top, rgba(10, 31, 21, 0.7), rgba(0, 0, 0, 0.1));
+}
+section.ulasan .isiUlasan .card {
+  border-radius: 10px;
 }
 section.ulasan .isiUlasan .card .card-body {
   z-index: 10;
@@ -279,6 +306,22 @@ section.about .image {
 section.about .konten {
   margin-top: 120px;
 }
+/* FEATURES */
+section.highlight p.subjudul,
+section.features p.subjudul,
+section.ulasan p.subjudul,
+section.about p.subjudul,
+section.listCafe p.subjudul,
+section.panel p.subjudul {
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
+  padding-left: 10px;
+}
+section.about p.subjudul {
+  font-size: 14px;
+  padding-left: 0px;
+}
 
 /* footer */
 section.footer {
@@ -294,11 +337,22 @@ section.footer .footergrid {
 section.footer .judul {
   grid-area: judul;
 }
+section.footer .judul p {
+  font-family: "Poppins", sans-serif;
+}
 section.footer .kontak {
   grid-area: kontak;
 }
 section.footer .navigasi {
   grid-area: navigasi;
+}
+section.footer .navigasi a {
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+}
+section.footer .bottom {
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
 }
 section.footer a {
   text-decoration: none;
@@ -332,15 +386,28 @@ section.nav-res {
     margin-bottom: 30px;
   }
 
-  section.hero .content p {
-    font-size: 14px;
-    margin-bottom: 15px;
-  }
   section.highlight .carousel {
     display: none;
   }
-  section.highlight p.subjudul {
-    display: none;
+  section.highlight p.subjudul,
+  section.features p.subjudul,
+  section.ulasan p.subjudul,
+  section.about p.subjudul,
+  section.listCafe p.subjudul,
+  section.panel p.subjudul {
+    font-size: 12px;
+    border-left: 2px solid #4f4f4f;
+  }
+  section.highlight .highlight-res {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    font-size: 14px;
+  }
+  section.highlight .highlight-res .card-text-res {
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-size: 12px;
   }
   section.highlight .highlight-res {
     display: flex;
@@ -392,18 +459,26 @@ section.nav-res {
     margin-top: 80px;
     margin-bottom: 30px;
   }
+  section.about p.subjudul {
+    padding-left: 10px;
+  }
   section.about .image {
     margin: 0 auto;
     height: 200px;
     width: 95%;
   }
   section.about .konten {
-    margin: 20px 10px;
+    margin: 20px 0px;
+  }
+  section.footer .navigasi a {
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
   }
 }
 
 @media (max-width: 991.98px) {
   /* BAGIAN NAVBAR */
+
   section.nav-res {
     display: block;
     padding: 15px;
@@ -473,12 +548,19 @@ section.nav-res {
     border-left: 2px solid white;
     padding-left: 10px;
   }
+  section.highlight .judulcafe {
+    font-size: 18px;
+  }
 
   section.highlight .carousel .card {
     height: 300px;
     font-size: 14px;
     border: 1px solid #9b9b9b;
     overflow: hidden;
+  }
+  section.highlight .slideCarousel .card p {
+    font-size: 14px;
+    color: #9b9b9b;
   }
   section.highlight .carousel button {
     position: absolute;
@@ -488,17 +570,6 @@ section.nav-res {
     text-align: center;
     padding-left: 7px;
     background-color: #1b222c;
-  }
-
-  /* FEATURES */
-  section.features p.subjudul,
-  section.ulasan p.subjudul,
-  section.about p.subjudul,
-  section.listCafe p.subjudul,
-  section.panel p.subjudul {
-    font-size: 14px;
-    border-left: 2px solid #4f4f4f;
-    padding-left: 10px;
   }
 
   /* BAGIAN FOOTER */

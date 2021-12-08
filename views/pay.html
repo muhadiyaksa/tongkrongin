@@ -1,15 +1,38 @@
 <!-- https://www.saidalfaruq.net/artikel/upload-file-menggunakan-drag-dan-drop-dengan-javascript-dan-php-s7y6fz8z -->
 <!-- https://www.w3schools.com/nodejs/nodejs_uploadfiles.asp -->
+<section class="header">
+ <div class="container">
+    <h2><a href="/cart" class="text-secondary me-3"><i class="bi bi-arrow-left-circle-fill"></i></a> Pembayaran</h2>
+ </div>
+</section>
+
 <section class="pay">
+
   <div class="container">
+    
     <div class="row">
+      <h2 class="fw-bold">Detail</h2>
       <div class="col-md-7">
-        <h2 class="mb-4">Pembayaran</h2>
-        <h4 class="mb-3">Total : <span class="fw-bold">Rp 385.000</span> Tanggal Pemesanan: <span>15 Oktober 2021</span></h4>
-        <div class="kotak">
-          <i class="bi bi-exclamation-circle-fill me-3"></i>
-          <h5 class="d-inline-block">Pembayaran dilakukan sebelum <span>15 Oktober 2021 , 18:00 WIB</span></h5>
+        <div class="identitas">
+          <table>
+            <tr>
+              <td>Total Pembayaran</td>
+              <td>:</td>
+              <td><span><strong>Rp. 300.000</strong> </span></td>
+            </tr>
+            <tr>
+              <td>Tanggal Pesan</td>
+              <td>:</td>
+              <td><span><strong>15 Oktober 2021</strong></span></td>
+            </tr>
+          </table>
         </div>
+     
+        <div class="kotak ">
+          <i class="bi bi-exclamation-circle-fill me-3"></i>
+          <h5 class="d-inline-block">Lakukan Pembayaran sebelum <span>15 Oktober 2021 , 18:00 WIB</span></h5>
+        </div>
+        <h2 class="fw-bold mt-4">Alamat Transfer</h2>
         <div class="identitas">
           <table>
             <tr>
@@ -22,13 +45,18 @@
               <td>:</td>
               <td><span>8821923190124</span></td>
             </tr>
+            <tr>
+              <td>Nomor Bank</td>
+              <td>:</td>
+              <td><span>Bank Central Asia (BCA)</span></td>
+            </tr>
           </table>
         </div>
         <a href="" class="text-dark" data-bs-toggle="modal" data-bs-target="#gantiBank"><i class="bi bi-box-arrow-in-down-left"></i> Ubah Akun Bank</a>
       </div>
-      <div class="col-md-5 text-center pt-5">
+      <div class="col-md-5 text-center ">
         <img src="/img/bcalogo.png" alt="BCA logo" />
-        <button class="btn btn-dark fs-4 px-4 py-2 mt-4" data-bs-toggle="modal" data-bs-target="#uploadBukti">Unggah Bukti Pembayaran</button>
+        <button class="btn btn-dark fs-4 px-4 py-2 mt-4" data-bs-toggle="modal" data-bs-target="#modalUpload">Unggah Bukti Pembayaran</button>
       </div>
     </div>
   </div>
@@ -51,7 +79,44 @@
   </div>
 </div>
 
+
 <!-- Modal Upload Bukti-->
+<div class="modal fade" id="modalUpload" tabindex="-1" aria-labelledby="modalUploadLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="header mb-3">
+          <div class="row">
+            <div class="col">
+              <h5 class="modal-title" id="modalUploadLabel">Unggah Foto</h5>
+            </div>
+            <div class="col text-end">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+          </div>
+        </div>
+        <form action="/foto" method="POST" enctype="multipart/form-data">
+          <div class="konten-upload" >
+       
+            <div class="hasil-file">
+            </div>
+            <h2 class="mb-4"><i class="bi bi-file-earmark-plus"></i></h2>
+            <p>Seret foto ke area ini (bisa lebih dari satu sekaligus) atau tekan tombol unggah dibawah ini. Pastikan foto telah memenuhi <strong>kualitas Tongkrongin (png , jpg , jpeg)</strong></p>
+            <label for="upload-photo">Unggah Foto</label>
+            <input type="file" name="file" id="upload-photo" class="upload-photo"/>
+          </div>
+          <div class="notif-area my-3"></div>
+          <div class="kirim">
+              <input type="submit" value="Kirim"></input>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- 
 <div class="modal fade" id="uploadBukti" tabindex="-1" aria-labelledby="uploadBuktiLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -66,4 +131,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
