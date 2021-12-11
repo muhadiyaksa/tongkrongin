@@ -266,6 +266,7 @@ app.put(
 app.get("/cafe", async (req, res) => {
   const dataUser = await req.user;
   const caves = await Cafe.find();
+  let formCapacities;
   if (dataUser) {
     formCapacities = await FormCapacity.findOne({ idUser: dataUser.id });
   }
@@ -371,7 +372,7 @@ app.get("/cafe/food/:idCafe", async (req, res) => {
   let idMix = [...idMenuFood, ...idMenuForm];
 
   let formFoodsResult = idMix.sort((a, b) => a - b);
-  console.log(formFoodsResult);
+
   let pembanding = [];
   let noDuplicate = [];
   for (let i = 0; i < formFoodsResult.length; i++) {

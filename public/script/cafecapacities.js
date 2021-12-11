@@ -1,24 +1,30 @@
-const hargaKapasitas = document.querySelector(".kapasitas h3.harga");
-const valueHargaKapasitas = document.querySelector(".kapasitas input.harga-kapasitas");
+const hargaKapasitasForm = document.querySelectorAll(".kapasitas h3.harga");
+const valueHargaKapasitas = document.querySelectorAll(".kapasitas input.harga-kapasitas");
+
+let value = [];
+valueHargaKapasitas.forEach((el) => {
+  value.push(el.value);
+});
+
+hargaKapasitasForm.forEach((el, i) => {
+  el.innerHTML = formatRupiah(value[i], "Rp. ");
+});
+
 const idCafe = document.querySelector("input.id-cafe");
 const kapKategori = document.querySelector(".modal .kotak");
 const inputKategori = document.querySelector("input.kapkategori");
 
 function tampilHarga(harga) {
   const hasilHarga = formatRupiah(harga, "Rp. ");
-  hargaKapasitas.innerHTML = hasilHarga;
+  hargaKapasitasForm.innerHTML = hasilHarga;
 }
 
 document.addEventListener("click", function (e) {
   if (e.target.classList.contains("overlay")) {
-    const harga = e.target.getAttribute("harga");
-    const jumlah = e.target.getAttribute("jumlah");
     const kategori = e.target.getAttribute("kategori");
 
     inputKategori.value = kategori;
     kapKategori.innerHTML = `${kategori} Orang`;
-
-    console.log(inputKategori.value);
   }
 });
 

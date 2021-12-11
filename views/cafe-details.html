@@ -27,7 +27,7 @@
       </div>
       <div class="col-md-7 pt-5">
         <h1><?= caves.nama ?></h1>
-        <h5><?= caves.alamat ?></h5>
+        <h5 class="alamat"><?= caves.alamat ?></h5>
         <h3 class="mt-4">Fasilitas</h3>
         <div class="fasilitas">
           <? caves.fasilitas.forEach((el)=>{ ?>
@@ -37,7 +37,14 @@
           </div>
           <? }) ?>
         </div>
-        <div class="row mt-4">
+        <h5 class="mt-3 jambuka">
+          <i class="bi bi-clock me-3"></i
+          ><?= caves.jamBuka ?>
+          -
+          <?= caves.jamTutup ?>
+          WIB
+        </h5>
+        <div class="row mt-4 ulasan">
           <div class="col-auto">
             <p>
               <span>5.0</span>

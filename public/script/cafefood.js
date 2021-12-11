@@ -13,6 +13,22 @@ const buttonCart = document.querySelector(".pesanan input.addtocart");
 const foodImg = document.querySelectorAll(".menu .image img");
 const foodName = document.querySelectorAll(".menu .makanan h4");
 const foodPrice = document.querySelectorAll(".value-harga");
+const cartPrice = document.querySelectorAll("section.makanan .menu h3.harga");
+
+let valuePrice = [];
+foodPrice.forEach((el) => {
+  valuePrice.push(el.value);
+});
+
+cartPrice.forEach((el, i) => {
+  el.innerHTML = formatRupiah(valuePrice[i], "Rp. ");
+});
+
+const hargaKapasitasValue = document.querySelector("input.harga-kapasitas");
+const hargaKapasitas = document.querySelector("span.harga-kapasitas");
+
+let hargaKap = hargaKapasitasValue.value;
+hargaKapasitas.innerHTML = formatRupiah(hargaKap, "Rp. ");
 
 const qtyForm = document.querySelector("input.jmlFormFoods");
 let cartsArray = [];
@@ -202,7 +218,7 @@ function cart(idcafe, iduser, idmenu, img, name, price, qty, target, totalPrice,
               </div>
               <div class="col-auto ">
                 <h4><span>${name}</span></h4>
-                <span class="harga" >Rp. ${price}</span>
+                <span class="harga" >${formatRupiah(price, "Rp. ")}</span>
               </div>
               <div class="col my-auto text-end qty">
                 <h4 target="${target}">${totalQty}</h4>
@@ -210,3 +226,63 @@ function cart(idcafe, iduser, idmenu, img, name, price, qty, target, totalPrice,
             </div>
           </div>`;
 }
+/* Fungsi formatRupiah */
+function formatRupiah(angka, prefix) {
+  var number_string = angka.replace(/[^,\d]/g, "").toString(),
+    split = number_string.split(","),
+    sisa = split[0].length % 3,
+    rupiah = split[0].substr(0, sisa),
+    ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+  // tambahkan titik jika yang di input sudah menjadi angka ribuan
+  if (ribuan) {
+    separator = sisa ? "." : "";
+    rupiah += separator + ribuan.join(".");
+  }
+
+  rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+  return prefix == undefined ? rupiah : rupiah ? "Rp. " + rupiah : "";
+}
+
+const listCart = document.querySelector("section.makanan .pesanan .list-group");
+const indikator = document.querySelector("section.makanan .pesanan p.indikator");
+const indikatorList = document.querySelector("section.makanan .list-makanan");
+
+let listMakanan = indikatorList.getBoundingClientRect();
+let paragraf = listCart.getBoundingClientRect();
+
+document.addEventListener("scroll", function () {
+  const windowS = window.scrollY;
+
+  let posisiKanan = window.innerWidth - indikator.getBoundingClientRect().right;
+  let widthCartList = indikator.getBoundingClientRect().width;
+
+  if (listMakanan.height > paragraf.height) {
+    if (windowS >= paragraf.top) {
+      listCart.classList.add("fixed-active");
+      listCart.classList.remove("static-active");
+      listCart.style.right = `${posisiKanan}px`;
+      listCart.style.width = widthCartList + "px";
+    } else {
+      listCart.classList.add("static-active");
+      listCart.classList.remove("remove-active");
+      listCart.style.right = `none`;
+    }
+  } else {
+    listCart.classList.remove("fixed-active");
+    listCart.classList.add("static-active");
+  }
+});
+
+// function getOffset(el) {
+//   var _x = 0;
+//   var _y = 0;
+//   while (el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
+//     _x += el.offsetLeft - el.scrollLeft;
+//     _y += el.offsetTop - el.scrollTop;
+//     el = el.offsetParent;
+//   }
+//   return { top: _y, left: _x };
+// }
+// var x = getOffset(listCart).top;
+// console.log(x);

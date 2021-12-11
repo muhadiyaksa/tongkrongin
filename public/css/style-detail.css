@@ -32,6 +32,19 @@ section.deskripsi .fasilitas .kotak {
   background-color: rgba(112, 112, 112, 0.05);
   border: 1px solid rgba(112, 112, 112, 0.3);
 }
+section.deskripsi .jambuka {
+  color: #4f4f4f;
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+}
+section.deskripsi .alamat {
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  color: #4f4f4f;
+}
+section.deskripsi .ulasan {
+  font-family: "Poppins", sans-serif;
+}
 section.tempatduduk a,
 section.makanan a {
   text-decoration: none;
@@ -76,15 +89,23 @@ section.tempatduduk .kapasitas .kategori {
 section.tempatduduk .kapasitas .kategori h4 {
   font-weight: 600;
 }
+section.tempatduduk .kapasitas .kategori span {
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+}
 section.tempatduduk .kapasitas .tersedia {
   grid-area: tersedia;
+  font-family: "Poppins", sans-serif;
   text-align: end;
   color: #4fc816;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 500;
 }
 section.tempatduduk .kapasitas .harga {
   grid-area: harga;
   text-align: end;
+  font-family: "Poppins", sans-serif;
+  font-size: 22px;
 }
 
 section.tempatduduk .kapasitas h5,

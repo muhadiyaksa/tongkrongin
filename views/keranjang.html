@@ -43,10 +43,11 @@
               Loc.
               <?= (caves) ? caves.nama : '' ?>
             </p>
+            <button class="btn btn-secondary rounded py-0" data-bs-toggle="modal" data-bs-target="#modalDetail"><i class="bi bi-box-arrow-in-down-left pe-2"></i>Detail</button>
           </div>
         </div>
       </div>
-      <div class="jumlah"><h3>Qty : 1</h3></div>
+      <div class="jumlah"><h4>Qty : 1</h4></div>
       <div class="harga">
         <input type="hidden" value="<?= capacities.harga ?>" class="value-harga-tempat" />
         <h4>
@@ -124,10 +125,13 @@
     </div>
     <? } ?>
     <div class="garis border-1 border-bottom"></div>
+    <div class="catatan">
+      <input type="text" class="form-input w-100" placeholder="Catatan untuk Pesanan kamu" />
+    </div>
     <div class="total text-end mt-4">
       <h3>Total : Rp. <span>-</span></h3>
-      <input href="" class="btn btn-dark text-light px-3 mt-3" type="submit" value="Bayar Sekarang" />
-      <a href="/pay">Bayar</a>
+      <input class="btn btn-dark text-light px-3 mt-3" type="submit" value="Bayar Sekarang" />
+      <!-- <a href="/pay">Bayar</a> -->
     </div>
   </div>
 </section>
@@ -145,6 +149,57 @@
           <input type="submit" class="btn btn-danger" value="Hapus" />
         </form>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalDetail" tabindex="-1" aria-labelledby="modalDetailLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalDetailLabel">Detail Pesanan Kapasitas</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+          <tbody>
+            <tr>
+              <th scope="row">Cafe</th>
+              <td>:</td>
+              <td><?= (caves) ? caves.nama : ''?></td>
+            </tr>
+            <tr>
+              <th scope="row">Alamat</th>
+              <td>:</td>
+              <td><?= (caves) ? caves.alamat : ''?></td>
+            </tr>
+            <tr class="text-capitalize">
+              <th scope="row">Kategori</th>
+              <td>:</td>
+              <td><?= (caves) ? caves.kategori : ''?></td>
+            </tr>
+            <tr class="text-capitalize">
+              <th scope="row">Atas Nama</th>
+              <td>:</td>
+              <td><?= (formCapacities) ? formCapacities.namaPemesan : ''?></td>
+            </tr>
+            <tr>
+              <th scope="row">Tanggal Pesan</th>
+              <td>:</td>
+              <td><?= (formCapacities) ? formCapacities.tanggalPesan : ''?></td>
+            </tr>
+            <tr>
+              <th scope="row">Jam Pesan</th>
+              <td>:</td>
+              <td>
+                <?= (formCapacities) ? formCapacities.jamPesan : ''?>
+                WIB
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
