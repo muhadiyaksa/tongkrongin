@@ -354,7 +354,7 @@ app.post("/cafe/details", async (req, res) => {
 });
 
 //Halaman Pesan
-app.get("/cafe/food/:idCafe", async (req, res) => {
+app.get("/cafe/food/:idCafe", checkAuthenticated, async (req, res) => {
   const foods = await Food.find({ idCafe: req.params.idCafe });
   const dataUser = await req.user;
   let formCapacities, formFoods, idMenuFood, idMenuForm;

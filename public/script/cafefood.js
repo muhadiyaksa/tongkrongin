@@ -248,31 +248,31 @@ const listCart = document.querySelector("section.makanan .pesanan .list-group");
 const indikator = document.querySelector("section.makanan .pesanan p.indikator");
 const indikatorList = document.querySelector("section.makanan .list-makanan");
 
-let listMakanan = indikatorList.getBoundingClientRect();
-let paragraf = listCart.getBoundingClientRect();
+// let listMakanan = indikatorList.getBoundingClientRect();
+// let paragraf = listCart.getBoundingClientRect();
 
-document.addEventListener("scroll", function () {
-  const windowS = window.scrollY;
+// document.addEventListener("scroll", function () {
+//   const windowS = window.scrollY;
 
-  let posisiKanan = window.innerWidth - indikator.getBoundingClientRect().right;
-  let widthCartList = indikator.getBoundingClientRect().width;
+//   let posisiKanan = window.innerWidth - indikator.getBoundingClientRect().right;
+//   let widthCartList = indikator.getBoundingClientRect().width;
 
-  if (listMakanan.height > paragraf.height) {
-    if (windowS >= paragraf.top) {
-      listCart.classList.add("fixed-active");
-      listCart.classList.remove("static-active");
-      listCart.style.right = `${posisiKanan}px`;
-      listCart.style.width = widthCartList + "px";
-    } else {
-      listCart.classList.add("static-active");
-      listCart.classList.remove("remove-active");
-      listCart.style.right = `none`;
-    }
-  } else {
-    listCart.classList.remove("fixed-active");
-    listCart.classList.add("static-active");
-  }
-});
+//   if (listMakanan.height > paragraf.height) {
+//     if (windowS >= paragraf.top) {
+//       listCart.classList.add("fixed-active");
+//       listCart.classList.remove("static-active");
+//       listCart.style.right = `${posisiKanan}px`;
+//       listCart.style.width = widthCartList + "px";
+//     } else {
+//       listCart.classList.add("static-active");
+//       listCart.classList.remove("remove-active");
+//       listCart.style.right = `none`;
+//     }
+//   } else {
+//     listCart.classList.remove("fixed-active");
+//     listCart.classList.add("static-active");
+//   }
+// });
 
 // function getOffset(el) {
 //   var _x = 0;

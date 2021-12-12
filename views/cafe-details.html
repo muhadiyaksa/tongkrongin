@@ -21,8 +21,7 @@
     <div class="row">
       <div class="col-md-5">
         <div class="image">
-          <img src="/img/<?= caves.gambar[1].namaGambar ?>" alt="cafe detail1" class="img-fluid" />
-          <div class="kotak"></div>
+          <img src="/img/cafe/<?= caves.gambar[1].namaGambar ?>" alt="cafe detail1" />
         </div>
       </div>
       <div class="col-md-7 pt-5">
@@ -37,6 +36,8 @@
           </div>
           <? }) ?>
         </div>
+        <input type="hidden" class="jam-buka" value="<?= caves.jamBuka ?>" />
+        <input type="hidden" class="jam-tutup" value="<?= caves.jamTutup ?>" />
         <h5 class="mt-3 jambuka">
           <i class="bi bi-clock me-3"></i
           ><?= caves.jamBuka ?>
@@ -119,15 +120,17 @@
           </div>
           <div class="mb-3">
             <label for="tanggal" class="form-label">Tanggal</label>
-            <input type="date" class="form-control" id="tanggal" name="tanggalpesan" required />
+            <input type="date" class="form-control tanggal-pesan" id="tanggal" name="tanggalpesan" required />
+            <span class="info-tanggal"></span>
           </div>
           <div class="mb-3">
             <label for="jam" class="form-label">Jam</label>
-            <input type="time" class="form-control" id="jam" name="jampesan" aria-describedby="emailHelp" required />
+            <input type="time" class="form-control jam-pesan" id="jam" name="jampesan" aria-describedby="emailHelp" required />
+            <span class="info-jam"></span>
           </div>
         </div>
         <div class="mx-auto mb-4 text-center">
-          <button type="submit" class="btn btn-secondary px-4 fs-4">Simpan</button>
+          <button type="submit" class="btn btn-secondary px-4 fs-4 kirim-kapasitas">Simpan</button>
         </div>
       </form>
     </div>
