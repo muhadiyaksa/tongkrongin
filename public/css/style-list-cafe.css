@@ -46,17 +46,24 @@ section.listCafe .isi-list-cafe .card .card-body {
 
 section.listCafe .isi-list-cafe .card {
   color: #ffffff;
-  height: 350px;
   position: relative;
-  box-sizing: border-box;
-  border-radius: 10px;
+  display: flex;
+  align-items: center;
   overflow: hidden;
+  box-sizing: border-box;
+  height: 270px;
+  width: 100%;
+  border-radius: 10px;
+  transition: 0.3s;
 }
+
 section.listCafe .isi-list-cafe .card .row {
   font-family: "Poppins", sans-serif;
+  font-size: 13px;
 }
 section.listCafe .isi-list-cafe .card img {
   height: 100%;
+  width: auto;
 }
 section.listCafe .isi-list-cafe .card .card-title {
   font-size: 28px;
@@ -90,6 +97,7 @@ section.listCafe .isi-list-cafe .card .card-text-sec {
   }
   section.listCafe .isi-list-cafe .card {
     height: 300px;
+    width: 100%;
   }
   section.listCafe .isi-list-cafe .card img {
     max-height: 180px;
@@ -112,5 +120,11 @@ section.listCafe .isi-list-cafe .card .card-text-sec {
   }
   section.listCafe .isi-list-cafe .card .card-text-sec {
     display: none;
+  }
+}
+
+@media (min-width: 992px) {
+  section.listCafe .isi-list-cafe .card:hover {
+    box-shadow: 0px 1px 10px #888888;
   }
 }

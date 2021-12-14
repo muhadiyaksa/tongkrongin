@@ -44,8 +44,51 @@ section.pay .identitas tr td:nth-child(1) {
   color: #acacac;
   padding-right: 30px;
 }
+
 section.pay .identitas tr td:nth-child(2) {
   padding-right: 10px;
+}
+
+section.pay .detail-pesanan .table tr td:nth-child(1) {
+  width: 70px;
+}
+section.pay .detail-pesanan .table tr td:nth-child(2) {
+  width: 10px;
+}
+section.pay .detail-pesanan .table tr td:nth-child(3) {
+  font-weight: 600;
+}
+section.pay .detail-pesanan .table {
+  font-size: 14px;
+  width: 100%;
+}
+section.pay .detail-pesanan .table tr {
+  border-bottom: 0px solid white !important;
+}
+
+section.pay .detail-pesanan {
+  font-family: "Poppins", sans-serif;
+}
+section.pay .detail-pesanan img {
+  border-radius: 6px;
+}
+section.pay .detail-pesanan .kapasitas {
+  margin-top: 20px;
+}
+section.pay .detail-pesanan img.cafe {
+  max-height: 80px;
+}
+section.pay .detail-pesanan input {
+  font-size: 13px;
+}
+section.pay .alamat {
+  margin-top: 50px;
+}
+section.pay .image-bank button {
+  font-size: 15px;
+  margin-left: 20px;
+  font-family: "Poppins", sans-serif;
+  margin-top: 30px;
 }
 
 @media (min-width: 768px) {
@@ -58,5 +101,24 @@ section.pay .identitas tr td:nth-child(2) {
   }
   section.pay .identitas {
     font-size: 16px;
+  }
+  section.pay .image-bank {
+    margin-top: 50px;
+  }
+  section.pay .image-bank button {
+    margin-top: 30px;
+    margin-left: 30px;
+  }
+  section.pay .detail-pesanan .table tr td:nth-child(1) {
+    width: 120px;
+  }
+  section.pay .detail-pesanan .table tr td:nth-child(2) {
+    width: 10px;
+  }
+  section.pay .detail-pesanan img.cafe {
+    max-height: 100%;
+  }
+  section.pay .alamat {
+    margin-top: 0px;
   }
 }

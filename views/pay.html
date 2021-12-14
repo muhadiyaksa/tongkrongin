@@ -11,30 +11,129 @@
   <div class="container">
     
     <div class="row">
-      <h2 class="fw-bold">Detail</h2>
-      <div class="col-md-7">
+      <div class="col-md-6">
+        <h2 class="fw-bold">Detail</h2>
         <div class="identitas">
           <table>
             <tr>
               <td>Total Pembayaran</td>
               <td>:</td>
-              <td><span><strong>Rp. 300.000</strong> </span></td>
+              <td><span><strong>Rp. <?= formCheckout.total ?></strong> </span></td>
             </tr>
             <tr>
               <td>Tanggal Pesan</td>
               <td>:</td>
-              <td><span><strong>15 Oktober 2021</strong></span></td>
+              <td><span><strong><?= `${formCheckout.tanggal} ${formCheckout.bulan} ${formCheckout.tahun}` ?></strong></span></td>
             </tr>
           </table>
         </div>
      
         <div class="kotak ">
           <i class="bi bi-exclamation-circle-fill me-3"></i>
-          <h5 class="d-inline-block">Lakukan Pembayaran sebelum <span>15 Oktober 2021 , 18:00 WIB</span></h5>
+          <h5 class="d-inline-block">Lakukan Pembayaran sebelum <span><?= `${Number(formCheckout.tanggal) + 1} ${formCheckout.bulan} ${formCheckout.tahun} -  ${formCheckout.jamPesan} WIB` ?></span></h5>
         </div>
-        <h2 class="fw-bold mt-4">Alamat Transfer</h2>
+
+        <div class="detail-pesanan">
+          <ul class="list-group">
+            <li class="list-group-item">Rincian Pesanan Anda</li>
+            <li class="list-group-item">
+              <h4 class="subjudul">Tempat</h4>
+              <div class="kapasitas">
+                <div class="row">
+                  <div class="col-4">
+                    <img src="/img/cafe/<?= caves.gambar[1].namaGambar ?>" alt="Cafe" class="img-fluid cafe mt-2" />
+                  </div>
+                  <div class="col">
+                    <table class="table">
+                      <tr>
+                        <td>Cafe</td>
+                        <td>:</td>
+                        <td><span class="text-capitalize"> <?= caves.nama ?> </span></td>
+                      </tr>
+                      <tr>
+                        <td>Alamat Cafe</td>
+                        <td>:</td>
+                        <td><span><?= caves.alamat ?></span></td>
+                      </tr>
+                      <tr>
+                        <td>Kategori</td>
+                        <td>:</td>
+                        <td><span class="text-capitalize"><?= caves.kategori ?></span></td>
+                      </tr>
+                      <tr>
+                        <td>Kapasitas</td>
+                        <td>:</td>
+                        <td><span class="text-capitalize"><?= formCapacities.kapKategori ?></span></td>
+                      </tr>
+                      <tr>
+                        <td>Atas Nama</td>
+                        <td>:</td>
+                        <td><span class="text-capitalize"><?= formCapacities.namaPemesan ?></span></td>
+                      </tr>
+                      <tr>
+                        <td>Tanggal Pesan</td>
+                        <td>:</td>
+                        <td><span><?= `${formCheckout.tanggal} ${formCheckout.bulan} ${formCheckout.tahun}` ?></span></td>
+                      </tr>
+                      <tr>
+                        <td>Jam Pesan</td>
+                        <td>:</td>
+                        <td><span><?= formCheckout.jamPesan ?> WIB</span></td>
+                      </tr>
+                      <tr>
+                        <td>Harga</td>
+                        <td>:</td>
+                        <td><span>Rp. <?= formCapacities.harga ?></span></td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <h4 class="subjudul">Makanan</h4>
+              <? formFoods.forEach((el,i)=>{ ?>
+              <div class="kapasitas">
+                <div class="row">
+                  <div class="col-4">
+                    <img src="/img/food/<?= foods[i].gambar ?>" alt="Food" class="img-fluid mt-2" />
+                  </div>
+                  <div class="col">
+                    <table class="table ">
+                      <tr>
+                        <td>Menu</td>
+                        <td>:</td>
+                        <td><span> <?= foods[i].namaMenu ?> </span></td>
+                      </tr>
+                      <tr>
+                        <td>Quantity</td>
+                        <td>:</td>
+                        <td><span><?= el.quantity ?></span></td>
+                      </tr>
+                      <tr>
+                        <td>Harga</td>
+                        <td>:</td>
+                        <td><span>Rp. <?= el.harga ?></span></td>
+                      </tr>
+                     
+                    </table>
+                  </div>
+                </div>
+              </div>  
+              <? }) ?>
+            </li>
+            <li class="list-group-item">
+              <h4 class="subjudul">Catatan</h4>
+              <input type="text" class="form-control mb-2" value="<?= (formCheckout.catatan) ? formCheckout.catatan : 'Catatan Kamu Masih Kosong' ?>" >
+            </li>
+        </div>
+        
+      </div>
+      <div class="col-md-1"></div>
+      <div class="col-md-5 alamat">
+        <h2 class="fw-bold ">Alamat Transfer</h2>
         <div class="identitas">
-          <table>
+          <table class="mb-3">
             <tr>
               <td>Nama Rekening</td>
               <td>:</td>
@@ -50,13 +149,15 @@
               <td>:</td>
               <td><span>Bank Central Asia (BCA)</span></td>
             </tr>
+           
           </table>
+          <span class="pt-3"><a href="" class="text-dark" data-bs-toggle="modal" data-bs-target="#gantiBank"><i class="bi bi-box-arrow-in-down-left"></i> Ubah Akun Bank</a></span>
         </div>
-        <a href="" class="text-dark" data-bs-toggle="modal" data-bs-target="#gantiBank"><i class="bi bi-box-arrow-in-down-left"></i> Ubah Akun Bank</a>
-      </div>
-      <div class="col-md-5 text-center ">
-        <img src="/img/bcalogo.png" alt="BCA logo" />
-        <button class="btn btn-dark fs-4 px-4 py-2 mt-4" data-bs-toggle="modal" data-bs-target="#modalUpload">Unggah Bukti Pembayaran</button>
+        
+        <div class="image-bank text-center">
+          <img src="/img/bcalogo.png" alt="BCA logo" class="img-fluid" />
+          <button class="btn btn-dark px-4 py-2 " data-bs-toggle="modal" data-bs-target="#modalUpload">Unggah Bukti Pembayaran</button>
+        </div>
       </div>
     </div>
   </div>

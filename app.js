@@ -30,6 +30,7 @@ const Capacity = require("./model/capacity");
 const FormCapacity = require("./model/form-capacity");
 const Food = require("./model/food");
 const FormFood = require("./model/form-food");
+const Checkout = require("./model/checkout");
 // const user = async () => {
 //   return await User.find();
 // };
@@ -302,9 +303,12 @@ app.get("/cafe/details/:id", async (req, res) => {
   const caves = await Cafe.findOne({ idCafe: req.params.id });
   const capacities = await Capacity.find({ idCafe: req.params.id });
   const dataUser = await req.user;
-  var formCapacities;
+  let formCapacities, formFoods;
   if (dataUser) {
     formCapacities = await FormCapacity.findOne({ idUser: dataUser.id });
+    if (formCapacities) {
+      formFoods = await FormFood.find({ idCafe: formCapacities.idCafe, idUser: dataUser.id });
+    }
   } else {
     formCapacities = null;
   }
@@ -315,6 +319,7 @@ app.get("/cafe/details/:id", async (req, res) => {
     caves,
     capacities,
     formCapacities,
+    formFoods,
   });
 });
 
@@ -556,12 +561,67 @@ app.put("/cart/qtyplus", async (req, res) => {
   });
 });
 
+app.post("/cart", async (req, res) => {
+  const dataOldCart = await Checkout.find({ idUser: req.body.iduser, idCafe: req.body.idcafe });
+  let arrBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+
+  const dataMasuk = {
+    idUser: req.body.iduser,
+    idCafe: req.body.idcafe,
+    idMenu: req.body.idmenu.split(","),
+    catatan: req.body.catatan,
+    total: req.body.total,
+    tanggal: new Date().getDate(),
+    bulan: arrBulan[new Date().getMonth()],
+    tahun: new Date().getFullYear(),
+    jamPesan: `${new Date().getHours()}:${new Date().getMinutes()}`,
+  };
+  if (dataOldCart.length !== 0) {
+    console.log("masuk kesini ora?");
+    Checkout.deleteMany({ idUser: req.body.iduser, idCafe: req.body.idcafe }).then((result) => {
+      Checkout.insertMany(dataMasuk, (error, result) => {
+        if (error) throw error;
+        res.redirect("/pay");
+      });
+    });
+  } else {
+    Checkout.insertMany(dataMasuk, (error, result) => {
+      if (error) throw error;
+      res.redirect("/pay");
+    });
+  }
+});
+
 app.get("/pay", checkAuthenticated, async (req, res) => {
   let dataUser = await req.user;
+  let formCheckout = await Checkout.findOne({ idUser: dataUser.id });
+  let formFoods = [];
+  let foods = [];
+  console.log(formCheckout.idMenu.length);
+  for (let i = 0; i < formCheckout.idMenu.length; i++) {
+    let formFood = await FormFood.find({ idCafe: formCheckout.idCafe, idUser: formCheckout.idUser, idMenu: formCheckout.idMenu[i] });
+    let food = await Food.find({ idCafe: formCheckout.idCafe, idMenu: formCheckout.idMenu[i] });
+    if (food && formFood) {
+      formFoods.push(...formFood);
+      foods.push(...food);
+    }
+  }
+
+  let formCapacities = await FormCapacity.findOne({ idUser: dataUser.id, idCafe: formCheckout.idCafe });
+  let caves = await Cafe.findOne({ idCafe: formCheckout.idCafe });
+
+  console.log(formFoods);
+  console.log(foods);
+
   res.render("pay", {
     layout: "layouts/main-layout-pay",
     title: "Form Pembayaran",
     dataUser,
+    formCheckout,
+    formFoods,
+    foods,
+    formCapacities,
+    caves,
   });
 });
 

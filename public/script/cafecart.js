@@ -74,6 +74,12 @@ function disabledButton() {
 disabledButton();
 let total = [];
 let totalCapacity = [];
+let idMenu = [];
+
+const bayarKeranjang = document.querySelector("input.bayar-keranjang");
+const idMenuArray = document.querySelector(".total input.idmenu-array");
+const totalHargaKeranjang = document.querySelector(".total input.total-harga");
+
 document.addEventListener("change", function (e) {
   if (e.target.classList.contains("check-capacity")) {
     e.preventDefault();
@@ -81,13 +87,17 @@ document.addEventListener("change", function (e) {
     if (e.target.checked) {
       totalCapacity.push(eValue);
       total.push(...totalCapacity);
+      bayarKeranjang.removeAttribute("disabled");
     } else {
       unCheckedFood();
       totalCapacity.splice(0);
       total.splice(0);
+      bayarKeranjang.setAttribute("disabled", "true");
     }
 
     let totalHarga = countPriceCheck(total).toString();
+    totalHargaKeranjang.value = totalHarga;
+
     totalForPrice.innerHTML = formatRupiah(totalHarga);
   } else if (e.target.classList.contains("check-for-price")) {
     e.preventDefault();
@@ -96,12 +106,19 @@ document.addEventListener("change", function (e) {
 
     if (e.target.checked) {
       total.unshift(eValue[2]);
+      idMenu.unshift(eValue[1]);
     } else {
       let kurang = total.filter((el) => el !== eValue[2]);
+      let idMenuFilter = idMenu.filter((el) => el !== eValue[1]);
       total = [...kurang];
+      idMenu = [...idMenuFilter];
     }
 
+    //ubah value
+    idMenuArray.value = idMenu;
     let totalHarga = countPriceCheck(total).toString();
+    totalHargaKeranjang.value = totalHarga;
+
     totalForPrice.innerHTML = formatRupiah(totalHarga);
   }
 });

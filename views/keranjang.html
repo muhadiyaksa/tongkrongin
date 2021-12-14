@@ -76,7 +76,7 @@
         <div class="pesanan">
           <div class="row">
             <div class="col-3 text-center my-auto">
-              <img src="/img/<?= food.gambar ?>" alt="food" class="img-fluid" />
+              <img src="/img/food/<?= food.gambar ?>" alt="food" class="img-fluid" />
             </div>
             <div class="col-9">
               <h4>
@@ -125,14 +125,21 @@
     </div>
     <? } ?>
     <div class="garis border-1 border-bottom"></div>
-    <div class="catatan">
-      <input type="text" class="form-input w-100" placeholder="Catatan untuk Pesanan kamu" />
-    </div>
-    <div class="total text-end mt-4">
-      <h3>Total : Rp. <span>-</span></h3>
-      <input class="btn btn-dark text-light px-3 mt-3" type="submit" value="Bayar Sekarang" />
-      <!-- <a href="/pay">Bayar</a> -->
-    </div>
+    <form action="/cart" method="post">
+      <div class="catatan">
+        <input type="text" class="form-input w-100" name="catatan" placeholder="Catatan untuk Pesanan kamu" />
+      </div>
+      <div class="total text-end mt-4">
+        <input type="hidden" name="iduser" value="<?= dataUser.id ?>" />
+        <input type="hidden" name="idcafe" value="<?= formCapacities.idCafe ?>" />
+        <input type="hidden" class="idmenu-array" name="idmenu" value="" />
+        <input type="hidden" class="total-harga" name="total" value="" />
+
+        <h3>Total : Rp. <span>-</span></h3>
+        <input class="btn btn-dark text-light px-3 mt-3 bayar-keranjang" type="submit" value="Bayar Sekarang" disabled />
+        <!-- <a href="/pay">Bayar</a> -->
+      </div>
+    </form>
   </div>
 </section>
 

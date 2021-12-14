@@ -59,6 +59,10 @@ section.makanan a {
   text-decoration: none;
   color: #4f4f4f;
 }
+section.tempatduduk p.alert {
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+}
 section.tempatduduk .kapasitas {
   display: grid;
   grid-template-columns: 1fr 3fr 1.5fr;
@@ -158,6 +162,9 @@ section.makanan .kapasitas h5 {
     margin-top: 5px;
     grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
     gap: 10px;
+  }
+  section.tempatduduk p.alert {
+    font-size: 11px;
   }
   section.tempatduduk .kapasitas {
     grid-template-columns: 1fr 1fr 1fr;
