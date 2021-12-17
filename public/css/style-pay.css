@@ -48,6 +48,9 @@ section.pay .identitas tr td:nth-child(1) {
 section.pay .identitas tr td:nth-child(2) {
   padding-right: 10px;
 }
+section.pay .detail-pesanan table tr {
+  /* display: grid; */
+}
 
 section.pay .detail-pesanan .table tr td:nth-child(1) {
   width: 70px;
@@ -90,7 +93,44 @@ section.pay .image-bank button {
   font-family: "Poppins", sans-serif;
   margin-top: 30px;
 }
-
+.modal .jenis-bank {
+  font-family: "Poppins", sans-serif;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 20px;
+}
+.modal .jenis-bank .item-bank {
+  height: 60px;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 7px;
+  cursor: pointer;
+  position: relative;
+  margin-bottom: 30px;
+}
+.modal .jenis-bank .item-bank .overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.modal .jenis-bank .item-bank img {
+  align-self: center;
+  justify-content: center;
+}
+.modal .kotak {
+  margin-top: 20px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  padding: 10px 10px;
+}
+.modal .kotak p {
+  font-size: 12px;
+}
+section.footer {
+  display: none;
+}
 @media (min-width: 768px) {
   section.pay .kotak h5 {
     font-size: 16px;
@@ -120,5 +160,8 @@ section.pay .image-bank button {
   }
   section.pay .alamat {
     margin-top: 0px;
+  }
+  section.footer {
+    display: block;
   }
 }

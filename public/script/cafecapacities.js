@@ -30,37 +30,57 @@ document.addEventListener("click", function (e) {
 
 const jamBuka = document.querySelector("input.jam-buka");
 const jamTutup = document.querySelector("input.jam-tutup");
+const tanggalIsi = document.querySelector("input.tanggal-pesan");
+const jamIsi = document.querySelector("input.jam-pesan");
 
 document.addEventListener("change", function (e) {
   if (e.target.classList.contains("tanggal-pesan")) {
     let valueE = e.target.value.split("-");
-    let hariIni = Number(new Date().getDate()) + 2;
+    let jamIni = new Date().getHours();
+    let hariIni = new Date().getDate();
     let bulanIni = Number(new Date().getMonth()) + 1;
-    console.log(bulanIni);
     let tahunIni = new Date().getFullYear();
+
+    let valueJamTutup = jamTutup.value;
+    let batasPesan = Number(valueJamTutup.toString().split(":")[0]) - 2;
+    console.log(jamIni);
 
     const kirimkapasitas = document.querySelector("button.kirim-kapasitas");
     const info = document.querySelector("span.info-tanggal");
+    const infoJam = document.querySelector("span.info-jam");
 
     if (valueE[0] >= tahunIni) {
       if (valueE[1] >= bulanIni) {
-        if (valueE[2] >= hariIni) {
+        if (valueE[2] > hariIni) {
           info.innerHTML = "";
+          infoJam.innerHTML = "";
+          jamIsi.value = "";
           kirimkapasitas.removeAttribute("disabled");
-          console.log("kesini nih");
+          jamIsi.removeAttribute("disabled");
+        } else if (valueE[2] == hariIni) {
+          if (batasPesan <= jamIni) {
+            info.innerHTML = "Hari ini sudah melewati Batas Jam Pemesanan";
+            kirimkapasitas.setAttribute("disabled", "true");
+            jamIsi.setAttribute("disabled", "true");
+          }
         } else {
-          info.innerHTML = "Masukan Tanggal Minimal 2 Hari Setelah Hari ini";
+          info.innerHTML = "Masukan Tanggal Hari ini atau Setelah Hari ini";
           kirimkapasitas.setAttribute("disabled", "true");
+          jamIsi.setAttribute("disabled", "true");
         }
       } else if (valueE[1] < bulanIni && valueE[0] > tahunIni) {
         info.innerHTML = "";
+        infoJam.innerHTML = "";
+        jamIsi.value = "";
         kirimkapasitas.removeAttribute("disabled");
+        jamIsi.removeAttribute("disabled");
       } else {
-        info.innerHTML = "Masukan Tanggal Minimal 2 Hari Setelah Hari ini";
+        info.innerHTML = "Masukan Tanggal Hari ini atau Hari Setelah Hari ini";
         kirimkapasitas.setAttribute("disabled", "true");
+        jamIsi.removeAttribute("disabled");
       }
     } else {
-      info.innerHTML = "Masukan Tanggal Minimal 2 Hari Setelah Hari ini";
+      info.innerHTML = "Masukan Tanggal Hari ini atau Hari Setelah Hari ini";
       kirimkapasitas.setAttribute("disabled", "true");
     }
   }
@@ -73,23 +93,57 @@ document.addEventListener("change", function (e) {
 
       valueJamBuka = jamBuka.value;
       valueJamTutup = jamTutup.value;
-      let batasPesan = Number(valueJamTutup.toString().split(":").join("")) - 300;
+      let batasPesan = Number(valueJamTutup.toString().split(":").join("")) - 200;
       let arrayBatasPesan = batasPesan.toString().split("");
+
+      let tanggalValue = tanggalIsi.value.split("-");
+
+      let hariIni = Number(new Date().getDate());
+      let jamIni = new Date().getHours();
+      let menitIni = new Date().getMinutes();
+      let batasJamSekarang = Number(`${jamIni}${menitIni.length == 1 ? `0${menitIni}` : `${menitIni}`}`);
+      let batasJamKedepan = Number(`${jamIni + 1}${menitIni.length == 1 ? `0${menitIni}` : `${menitIni}`}`);
+      let valueIsi = Number(e.target.value.toString().split(":").join(""));
+      console.log(batasJamSekarang);
+      console.log(batasJamKedepan);
       arrayBatasPesan.splice(2, 0, ":");
 
       let valueBatasPesan = arrayBatasPesan.join("");
 
-      if (e.target.value >= valueJamBuka && e.target.value <= valueJamTutup) {
-        if (e.target.value > valueBatasPesan) {
-          info.innerHTML = "Pilihlah Waktu minimal 3 Jam sebelum Cafe Tutup";
-          kirimkapasitas.setAttribute("disabled", "true");
-        } else {
-          info.innerHTML = "";
-          kirimkapasitas.removeAttribute("disabled");
-        }
-      } else {
-        info.innerHTML = "Pilihlah Waktu sesuai jam Buka dan Jam Tutup Cafe";
+      if (tanggalValue.length === 1) {
+        info.innerHTML = "Pilihlah Tanggal Terlebih dahulu";
         kirimkapasitas.setAttribute("disabled", "true");
+      } else {
+        if (tanggalValue[2] == hariIni) {
+          if (e.target.value >= valueJamBuka && e.target.value <= valueJamTutup) {
+            if (valueIsi >= batasJamSekarang && valueIsi < batasJamKedepan) {
+              info.innerHTML = "Pilihlah Waktu minimal 1 jam Dari sekarang";
+              kirimkapasitas.setAttribute("disabled", "true");
+            } else if (e.target.value > valueBatasPesan) {
+              info.innerHTML = "Pilihlah Waktu minimal 2 Jam sebelum Cafe Tutup";
+              kirimkapasitas.setAttribute("disabled", "true");
+            } else {
+              info.innerHTML = "";
+              kirimkapasitas.removeAttribute("disabled");
+            }
+          } else {
+            info.innerHTML = "";
+            kirimkapasitas.removeAttribute("disabled");
+          }
+        } else {
+          if (e.target.value >= valueJamBuka && e.target.value <= valueJamTutup) {
+            if (e.target.value > valueBatasPesan) {
+              info.innerHTML = "Pilihlah Waktu minimal 2 Jam sebelum Cafe Tutup";
+              kirimkapasitas.setAttribute("disabled", "true");
+            } else {
+              info.innerHTML = "";
+              kirimkapasitas.removeAttribute("disabled");
+            }
+          } else {
+            info.innerHTML = "Pilihlah Waktu sesuai jam Buka dan Jam Tutup Cafe";
+            kirimkapasitas.setAttribute("disabled", "true");
+          }
+        }
       }
     }
   }

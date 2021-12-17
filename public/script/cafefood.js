@@ -28,7 +28,9 @@ const hargaKapasitasValue = document.querySelector("input.harga-kapasitas");
 const hargaKapasitas = document.querySelector("span.harga-kapasitas");
 
 let hargaKap = hargaKapasitasValue.value;
-hargaKapasitas.innerHTML = formatRupiah(hargaKap, "Rp. ");
+if (hargaKapasitas) {
+  hargaKapasitas.innerHTML = formatRupiah(hargaKap, "Rp. ");
+}
 
 const qtyForm = document.querySelector("input.jmlFormFoods");
 let cartsArray = [];

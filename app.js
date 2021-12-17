@@ -578,7 +578,7 @@ app.post("/cart", async (req, res) => {
   };
   if (dataOldCart.length !== 0) {
     console.log("masuk kesini ora?");
-    Checkout.deleteMany({ idUser: req.body.iduser, idCafe: req.body.idcafe }).then((result) => {
+    Checkout.deleteMany({ idUser: req.body.iduser }).then((result) => {
       Checkout.insertMany(dataMasuk, (error, result) => {
         if (error) throw error;
         res.redirect("/pay");
@@ -593,25 +593,28 @@ app.post("/cart", async (req, res) => {
 });
 
 app.get("/pay", checkAuthenticated, async (req, res) => {
-  let dataUser = await req.user;
+  const dataUser = await req.user;
   let formCheckout = await Checkout.findOne({ idUser: dataUser.id });
   let formFoods = [];
   let foods = [];
-  console.log(formCheckout.idMenu.length);
-  for (let i = 0; i < formCheckout.idMenu.length; i++) {
-    let formFood = await FormFood.find({ idCafe: formCheckout.idCafe, idUser: formCheckout.idUser, idMenu: formCheckout.idMenu[i] });
-    let food = await Food.find({ idCafe: formCheckout.idCafe, idMenu: formCheckout.idMenu[i] });
-    if (food && formFood) {
-      formFoods.push(...formFood);
-      foods.push(...food);
+
+  let formCapacities, caves;
+  if (formCheckout) {
+    formCapacities = await FormCapacity.findOne({ idUser: formCheckout.idUser });
+    caves = await Cafe.findOne({ idCafe: formCheckout.idCafe });
+    for (let i = 0; i < formCheckout.idMenu.length; i++) {
+      try {
+        let formFood = await FormFood.find({ idCafe: formCheckout.idCafe, idUser: dataUser.id, idMenu: formCheckout.idMenu[i] });
+        let food = await Food.find({ idCafe: formCheckout.idCafe, idMenu: formCheckout.idMenu[i] });
+        if (food && formFood) {
+          formFoods.push(...formFood);
+          foods.push(...food);
+        }
+      } catch (err) {
+        if (err) throw err;
+      }
     }
   }
-
-  let formCapacities = await FormCapacity.findOne({ idUser: dataUser.id, idCafe: formCheckout.idCafe });
-  let caves = await Cafe.findOne({ idCafe: formCheckout.idCafe });
-
-  console.log(formFoods);
-  console.log(foods);
 
   res.render("pay", {
     layout: "layouts/main-layout-pay",
@@ -702,6 +705,24 @@ app.post(
     }
   }
 );
+
+//Halaman User
+app.get("/about", async (req, res) => {
+  const dataUser = await req.user;
+  const caves = await Cafe.find();
+
+  let formCapacities;
+  if (dataUser) {
+    formCapacities = await FormCapacity.findOne({ idUser: dataUser.id });
+  }
+  res.render("about", {
+    title: "Tentang Kami",
+    layout: "layouts/main-layout-primary",
+    dataUser,
+    caves,
+    formCapacities,
+  });
+});
 
 app.delete("/logout", (req, res) => {
   req.logOut();

@@ -30,7 +30,7 @@
      
         <div class="kotak ">
           <i class="bi bi-exclamation-circle-fill me-3"></i>
-          <h5 class="d-inline-block">Lakukan Pembayaran sebelum <span><?= `${Number(formCheckout.tanggal) + 1} ${formCheckout.bulan} ${formCheckout.tahun} -  ${formCheckout.jamPesan} WIB` ?></span></h5>
+          <h5 class="d-inline-block">Lakukan Pembayaran sebelum <span><?= `${Number(formCheckout.tanggal)} ${formCheckout.bulan} ${formCheckout.tahun} -  ${Number(formCheckout.jamPesan.split(':')[0]) + 1}:${Number(formCheckout.jamPesan.split(':')[1])} WIB` ?></span></h5>
         </div>
 
         <div class="detail-pesanan">
@@ -40,49 +40,49 @@
               <h4 class="subjudul">Tempat</h4>
               <div class="kapasitas">
                 <div class="row">
-                  <div class="col-4">
+                  <div class="col-3">
                     <img src="/img/cafe/<?= caves.gambar[1].namaGambar ?>" alt="Cafe" class="img-fluid cafe mt-2" />
                   </div>
                   <div class="col">
-                    <table class="table">
+                    <table class="table table-sm" >
                       <tr>
-                        <td>Cafe</td>
-                        <td>:</td>
+                        <td><span>Cafe</span></td>
+                        <td><span>:</span></td>
                         <td><span class="text-capitalize"> <?= caves.nama ?> </span></td>
                       </tr>
                       <tr>
-                        <td>Alamat Cafe</td>
-                        <td>:</td>
+                        <td><span>Alamat Cafe</span></td>
+                        <td><span>:</span></td>
                         <td><span><?= caves.alamat ?></span></td>
                       </tr>
                       <tr>
-                        <td>Kategori</td>
-                        <td>:</td>
+                        <td><span>Kategori</span></td>
+                        <td><span>:</span></td>
                         <td><span class="text-capitalize"><?= caves.kategori ?></span></td>
                       </tr>
                       <tr>
-                        <td>Kapasitas</td>
-                        <td>:</td>
+                        <td><span>Kapasitas</span></td>
+                        <td><span>:</span></td>
                         <td><span class="text-capitalize"><?= formCapacities.kapKategori ?></span></td>
                       </tr>
                       <tr>
-                        <td>Atas Nama</td>
-                        <td>:</td>
+                        <td><span>Atas Nama</span></td>
+                        <td><span>:</span></td>
                         <td><span class="text-capitalize"><?= formCapacities.namaPemesan ?></span></td>
                       </tr>
                       <tr>
-                        <td>Tanggal Pesan</td>
-                        <td>:</td>
+                        <td><span>Tanggal Pesan</span></td>
+                        <td><span>:</span></td>
                         <td><span><?= `${formCheckout.tanggal} ${formCheckout.bulan} ${formCheckout.tahun}` ?></span></td>
                       </tr>
                       <tr>
-                        <td>Jam Pesan</td>
-                        <td>:</td>
+                        <td><span>Jam Pesan</span></td>
+                        <td><span>:</span></td>
                         <td><span><?= formCheckout.jamPesan ?> WIB</span></td>
                       </tr>
                       <tr>
-                        <td>Harga</td>
-                        <td>:</td>
+                        <td><span>Harga</span></td>
+                        <td><span>:</span></td>
                         <td><span>Rp. <?= formCapacities.harga ?></span></td>
                       </tr>
                     </table>
@@ -95,11 +95,11 @@
               <? formFoods.forEach((el,i)=>{ ?>
               <div class="kapasitas">
                 <div class="row">
-                  <div class="col-4">
+                  <div class="col-3">
                     <img src="/img/food/<?= foods[i].gambar ?>" alt="Food" class="img-fluid mt-2" />
                   </div>
                   <div class="col">
-                    <table class="table ">
+                    <table class="table table-sm">
                       <tr>
                         <td>Menu</td>
                         <td>:</td>
@@ -124,7 +124,7 @@
             </li>
             <li class="list-group-item">
               <h4 class="subjudul">Catatan</h4>
-              <input type="text" class="form-control mb-2" value="<?= (formCheckout.catatan) ? formCheckout.catatan : 'Catatan Kamu Masih Kosong' ?>" >
+              <input type="text" class="form-control mb-2" value="<?= (formCheckout.catatan) ? formCheckout.catatan : '-' ?>" >
             </li>
         </div>
         
@@ -137,17 +137,17 @@
             <tr>
               <td>Nama Rekening</td>
               <td>:</td>
-              <td><span>PT. Tongkrongin</span></td>
+              <td><span class="nama-rekening"><strong><?= caves.rekening[0].namaRekening ?></strong></span></td>
             </tr>
             <tr>
               <td>Nomor Rekening</td>
               <td>:</td>
-              <td><span>8821923190124</span></td>
+              <td><span class="nomor-rekening"><strong> <?= caves.rekening[0].nomorRekening ?></strong> </span></td>
             </tr>
             <tr>
-              <td>Nomor Bank</td>
+              <td>Nama Bank</td>
               <td>:</td>
-              <td><span>Bank Central Asia (BCA)</span></td>
+              <td><span class="nama-bank"><strong><?= caves.rekening[0].namaBank ?></span></td>
             </tr>
            
           </table>
@@ -155,7 +155,7 @@
         </div>
         
         <div class="image-bank text-center">
-          <img src="/img/bcalogo.png" alt="BCA logo" class="img-fluid" />
+          <img src="/img/bank/<?= caves.rekening[0].namaBank ?>.png" alt="BCA logo" class="img-fluid" />
           <button class="btn btn-dark px-4 py-2 " data-bs-toggle="modal" data-bs-target="#modalUpload">Unggah Bukti Pembayaran</button>
         </div>
       </div>
@@ -167,15 +167,23 @@
 <div class="modal fade" id="gantiBank" tabindex="-1" aria-labelledby="gantiBankLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="gantiBankLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      
+      <div class="modal-body">
+        <div class="d-flex mb-4">
+          <h5 class="modal-title" id="gantiBankLabel">Pilih Bank</h5>
+          <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="jenis-bank">
+          <? caves.rekening.forEach(el=>{ ?>
+            <div class="item-bank" >
+              <div class="overlay" namaRekening="<?= el.namaRekening ?>" nomorRekening="<?= el.nomorRekening ?>" namaBank="<?= el.namaBank ?>" data-bs-dismiss="modal" aria-label="Close"></div>
+              <img src="/img/bank/<?= el.namaBank ?>.png" alt="<?= el.namaBank ?>" class="img-fluid" >
+            </div>
+          <? }) ?>
+        </div>
+        
       </div>
-      <div class="modal-body">...</div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+     
     </div>
   </div>
 </div>
@@ -207,6 +215,9 @@
             <input type="file" name="file" id="upload-photo" class="upload-photo"/>
           </div>
           <div class="notif-area my-3"></div>
+          <div class="kotak">
+            <p class="m-0"><i class="bi bi-exclamation-circle-fill me-3"></i> Dengan Menekan tombol <strong>Kirim</strong> maka kamu sudah menyelesaikan Pembayaran</p>
+          </div>
           <div class="kirim">
               <input type="submit" value="Kirim"></input>
           </div>

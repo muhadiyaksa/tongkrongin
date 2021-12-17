@@ -131,7 +131,7 @@
       </div>
       <div class="total text-end mt-4">
         <input type="hidden" name="iduser" value="<?= dataUser.id ?>" />
-        <input type="hidden" name="idcafe" value="<?= formCapacities.idCafe ?>" />
+        <input type="hidden" name="idcafe" value="<?= (formCapacities) ? formCapacities.idCafe : ''?>" />
         <input type="hidden" class="idmenu-array" name="idmenu" value="" />
         <input type="hidden" class="total-harga" name="total" value="" />
 

@@ -69,7 +69,10 @@
     <p>
       <span class="fw-bold"><?= (formCapacities && formFoods) ? formFoods.length + 1 : (formCapacities && !formFoods) ? '1' : '0' ?></span> Pesanan Dalam Keranjang
     </p>
-    <p class="alert alert-danger"><?= (formCapacities) ?    'Kamu sudah Memiliki Pesanan Dalam Keranjang, Apabila kamu memilih Kapasitas di Cafe ini , maka Pesanan Mu dalam Keranjang akan Otomatis Terhapus' : '' ?></p>
+    <? if (formCapacities){ ?>
+    <p class="alert alert-danger">Kamu sudah Memiliki Pesanan Dalam Keranjang, Apabila kamu memilih Kapasitas di Cafe ini , maka Pesanan Mu dalam Keranjang akan Otomatis Terhapus</p>
+    <? } ?>
+
     <? capacities.forEach((el)=>{ ?>
     <div class="kapasitas" data-bs-toggle="modal" data-bs-target="#formPesan">
       <div class="overlay" kategori="<?= el.kapKategori ?>" jumlah="<?= el.jumlah ?>" harga="<?= el.harga ?>"></div>
