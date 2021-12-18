@@ -141,3 +141,61 @@ function formatRupiah(angka, prefix) {
   rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
   return prefix == undefined ? rupiah : rupiah ? "Rp. " + rupiah : "";
 }
+
+const tanggalPesan = document.querySelector("input.tanggal-pesan");
+const wadahTanggal = document.querySelector("span.wadah-tanggal");
+
+function ubahTanggal(tanggal) {
+  let arr = tanggal.value.split("-");
+  let bulan = ["", "januari", "februari", "maret", "april", "mei", "juni", "juli", "agustus", "september", "oktober", "november", "desember"];
+  let bulanIndex = arr[1];
+
+  wadahTanggal.innerHTML = `${arr[2]} ${bulan[bulanIndex]} ${arr[0]}`;
+}
+if (tanggalPesan) {
+  ubahTanggal(tanggalPesan);
+}
+
+const waktuPesan = document.querySelector("input.waktu-pesan");
+const jamPesan = document.querySelector("input.jam-pesan");
+const kadaluarsa = document.querySelector("section.keranjang .kadaluarsa");
+const checkboxInput = document.querySelectorAll("section.keranjang input.form-check-input");
+
+function cekKadaluarsa(tanggal, jam) {
+  let tanggalSekarang = new Date().getDate();
+  let bulanSekarang = Number(new Date().getMonth()) + 1;
+  let tahunSekarang = new Date().getFullYear();
+  let jamSekarang = new Date().getHours();
+  let menitSekarang = new Date().getMinutes();
+
+  let arrSekarang = [tahunSekarang, cekLength(bulanSekarang), cekLength(tanggalSekarang), cekLength(jamSekarang), cekLength(menitSekarang)].join("");
+  let arrTanggal = tanggal.value.split("-");
+  let arrJam = jam.value.split(":");
+
+  let arrPesan = [arrTanggal[0], cekLength(arrTanggal[1]), cekLength(arrTanggal[2]), cekLength(arrJam[0]), cekLength(arrJam[1])].join("");
+  // console.log(Number(arrSekarang));
+  // console.log(arrPesan);
+
+  if (Number(arrPesan) <= Number(arrSekarang)) {
+    bayarKeranjang.setAttribute("disabled", "true");
+    checkboxInput.forEach((el) => {
+      el.setAttribute("disabled", "true");
+    });
+    kadaluarsa.classList.remove("displayNone");
+  } else {
+    kadaluarsa.classList.add("displayNone");
+    checkboxInput.forEach((el) => {
+      el.removeAttribute("disabled", "true");
+    });
+  }
+}
+
+cekKadaluarsa(waktuPesan, jamPesan);
+
+function cekLength(param) {
+  if (param.length == 1) {
+    return `0${param}`;
+  } else {
+    return param;
+  }
+}

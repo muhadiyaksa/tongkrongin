@@ -1,8 +1,16 @@
 body {
   color: #474747;
 }
+.displayNone {
+  display: none;
+}
 section.keranjang {
   margin: 50px 0px;
+}
+section.keranjang .kadaluarsa {
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  margin-top: 20px;
 }
 
 section.keranjang .judul {
@@ -154,6 +162,10 @@ section.keranjang .catatan input {
 }
 
 @media (min-width: 768px) {
+  section.keranjang .kadaluarsa {
+    font-size: 16px;
+  }
+
   section.keranjang .judul {
     display: flex;
     flex-direction: row;

@@ -32,6 +32,9 @@ const Checkout = mongoose.model("Checkout", {
   jamPesan: {
     type: String,
   },
+  status: {
+    type: String,
+  },
 });
 
 module.exports = Checkout;

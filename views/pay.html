@@ -18,10 +18,11 @@
             <tr>
               <td>Total Pembayaran</td>
               <td>:</td>
-              <td><span><strong>Rp. <?= formCheckout.total ?></strong> </span></td>
+              <input type="hidden" class="total-pembayaran" value="<?= formCheckout.total ?>">
+              <td><span><strong class="totalbayar"></strong> </span></td>
             </tr>
             <tr>
-              <td>Tanggal Pesan</td>
+              <td>Tanggal Checkout</td>
               <td>:</td>
               <td><span><strong><?= `${formCheckout.tanggal} ${formCheckout.bulan} ${formCheckout.tahun}` ?></strong></span></td>
             </tr>
@@ -71,14 +72,15 @@
                         <td><span class="text-capitalize"><?= formCapacities.namaPemesan ?></span></td>
                       </tr>
                       <tr>
-                        <td><span>Tanggal Pesan</span></td>
+                        <td><span>Tanggal Booking</span></td>
                         <td><span>:</span></td>
-                        <td><span><?= `${formCheckout.tanggal} ${formCheckout.bulan} ${formCheckout.tahun}` ?></span></td>
+                        <input type="hidden" class="tanggal-pesan" value="<?= formCapacities.tanggalPesan ?>">
+                        <td><span class="wadah-tanggal text-capitalize"></span></td>
                       </tr>
                       <tr>
-                        <td><span>Jam Pesan</span></td>
+                        <td><span>Jam Booking</span></td>
                         <td><span>:</span></td>
-                        <td><span><?= formCheckout.jamPesan ?> WIB</span></td>
+                        <td><span><?= formCapacities.jamPesan ?> WIB</span></td>
                       </tr>
                       <tr>
                         <td><span>Harga</span></td>

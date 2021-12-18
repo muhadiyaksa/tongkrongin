@@ -575,6 +575,7 @@ app.post("/cart", async (req, res) => {
     bulan: arrBulan[new Date().getMonth()],
     tahun: new Date().getFullYear(),
     jamPesan: `${new Date().getHours()}:${new Date().getMinutes()}`,
+    status: "pending",
   };
   if (dataOldCart.length !== 0) {
     console.log("masuk kesini ora?");

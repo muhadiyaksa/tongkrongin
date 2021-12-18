@@ -19,6 +19,16 @@
       <div class="col-2">Harga</div>
       <div class="col-1"></div>
     </div>
+    <div class="kadaluarsa">
+      <div class="alert alert-danger">
+        <div class="row">
+          <div class="col-1">
+            <h5 class="m-0"><i class="bi bi-exclamation-circle-fill me-2"></i></h5>
+          </div>
+          <div class="col-11 text-start">Ups! Pesanan kamu sudah kadaluarsa , Hapus Atau Ganti pesananmu sekarang!</div>
+        </div>
+      </div>
+    </div>
     <input type="hidden" value="<?= (capacities) ? capacities.kapKategori : "kosong" ?>" class="isi-keranjang" />
     <? if(!capacities) { ?>
     <div class="kolomgrid mt-4 tempat"></div>
@@ -43,6 +53,8 @@
               Loc.
               <?= (caves) ? caves.nama : '' ?>
             </p>
+            <input type="hidden" class="waktu-pesan" value="<?= (formCapacities) ? formCapacities.tanggalPesan : '' ?>" />
+            <input type="hidden" class="jam-pesan" value="<?= (formCapacities) ? formCapacities.jamPesan : '' ?>" />
             <button class="btn btn-secondary rounded py-0" data-bs-toggle="modal" data-bs-target="#modalDetail"><i class="bi bi-box-arrow-in-down-left pe-2"></i>Detail</button>
           </div>
         </div>
@@ -195,7 +207,8 @@
             <tr>
               <th scope="row">Tanggal Pesan</th>
               <td>:</td>
-              <td><?= (formCapacities) ? formCapacities.tanggalPesan : ''?></td>
+              <input type="hidden" class="tanggal-pesan" value="<?= (formCapacities) ? formCapacities.tanggalPesan : '' ?>" />
+              <td><span class="wadah-tanggal text-capitalize"></span></td>
             </tr>
             <tr>
               <th scope="row">Jam Pesan</th>
