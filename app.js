@@ -336,7 +336,7 @@ app.post("/cafe/details", async (req, res) => {
     jamPesan: req.body.jampesan,
     harga: capacities.harga,
   };
-  // console.log(req.body.kapkategorilama);
+
   if (req.body.kapkategorilama) {
     FormCapacity.deleteOne({ idUser: req.body.iduser }).then((result) => {
       if (formFoods) {
@@ -578,7 +578,6 @@ app.post("/cart", async (req, res) => {
     status: "pending",
   };
   if (dataOldCart.length !== 0) {
-    console.log("masuk kesini ora?");
     Checkout.deleteMany({ idUser: req.body.iduser }).then((result) => {
       Checkout.insertMany(dataMasuk, (error, result) => {
         if (error) throw error;
@@ -760,76 +759,3 @@ app.use("/", (req, res) => {
 app.listen(port, () => {
   console.log(`Tongkrongin App | Listening at http://localhost:${port}`);
 });
-
-// app.get("/cafe", (req, res) => {
-//   res.render("cafe", {
-//     layout: "layouts/main-layout-list",
-//     title: "List Cafe",
-//   });
-// });
-
-// app.get("/cafe/details", (req, res) => {
-//   // const contact = findContact(req.params.nama);
-
-//   res.render("cafe-details", {
-//     layout: "layouts/main-layout-list",
-//     title: "Detail Cafe",
-//   });
-// });
-
-// app.get("/chart", (req, res) => {
-//   // const contact = findContact(req.params.nama);
-
-//   res.render("keranjang", {
-//     layout: "layouts/main-layout-list",
-//     title: "Keranjang",
-//   });
-// });
-
-// app.get("/chart/checkout", (req, res) => {
-//   // const contact = findContact(req.params.nama);
-
-//   res.render("pay", {
-//     layout: "layouts/main-layout-list",
-//     title: "Checkout",
-//   });
-// });
-
-// app.get("/cafe/details/food", (req, res) => {
-//   // const contact = findContact(req.params.nama);
-
-//   res.render("cafe-food", {
-//     layout: "layouts/main-layout-list",
-//     title: "Detail Food",
-//   });
-// });
-
-//Proses Login User
-// app.post(
-//   "/",
-//   checkNotAuthenticated,
-//   [
-//     body("email").custom(async (value, { req }) => {
-//       const valueEmail = await User.findOne({ email: value, password: req.body.password });
-//       if (!valueEmail) {
-//         throw new Error("Email Belum Terdaftar!");
-//       }
-//       return true;
-//     }),
-//     check("email", "Email tidak Valid!").isEmail(),
-//   ],
-//   (req, res) => {
-//     const errors = validationResult(req);
-//     if (!errors.isEmpty()) {
-//       res.render("login", {
-//         title: "Login",
-//         layout: "layouts/main-layout-login",
-//         errors: errors.array(),
-//       });
-//     } else {
-//       req.flash("msg", "Login Succesfully!");
-//       req.session.user = req.body.email;
-//       res.redirect("/");
-//     }
-//   }
-// );

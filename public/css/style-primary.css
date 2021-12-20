@@ -42,6 +42,8 @@ section.nav-res .logout {
 }
 .nav-link {
   line-height: 35px;
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
 }
 .navbar-nav span.batas {
   min-height: 100%;

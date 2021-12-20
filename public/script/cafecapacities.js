@@ -62,6 +62,12 @@ document.addEventListener("change", function (e) {
             info.innerHTML = "Hari ini sudah melewati Batas Jam Pemesanan";
             kirimkapasitas.setAttribute("disabled", "true");
             jamIsi.setAttribute("disabled", "true");
+          } else {
+            info.innerHTML = "";
+            infoJam.innerHTML = "";
+            jamIsi.value = "";
+            kirimkapasitas.removeAttribute("disabled");
+            jamIsi.removeAttribute("disabled");
           }
         } else {
           info.innerHTML = "Masukan Tanggal Hari ini atau Setelah Hari ini";
@@ -127,8 +133,8 @@ document.addEventListener("change", function (e) {
               kirimkapasitas.removeAttribute("disabled");
             }
           } else {
-            info.innerHTML = "";
-            kirimkapasitas.removeAttribute("disabled");
+            info.innerHTML = "Pilihlah Waktu sesuai jam Buka dan Jam Tutup Cafe";
+            kirimkapasitas.setAttribute("disabled", "true");
           }
         } else {
           if (e.target.value >= valueJamBuka && e.target.value <= valueJamTutup) {

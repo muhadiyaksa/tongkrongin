@@ -36,3 +36,12 @@ wadahCafeRes.forEach((el, i) => {
 
 console.log(inputCafe);
 console.log(wadahCafe);
+
+const caves = document.querySelectorAll("input.object-caves");
+
+let arr = [];
+caves.forEach((el) => {
+  arr.push(el.value.replace("\n", ""));
+});
+
+console.log(arr);

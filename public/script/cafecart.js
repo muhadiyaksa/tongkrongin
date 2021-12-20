@@ -146,15 +146,16 @@ const tanggalPesan = document.querySelector("input.tanggal-pesan");
 const wadahTanggal = document.querySelector("span.wadah-tanggal");
 
 function ubahTanggal(tanggal) {
-  let arr = tanggal.value.split("-");
-  let bulan = ["", "januari", "februari", "maret", "april", "mei", "juni", "juli", "agustus", "september", "oktober", "november", "desember"];
-  let bulanIndex = arr[1];
+  if (wadahTanggal !== null) {
+    let arr = tanggal.value.split("-");
+    let bulan = ["", "januari", "februari", "maret", "april", "mei", "juni", "juli", "agustus", "september", "oktober", "november", "desember"];
+    let bulanIndex = arr[1];
 
-  wadahTanggal.innerHTML = `${arr[2]} ${bulan[bulanIndex]} ${arr[0]}`;
+    wadahTanggal.innerHTML = `${arr[2]} ${bulan[bulanIndex]} ${arr[0]}`;
+  }
 }
-if (tanggalPesan) {
-  ubahTanggal(tanggalPesan);
-}
+
+ubahTanggal(tanggalPesan);
 
 const waktuPesan = document.querySelector("input.waktu-pesan");
 const jamPesan = document.querySelector("input.jam-pesan");
@@ -169,24 +170,28 @@ function cekKadaluarsa(tanggal, jam) {
   let menitSekarang = new Date().getMinutes();
 
   let arrSekarang = [tahunSekarang, cekLength(bulanSekarang), cekLength(tanggalSekarang), cekLength(jamSekarang), cekLength(menitSekarang)].join("");
-  let arrTanggal = tanggal.value.split("-");
-  let arrJam = jam.value.split(":");
+  let arrTanggal, arrJam, arrPesan;
 
-  let arrPesan = [arrTanggal[0], cekLength(arrTanggal[1]), cekLength(arrTanggal[2]), cekLength(arrJam[0]), cekLength(arrJam[1])].join("");
-  // console.log(Number(arrSekarang));
-  // console.log(arrPesan);
-
-  if (Number(arrPesan) <= Number(arrSekarang)) {
-    bayarKeranjang.setAttribute("disabled", "true");
-    checkboxInput.forEach((el) => {
-      el.setAttribute("disabled", "true");
-    });
-    kadaluarsa.classList.remove("displayNone");
+  if (!waktuPesan) {
+    if (kadaluarsa !== null) {
+      kadaluarsa.classList.add("displayNone");
+    }
   } else {
-    kadaluarsa.classList.add("displayNone");
-    checkboxInput.forEach((el) => {
-      el.removeAttribute("disabled", "true");
-    });
+    arrTanggal = tanggal.value.split("-");
+    arrJam = jam.value.split(":");
+    arrPesan = [arrTanggal[0], cekLength(arrTanggal[1]), cekLength(arrTanggal[2]), cekLength(arrJam[0]), cekLength(arrJam[1])].join("");
+
+    if (Number(arrPesan) <= Number(arrSekarang)) {
+      checkboxInput.forEach((el) => {
+        el.setAttribute("disabled", "true");
+      });
+      kadaluarsa.classList.remove("displayNone");
+    } else {
+      kadaluarsa.classList.add("displayNone");
+      checkboxInput.forEach((el) => {
+        el.removeAttribute("disabled", "true");
+      });
+    }
   }
 }
 

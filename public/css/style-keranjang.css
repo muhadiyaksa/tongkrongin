@@ -4,6 +4,10 @@ body {
 .displayNone {
   display: none;
 }
+input.form-check-input {
+  font-size: 18px;
+  border: 1px solid #3a3a3a;
+}
 section.keranjang {
   margin: 50px 0px;
 }
@@ -162,6 +166,9 @@ section.keranjang .catatan input {
 }
 
 @media (min-width: 768px) {
+  input.form-check-input {
+    font-size: 24px;
+  }
   section.keranjang .kadaluarsa {
     font-size: 16px;
   }
