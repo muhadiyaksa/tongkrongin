@@ -24,6 +24,8 @@ showPassword.forEach((el, i) => {
 
 const dropArea = document.querySelector(".konten-upload");
 const notifArea = document.querySelector(".notif-area");
+const overlayLoc = document.querySelector(".kirim .overlay-loc");
+
 let input, hasilFile, h2DropArea, pDropArea, labelDropArea, file;
 if (dropArea) {
   input = dropArea.querySelector("input.upload-photo");
@@ -59,6 +61,7 @@ function notifErrorDouble() {
             Foto Profil tidak dapat menerima lebih dari 1 Foto!
           </div>`;
 }
+
 function showFile(input) {
   if (input.files && input.files[0]) {
     let card = "";
@@ -84,11 +87,15 @@ function showFile(input) {
           console.log(input.files[0].name);
         };
         reader.readAsDataURL(input.files[0]);
+        overlayLoc.classList.remove("overlay-upload");
       } else {
         notifArea.style.display = "block";
         notifArea.innerHTML = notifError();
+        overlayLoc.classList.add("overlay-upload");
       }
     }
+  } else {
+    overlayLoc.classList.add("overlay-upload");
   }
 }
 

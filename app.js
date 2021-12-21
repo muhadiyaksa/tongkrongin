@@ -143,7 +143,8 @@ app.get("/user/update/:id", checkAuthenticated, async (req, res) => {
 app.post("/foto", (req, res) => {
   if (req.files.file) {
     var file = req.files.file;
-    var fileName = file.name;
+    const filePhoto = Math.floor(Math.random() * 12399);
+    var fileName = "user" + filePhoto + file.name;
 
     file.mv(__dirname + "/public/img/user/" + fileName, function (err) {
       if (err) {
@@ -577,7 +578,7 @@ app.post("/cart", async (req, res) => {
     jamPesan: `${new Date().getHours()}:${new Date().getMinutes()}`,
     status: "pending",
   };
-  if (dataOldCart.length !== 0) {
+  if (dataOldCart.length !== 0 || dataOldCart !== null) {
     Checkout.deleteMany({ idUser: req.body.iduser }).then((result) => {
       Checkout.insertMany(dataMasuk, (error, result) => {
         if (error) throw error;
@@ -625,6 +626,13 @@ app.get("/pay", checkAuthenticated, async (req, res) => {
     foods,
     formCapacities,
     caves,
+  });
+});
+
+app.get("/invoice", (req, res) => {
+  res.render("invoice", {
+    layout: "layouts/main-layout-pay",
+    title: "Kode Invoice",
   });
 });
 

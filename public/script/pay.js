@@ -17,7 +17,8 @@ document.addEventListener("click", function (e) {
 
     wadahNamaRekening.innerHTML = valueNamaRek;
     wadahNomorRekening.innerHTML = valueNoRek;
-    wadahNamaBank.innerHTML = valueNamaBank;
+    // wadahNamaBank.innerHTML = valueNamaBank;
+    namaBank(valueNamaBank);
     imageBank.src = `/img/bank/${valueNamaBank}.png`;
   }
 });
@@ -55,3 +56,36 @@ function formatRupiah(angka, prefix) {
   return prefix == undefined ? rupiah : rupiah ? "Rp. " + rupiah : "";
 }
 totalBayar.textContent = formatRupiah(totalPembayaran.value, "Rp. ");
+
+const menitPesan = document.querySelector("input.menit-pesan");
+const menitWadah = document.querySelector("span.menit-wadah");
+
+function cekMenit(param) {
+  if (param.length == 1) {
+    return `0${param}`;
+  } else {
+    return param;
+  }
+}
+
+menitWadah.textContent = cekMenit(menitPesan.value);
+
+const valueNamaBank = document.querySelector("input.nama-bank");
+
+function namaBank(param) {
+  if (param == "bca") {
+    wadahNamaBank.textContent = "Bank Central Asia";
+  } else if (param == "bni") {
+    wadahNamaBank.textContent = "Bank Negeri Indonesia";
+  } else if (param == "bri") {
+    wadahNamaBank.textContent = "Bank Rakyat Indonesia";
+  } else if (param == "dana") {
+    wadahNamaBank.textContent = "Dana";
+  } else if (param == "mandiri") {
+    wadahNamaBank.textContent = "Bank Mandiri";
+  } else {
+    wadahNamaBank.textContent = "-";
+  }
+}
+
+namaBank(valueNamaBank.value);

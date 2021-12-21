@@ -40,8 +40,13 @@ console.log(wadahCafe);
 const caves = document.querySelectorAll("input.object-caves");
 
 let arr = [];
-caves.forEach((el) => {
-  arr.push(el.value.replace("\n", ""));
-});
+// caves.forEach((el) => {
+//   let bersih = el.value.split("");
+//   for(let i=0; i<bersih.length; i++){
+//     if(bersih[i+1]){
+//       if(bersih[i] == '\ ' && )
+//     }
+//   }
+// });
 
 console.log(arr);
