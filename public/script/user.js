@@ -112,6 +112,29 @@ function resultFile(namafile) {
           </div>`;
 }
 
+const statusPesanan = document.querySelectorAll("input.status-pesanan");
+const statusWadah = document.querySelectorAll("h5.status-loc");
+
+function changeStatus(param, wadah) {
+  if (param == "pending") {
+    wadah.innerHTML = "Belum Bayar";
+    wadah.style.color = "#ff810b";
+  } else if (param == "waiting") {
+    wadah.innerHTML = "Menunggu";
+    wadah.style.color = "#00c431";
+  } else if (param == "confirmed") {
+    wadah.innerHTML = "Selesai";
+    wadah.style.color = "#00c431";
+  }
+}
+console.log(statusPesanan.value);
+console.log(statusWadah);
+if (statusPesanan !== null) {
+  statusPesanan.forEach((el, i) => {
+    changeStatus(el.value, statusWadah[i]);
+  });
+}
+
 // CADANGAN
 // ----------------------------
 // function showFileMore1() {

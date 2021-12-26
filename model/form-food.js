@@ -19,6 +19,9 @@ const FormFood = mongoose.model("FormFood", {
   harga: {
     type: String,
   },
+  status: {
+    type: String,
+  },
 });
 
 // const food1 = new FormFood({

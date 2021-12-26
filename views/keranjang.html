@@ -53,7 +53,7 @@
               Loc.
               <?= (caves) ? caves.nama : '' ?>
             </p>
-            <input type="hidden" class="waktu-pesan" value="<?= (formCapacities) ? formCapacities.tanggalPesan : '' ?>" />
+            <input type="hidden" class="waktu-pesan" value="<?= (formCapacities) ? formCapacities.waktu : '' ?>" />
             <input type="hidden" class="jam-pesan" value="<?= (formCapacities) ? formCapacities.jamPesan : '' ?>" />
             <button class="btn btn-secondary rounded py-0" data-bs-toggle="modal" data-bs-target="#modalDetail">Detail</button>
           </div>
@@ -207,8 +207,9 @@
             <tr>
               <th scope="row">Tanggal Pesan</th>
               <td>:</td>
-              <input type="hidden" class="tanggal-pesan" value="<?= (formCapacities) ? formCapacities.tanggalPesan : '' ?>" />
-              <td><span class="wadah-tanggal text-capitalize"></span></td>
+              <td>
+                <span class="text-capitalize"><?= (formCapacities) ? formCapacities.tanggalPesan : '' ?></span>
+              </td>
             </tr>
             <tr>
               <th scope="row">Jam Pesan</th>

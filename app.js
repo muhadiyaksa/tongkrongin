@@ -2,27 +2,26 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
+//For Express
 const express = require("express");
 const ejs = require("ejs");
 const expressLayouts = require("express-ejs-layouts");
-const upload = require("express-fileupload");
 
+//For Validation
+// const upload = require("express-fileupload");
 const { body, validationResult, check } = require("express-validator");
 const methodOverride = require("method-override");
 const { unlinkSync } = require("fs");
 
+//For Message
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const flash = require("express-flash");
-// const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
-
-// const formidable = require("formidable");
-
 const busboy = require("connect-busboy");
-// const mv = require("mv");
 
+//For Schema Database
 require("./utils/db");
 const User = require("./model/user");
 const Cafe = require("./model/cafe");
@@ -31,10 +30,11 @@ const FormCapacity = require("./model/form-capacity");
 const Food = require("./model/food");
 const FormFood = require("./model/form-food");
 const Checkout = require("./model/checkout");
-// const user = async () => {
-//   return await User.find();
-// };
 
+//For Photo Upload
+const bodyParser = require("body-parser");
+
+//For Regist
 const initializePassport = require("./passport-config");
 initializePassport(
   passport,
@@ -42,7 +42,11 @@ initializePassport(
   async (id) => await User.findOne({ id: id })
 );
 
-//Menjalankan Server
+//For Function
+const { checkedDuplicate, returnNoDuplicate, changeDateFormat } = require("./utils/func");
+const { upload, imageFileName } = require("./utils/gridFs");
+
+//Running Server
 const app = express();
 const port = 3000;
 
@@ -53,12 +57,11 @@ ejs.delimiter = "?";
 app.set("view engine", "html");
 app.engine("html", ejs.renderFile);
 
+//Use Express
 app.use(expressLayouts); //Third-party middleware
 app.use(express.static("public")); //Built in middleware
 app.use(express.urlencoded({ extended: true })); //Built In Middleware
-app.use(upload());
 app.use(busboy());
-// app.use(express.bodyParser());
 
 //konfigurasi flash
 app.use(cookieParser(process.env.SESSION_SECRET));
@@ -72,11 +75,13 @@ app.use(
   })
 );
 
+//For Passport
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride("_method"));
+app.use(bodyParser.json());
 
-//Halaman Landing
+//Landing Page
 app.get("/", checkNotAuthenticatedSecond, async (req, res) => {
   const caves = await Cafe.find();
 
@@ -89,13 +94,13 @@ app.get("/", checkNotAuthenticatedSecond, async (req, res) => {
   });
 });
 
-//Halaman Home
+//Home Page
 app.get("/home", checkAuthenticated, async (req, res) => {
   const dataUser = await req.user;
   const caves = await Cafe.find();
 
   if (dataUser) {
-    formCapacities = await FormCapacity.findOne({ idUser: dataUser.id });
+    formCapacities = await FormCapacity.findOne({ idUser: dataUser.id, status: "pending" });
   }
   res.render("index", {
     layout: "layouts/main-layout-primary",
@@ -109,10 +114,28 @@ app.get("/home", checkAuthenticated, async (req, res) => {
 //Halaman User
 app.get("/user/:id", checkAuthenticated, async (req, res) => {
   const user = await User.findOne({ id: req.params.id });
+  const formCheckout = await Checkout.find({ idUser: req.params.id });
+
   const dataUser = await req.user;
+  let caves = [];
+  let formCap = [];
   if (dataUser) {
-    formCapacities = await FormCapacity.findOne({ idUser: dataUser.id });
+    formCapacities = await FormCapacity.findOne({ idUser: dataUser.id, status: "pending" });
+
+    for (let i = 0; i < formCheckout.length; i++) {
+      try {
+        let cafe = await Cafe.find({ idCafe: formCheckout[i].idCafe });
+        let formCapacity = await FormCapacity.find({ idCafe: formCheckout[i].idCafe, idUser: dataUser.id });
+        if (cafe && formCapacity) {
+          caves.push(...cafe);
+          formCap.push(...formCapacity);
+        }
+      } catch (err) {
+        if (err) throw err;
+      }
+    }
   }
+  console.log(formCap);
   res.render("user-profile", {
     title: "Halaman User",
     layout: "layouts/main-layout-user",
@@ -120,6 +143,9 @@ app.get("/user/:id", checkAuthenticated, async (req, res) => {
     dataUser,
     msg: req.flash("msg"),
     formCapacities,
+    formCap,
+    formCheckout,
+    caves,
   });
 });
 
@@ -128,7 +154,7 @@ app.get("/user/update/:id", checkAuthenticated, async (req, res) => {
   const user = await User.findOne({ id: req.params.id });
   const dataUser = await req.user;
   if (dataUser) {
-    formCapacities = await FormCapacity.findOne({ idUser: dataUser.id });
+    formCapacities = await FormCapacity.findOne({ idUser: dataUser.id, status: "pending" });
   }
   res.render("user-update", {
     title: "Halaman Update",
@@ -211,7 +237,7 @@ app.get("/user/password/:id", checkAuthenticated, async (req, res) => {
   const user = await User.findOne({ id: req.params.id });
   const dataUser = await req.user;
   if (dataUser) {
-    formCapacities = await FormCapacity.findOne({ idUser: dataUser.id });
+    formCapacities = await FormCapacity.findOne({ idUser: dataUser.id, status: "pending" });
   }
   res.render("user-password", {
     title: "Halaman Update",
@@ -270,7 +296,7 @@ app.get("/cafe", async (req, res) => {
   const caves = await Cafe.find();
   let formCapacities;
   if (dataUser) {
-    formCapacities = await FormCapacity.findOne({ idUser: dataUser.id });
+    formCapacities = await FormCapacity.findOne({ idUser: dataUser.id, status: "pending" });
   }
   res.render("cafe", {
     layout: "layouts/main-layout-list",
@@ -304,15 +330,17 @@ app.get("/cafe/details/:id", async (req, res) => {
   const caves = await Cafe.findOne({ idCafe: req.params.id });
   const capacities = await Capacity.find({ idCafe: req.params.id });
   const dataUser = await req.user;
-  let formCapacities, formFoods;
+  let formCapacities, formFoods, formCheckout;
+
   if (dataUser) {
-    formCapacities = await FormCapacity.findOne({ idUser: dataUser.id });
+    formCapacities = await FormCapacity.findOne({ idUser: dataUser.id, status: "pending" });
     if (formCapacities) {
-      formFoods = await FormFood.find({ idCafe: formCapacities.idCafe, idUser: dataUser.id });
+      formFoods = await FormFood.find({ idCafe: formCapacities.idCafe, idUser: formCapacities.idUser, status: "pending" });
     }
   } else {
     formCapacities = null;
   }
+
   res.render("cafe-details", {
     layout: "layouts/main-layout-booking",
     title: "Detail Cafe",
@@ -326,22 +354,24 @@ app.get("/cafe/details/:id", async (req, res) => {
 
 app.post("/cafe/details", async (req, res) => {
   const capacities = await Capacity.findOne({ idCafe: req.body.idcafe, kapKategori: req.body.kapkategori });
-  const formFoods = await FormFood.find({ idCafe: req.body.idcafe, idUser: req.body.iduser });
+  const formFoods = await FormFood.find({ idCafe: req.body.idcafe, idUser: req.body.iduser, status: "pending" });
 
   const dataMasuk = {
     idCafe: req.body.idcafe,
     idUser: req.body.iduser,
     kapKategori: req.body.kapkategori,
     namaPemesan: req.body.namapemesan.toLowerCase(),
-    tanggalPesan: req.body.tanggalpesan,
+    waktu: req.body.tanggalpesan,
+    tanggalPesan: changeDateFormat(req.body.tanggalpesan),
     jamPesan: req.body.jampesan,
     harga: capacities.harga,
+    status: "pending",
   };
 
   if (req.body.kapkategorilama) {
-    FormCapacity.deleteOne({ idUser: req.body.iduser }).then((result) => {
+    FormCapacity.deleteOne({ idUser: req.body.iduser, status: "pending" }).then((result) => {
       if (formFoods) {
-        FormFood.deleteMany({ idUser: req.body.iduser }).then((error, result) => {
+        FormFood.deleteMany({ idUser: req.body.iduser, status: "pending" }).then((error, result) => {
           FormCapacity.insertMany(dataMasuk, (error, result) => {
             res.redirect("/cafe/food/" + req.body.idcafe);
           });
@@ -365,9 +395,9 @@ app.get("/cafe/food/:idCafe", checkAuthenticated, async (req, res) => {
   const dataUser = await req.user;
   let formCapacities, formFoods, idMenuFood, idMenuForm;
   if (dataUser) {
-    formCapacities = await FormCapacity.findOne({ idUser: dataUser.id });
+    formCapacities = await FormCapacity.findOne({ idUser: dataUser.id, status: "pending" });
     if (formCapacities) {
-      formFoods = await FormFood.find({ idCafe: formCapacities.idCafe, idUser: dataUser.id });
+      formFoods = await FormFood.find({ idCafe: formCapacities.idCafe, idUser: dataUser.id, status: "pending" });
 
       idMenuFood = foods.map((el) => el.idMenu);
       idMenuForm = formFoods.map((el) => el.idMenu);
@@ -375,31 +405,11 @@ app.get("/cafe/food/:idCafe", checkAuthenticated, async (req, res) => {
   } else {
     formCapacities = null;
   }
-  let idMix = [...idMenuFood, ...idMenuForm];
 
+  let idMix = [...idMenuFood, ...idMenuForm];
   let formFoodsResult = idMix.sort((a, b) => a - b);
 
-  let pembanding = [];
-  let noDuplicate = [];
-  for (let i = 0; i < formFoodsResult.length; i++) {
-    pembanding.push(formFoodsResult[i]);
-    if (pembanding[i - 1]) {
-      if (formFoodsResult[i + 1]) {
-        if (formFoodsResult[i] !== pembanding[i - 1] && formFoodsResult[i] !== formFoodsResult[i + 1]) {
-          noDuplicate.push(formFoodsResult[i]);
-        }
-      } else {
-        if (formFoodsResult[i] !== pembanding[i - 1]) {
-          noDuplicate.push(formFoodsResult[i]);
-        }
-      }
-    } else {
-      if (pembanding[i] !== formFoodsResult[i + 1]) {
-        noDuplicate.push(formFoodsResult[i]);
-      }
-    }
-  }
-
+  let noDuplicate = checkedDuplicate(formFoodsResult);
   let hslFormFoods = noDuplicate.map((el) => foods.find((food) => food.idMenu == el));
 
   res.render("cafe-food", {
@@ -413,7 +423,12 @@ app.get("/cafe/food/:idCafe", checkAuthenticated, async (req, res) => {
   });
 });
 
-app.post("/cafe/food", (req, res) => {
+app.post("/cafe/food", async (req, res) => {
+  const dataUser = await req.user;
+  const formFoods = await FormFood.find({ idUser: dataUser.id, status: "pending" });
+
+  let arrIDMenu = formFoods.map((el) => el.idMenu);
+
   function datamasuk(el) {
     return {
       idCafe: req.body.idcafe[el],
@@ -421,6 +436,7 @@ app.post("/cafe/food", (req, res) => {
       idMenu: req.body.idmenu[el],
       quantity: req.body.quantity[el],
       harga: req.body.harga[el],
+      status: "pending",
     };
   }
 
@@ -430,42 +446,55 @@ app.post("/cafe/food", (req, res) => {
     idMenu: req.body.idmenu,
     quantity: req.body.quantity,
     harga: req.body.harga,
+    status: "pending",
   };
 
-  let reqUser;
-  let lenMore = [];
+  let reqIDMenu;
+  let lengthIDMenu = [];
   let dataReq = [];
+  let moreReqIDMenu = [];
   try {
-    reqUser = [req.body.idmenu];
+    reqIDMenu = [req.body.idmenu];
 
-    reqUser.forEach((el) => {
+    reqIDMenu.forEach((el) => {
       let len = [];
       el.forEach((item) => {
         len.push(item);
       });
-      lenMore = [...len];
+      lengthIDMenu = [...len];
     });
 
-    for (let i = 0; i < lenMore.length; i++) {
+    for (let i = 0; i < lengthIDMenu.length; i++) {
       let hsl = datamasuk(i);
       dataReq.push(hsl);
+      moreReqIDMenu.push(dataReq[i].idMenu);
     }
   } catch {
-    reqUser = [req.body.idMenu];
+    reqIDMenu = [req.body.idmenu];
   }
 
-  //Berhasil
-  if (lenMore.length > 1 && reqUser.length === 1) {
+  let oneData = [...arrIDMenu, ...reqIDMenu].sort((a, b) => a - b);
+  let moreData = [...arrIDMenu, ...moreReqIDMenu].sort((a, b) => a - b);
+
+  if (lengthIDMenu.length > 1 && reqIDMenu.length === 1) {
     try {
-      FormFood.insertMany(dataReq);
-      res.redirect("/cart");
+      if (returnNoDuplicate(moreData).length === 0) {
+        FormFood.insertMany(dataReq);
+        res.redirect("/cart");
+      } else {
+        res.redirect("/cart");
+      }
     } catch (e) {
       console.error(e);
     }
-  } else if (lenMore.length === 0 && reqUser.length === 1) {
-    FormFood.insertMany(dataMasuk, (error, result) => {
+  } else if (lengthIDMenu.length === 0 && reqIDMenu.length === 1) {
+    if (returnNoDuplicate(oneData).length === 0) {
+      FormFood.insertMany(dataMasuk, (error, result) => {
+        res.redirect("/cart");
+      });
+    } else {
       res.redirect("/cart");
-    });
+    }
   } else {
     res.redirect("/cart");
   }
@@ -474,12 +503,13 @@ app.post("/cafe/food", (req, res) => {
 //Halaman Keranjang
 app.get("/cart", checkAuthenticated, async (req, res) => {
   const dataUser = await req.user;
+
   let formCapacities, formFoods, capacities, foods, caves;
 
   if (dataUser) {
-    formCapacities = await FormCapacity.findOne({ idUser: dataUser.id });
+    formCapacities = await FormCapacity.findOne({ idUser: dataUser.id, status: "pending" });
     if (formCapacities) {
-      formFoods = await FormFood.find({ idCafe: formCapacities.idCafe, idUser: dataUser.id });
+      formFoods = await FormFood.find({ idCafe: formCapacities.idCafe, idUser: dataUser.id, status: "pending" });
       foods = await Food.find({ idCafe: formCapacities.idCafe });
       caves = await Cafe.findOne({ idCafe: formCapacities.idCafe });
       capacities = await Capacity.findOne({ idCafe: formCapacities.idCafe, idUser: req.user.id, kapKategori: formCapacities.kapKategori });
@@ -501,22 +531,22 @@ app.get("/cart", checkAuthenticated, async (req, res) => {
 });
 
 app.delete("/cart", (req, res) => {
-  FormCapacity.deleteOne({ idUser: req.body.iduser }).then((result) => {
-    FormFood.deleteMany({ idUser: req.body.iduser }).then((error, result) => {
+  FormCapacity.deleteOne({ idUser: req.body.iduser, status: "pending" }).then((result) => {
+    FormFood.deleteMany({ idUser: req.body.iduser, status: "pending" }).then((error, result) => {
       res.redirect("/cart");
     });
   });
 });
 
 app.delete("/cart/food", (req, res) => {
-  FormFood.deleteOne({ idUser: req.body.iduser, idMenu: req.body.idmenu, idCafe: req.body.idcafe }).then((error, result) => {
+  FormFood.deleteOne({ idUser: req.body.iduser, idMenu: req.body.idmenu, idCafe: req.body.idcafe, status: "pending" }).then((error, result) => {
     res.redirect("/cart");
   });
 });
 
 app.put("/cart/qtymin", async (req, res) => {
-  let formFoods = await FormFood.findOne({ idCafe: req.body.idcafe, idUser: req.body.iduser, idMenu: req.body.idmenu });
-  let foods = await Food.findOne({ idCafe: req.body.idcafe, idMenu: req.body.idmenu });
+  let formFoods = await FormFood.findOne({ idCafe: req.body.idcafe, idUser: req.body.iduser, idMenu: req.body.idmenu, status: "pending" });
+  let foods = await Food.findOne({ idCafe: req.body.idcafe, idMenu: req.body.idmenu, status: "pending" });
 
   let qtyUpdate = Number(formFoods.quantity) - 1;
   let priceUpdate = Number(formFoods.harga) - Number(foods.harga);
@@ -539,8 +569,8 @@ app.put("/cart/qtymin", async (req, res) => {
 });
 
 app.put("/cart/qtyplus", async (req, res) => {
-  let formFoods = await FormFood.findOne({ idCafe: req.body.idcafe, idUser: req.body.iduser, idMenu: req.body.idmenu });
-  let foods = await Food.findOne({ idCafe: req.body.idcafe, idMenu: req.body.idmenu });
+  let formFoods = await FormFood.findOne({ idCafe: req.body.idcafe, idUser: req.body.iduser, idMenu: req.body.idmenu, status: "pending" });
+  let foods = await Food.findOne({ idCafe: req.body.idcafe, idMenu: req.body.idmenu, status: "pending" });
 
   let qtyUpdate = Number(formFoods.quantity) + 1;
   let priceUpdate = Number(formFoods.harga) + Number(foods.harga);
@@ -563,8 +593,10 @@ app.put("/cart/qtyplus", async (req, res) => {
 });
 
 app.post("/cart", async (req, res) => {
-  const dataOldCart = await Checkout.find({ idUser: req.body.iduser, idCafe: req.body.idcafe });
-  let arrBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+  const dataOldCart = await Checkout.find({ idUser: req.body.iduser, idCafe: req.body.idcafe, status: "pending" });
+  let tahun = new Date().getFullYear();
+  let bulan = new Date().getMonth();
+  let tanggal = new Date().getDate();
 
   const dataMasuk = {
     idUser: req.body.iduser,
@@ -572,14 +604,12 @@ app.post("/cart", async (req, res) => {
     idMenu: req.body.idmenu.split(","),
     catatan: req.body.catatan,
     total: req.body.total,
-    tanggal: new Date().getDate(),
-    bulan: arrBulan[new Date().getMonth()],
-    tahun: new Date().getFullYear(),
+    tanggalPesan: changeDateFormat([tahun, bulan, tanggal].join("-")),
     jamPesan: `${new Date().getHours()}:${new Date().getMinutes()}`,
     status: "pending",
   };
   if (dataOldCart.length !== 0 || dataOldCart !== null) {
-    Checkout.deleteMany({ idUser: req.body.iduser }).then((result) => {
+    Checkout.deleteMany({ idUser: req.body.iduser, status: "pending" }).then((result) => {
       Checkout.insertMany(dataMasuk, (error, result) => {
         if (error) throw error;
         res.redirect("/pay");
@@ -595,17 +625,17 @@ app.post("/cart", async (req, res) => {
 
 app.get("/pay", checkAuthenticated, async (req, res) => {
   const dataUser = await req.user;
-  let formCheckout = await Checkout.findOne({ idUser: dataUser.id });
+  let formCheckout = await Checkout.findOne({ idUser: dataUser.id, status: "pending" });
   let formFoods = [];
   let foods = [];
 
   let formCapacities, caves;
   if (formCheckout) {
-    formCapacities = await FormCapacity.findOne({ idUser: formCheckout.idUser });
+    formCapacities = await FormCapacity.findOne({ idUser: formCheckout.idUser, status: "pending" });
     caves = await Cafe.findOne({ idCafe: formCheckout.idCafe });
     for (let i = 0; i < formCheckout.idMenu.length; i++) {
       try {
-        let formFood = await FormFood.find({ idCafe: formCheckout.idCafe, idUser: dataUser.id, idMenu: formCheckout.idMenu[i] });
+        let formFood = await FormFood.find({ idCafe: formCheckout.idCafe, idUser: dataUser.id, idMenu: formCheckout.idMenu[i], status: "pending" });
         let food = await Food.find({ idCafe: formCheckout.idCafe, idMenu: formCheckout.idMenu[i] });
         if (food && formFood) {
           formFoods.push(...formFood);
@@ -629,10 +659,102 @@ app.get("/pay", checkAuthenticated, async (req, res) => {
   });
 });
 
-app.get("/invoice", (req, res) => {
+app.put("/pay", upload.single("file"), async (req, res) => {
+  let tahunIni = new Date().getFullYear();
+  let bulanIni = new Date().getMonth();
+  let tanggalIni = new Date().getDate();
+  let jamIni = new Date().getHours();
+  let menitIni = new Date().getMinutes();
+  let jamBayar = `${jamIni.length == 1 ? `0${jamIni}` : jamIni}:${menitIni.length == 1 ? `0${menitIni}` : menitIni}`;
+  let idCafe = req.body.idcafe;
+  let idUser = req.body.iduser;
+  let jumlahCheckout = await Checkout.find({ idUser: req.body.iduser });
+
+  const invoice = ["INV", `${tahunIni}${bulanIni}${tanggalIni}`, jumlahCheckout.length, idCafe, idUser].join("/");
+
+  Checkout.updateOne(
+    {
+      idUser: req.body.iduser,
+      idCafe: req.body.idcafe,
+      status: "pending",
+    },
+    {
+      $set: {
+        kodeInv: invoice,
+        tanggalBayar: changeDateFormat([tahunIni, bulanIni, tanggalIni].join("-")),
+        jamBayar: jamBayar,
+        status: "waiting",
+        fileImage: imageFileName[0],
+        namaBank: req.body.namaBank,
+        nomorRekening: req.body.nomorRekening,
+        namaRekening: req.body.namaRekening,
+      },
+    }
+  ).then((result) => {
+    FormCapacity.updateOne(
+      {
+        idUser: req.body.iduser,
+        idCafe: req.body.idcafe,
+        status: "pending",
+      },
+      {
+        $set: {
+          status: "waiting",
+        },
+      }
+    ).then((result) => {
+      FormFood.updateMany(
+        {
+          idUser: req.body.iduser,
+          idCafe: req.body.idcafe,
+          status: "pending",
+        },
+        {
+          $set: {
+            status: "waiting",
+          },
+        }
+      ).then((result) => {
+        res.redirect("/invoice");
+      });
+    });
+  });
+});
+
+app.get("/invoice", async (req, res) => {
+  const dataUser = await req.user;
+  let formCheckout = await Checkout.findOne({ idUser: dataUser.id, status: "waiting" });
+
+  let formFoods = [];
+  let foods = [];
+
+  let formCapacities, caves;
+  if (formCheckout) {
+    formCapacities = await FormCapacity.findOne({ idUser: formCheckout.idUser });
+    caves = await Cafe.findOne({ idCafe: formCheckout.idCafe });
+    for (let i = 0; i < formCheckout.idMenu.length; i++) {
+      try {
+        let formFood = await FormFood.find({ idCafe: formCheckout.idCafe, idUser: dataUser.id, idMenu: formCheckout.idMenu[i] });
+        let food = await Food.find({ idCafe: formCheckout.idCafe, idMenu: formCheckout.idMenu[i] });
+        if (food && formFood) {
+          formFoods.push(...formFood);
+          foods.push(...food);
+        }
+      } catch (err) {
+        if (err) throw err;
+      }
+    }
+  }
+
   res.render("invoice", {
     layout: "layouts/main-layout-pay",
     title: "Kode Invoice",
+    dataUser,
+    formCheckout,
+    formFoods,
+    foods,
+    formCapacities,
+    caves,
   });
 });
 
@@ -721,7 +843,7 @@ app.get("/about", async (req, res) => {
 
   let formCapacities;
   if (dataUser) {
-    formCapacities = await FormCapacity.findOne({ idUser: dataUser.id });
+    formCapacities = await FormCapacity.findOne({ idUser: dataUser.id, status: "pending" });
   }
   res.render("about", {
     title: "Tentang Kami",

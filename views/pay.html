@@ -24,7 +24,7 @@
             <tr>
               <td>Tanggal Checkout</td>
               <td>:</td>
-              <td><span><strong><?= `${formCheckout.tanggal} ${formCheckout.bulan} ${formCheckout.tahun}` ?></strong></span></td>
+              <td><span><strong><?= formCheckout.tanggalPesan ?></strong></span></td>
             </tr>
           </table>
         </div>
@@ -32,7 +32,7 @@
         <div class="kotak ">
           <i class="bi bi-exclamation-circle-fill me-3"></i>
           <input type="hidden" class="menit-pesan" value="<?= formCheckout.jamPesan.split(':')[1] ?>">
-          <h5 class="d-inline-block">Lakukan Pembayaran sebelum <span><?= `${Number(formCheckout.tanggal)} ${formCheckout.bulan} ${formCheckout.tahun} -  ${Number(formCheckout.jamPesan.split(':')[0]) + 1}:`  ?><span class="menit-wadah"></span> WIB</span></h5>
+          <h5 class="d-inline-block">Lakukan Pembayaran sebelum <span><?= `${formCheckout.tanggalPesan} -  ${Number(formCheckout.jamPesan.split(':')[0]) + 1}:`  ?><span class="menit-wadah"></span> WIB</span></h5>
         </div>
 
         <div class="detail-pesanan">
@@ -75,8 +75,7 @@
                       <tr>
                         <td><span>Tanggal Booking</span></td>
                         <td><span>:</span></td>
-                        <input type="hidden" class="tanggal-pesan" value="<?= formCapacities.tanggalPesan ?>">
-                        <td><span class="wadah-tanggal text-capitalize"></span></td>
+                        <td><span class="text-capitalize"><?= formCapacities.tanggalPesan ?></span></td>
                       </tr>
                       <tr>
                         <td><span>Jam Booking</span></td>
@@ -155,11 +154,13 @@
             </tr>
            
           </table>
-          <span class="pt-3"><a href="" class="text-dark" data-bs-toggle="modal" data-bs-target="#gantiBank"><i class="bi bi-box-arrow-in-down-left"></i> Ubah Akun Bank</a></span>
+          <span class="pt-3 "><a href="" class="text-dark" data-bs-toggle="modal" data-bs-target="#gantiBank"><i class="bi bi-box-arrow-in-down-left"></i> Ubah Akun Bank</a></span>
+          <div class="text-center img-bank">
+            <img src="/img/bank/<?= caves.rekening[0].namaBank ?>.png" alt="BCA logo" class="img-fluid text-center" />
+          </div>
         </div>
         
-        <div class="image-bank text-center">
-          <img src="/img/bank/<?= caves.rekening[0].namaBank ?>.png" alt="BCA logo" class="img-fluid" />
+        <div class="unggah-button text-center">
           <button class="btn btn-dark px-4 py-2 " data-bs-toggle="modal" data-bs-target="#modalUpload">Unggah Bukti Pembayaran</button>
         </div>
       </div>
@@ -208,9 +209,13 @@
             </div>
           </div>
         </div>
-        <form action="/foto" method="POST" enctype="multipart/form-data">
+        <form action="/pay?_method=PUT" method="POST" enctype="multipart/form-data">
           <div class="konten-upload" >
-       
+            <input type="hidden" name="iduser" value="<?= dataUser.id ?>">
+            <input type="hidden" name="idcafe" value="<?= formCapacities.idCafe ?>">
+            <input type="hidden" name="namaBank"  class="namabank"  value="<?= caves.rekening[0].namaBank ?>">
+            <input type="hidden" name="namaRekening" class="namarekening" value="<?= caves.rekening[0].namaRekening ?>">
+            <input type="hidden" name="nomorRekening" class="nomorrekening" value="<?= caves.rekening[0].nomorRekening ?>">
             <div class="hasil-file">
             </div>
             <h2 class="mb-4"><i class="bi bi-file-earmark-plus"></i></h2>

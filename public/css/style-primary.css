@@ -30,8 +30,6 @@ section.nav-res button.userpage {
 }
 
 section.nav-res button.userpage {
-  width: 30px;
-  margin: 0 -10px;
   padding: none;
 }
 section.nav-res .logout {
@@ -518,25 +516,26 @@ section.nav-res {
   }
   section.nav-res .kolomgrid .keranjang {
     grid-area: dua;
-    text-align: end;
+    text-align: center;
     position: relative;
   }
 
   section.nav-res .kolomgrid .notifikasi {
     grid-area: tiga;
-    text-align: end;
+    text-align: center;
     position: relative;
   }
   section.nav-res .kolomgrid .user {
     grid-area: empat;
-    text-align: end;
+    margin: 0 auto;
   }
+
   section.nav-res .kolomgrid .keranjang .bulat,
   section.nav-res .kolomgrid .notifikasi .bulat {
     position: absolute;
     width: 10px;
     height: 10px;
-    right: 10px;
+    right: 20%;
     top: 10px;
     background-color: red;
     border-radius: 10px;
@@ -603,5 +602,44 @@ section.nav-res {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     grid-template-areas: "judul judul" "kontak navigasi";
+  }
+}
+
+@media (min-width: 768px) {
+  .user-hover {
+    position: relative;
+    font-family: "Poppins", sans-serif;
+    margin-left: 20px;
+    height: 100%;
+    align-self: center;
+  }
+  .user-hover h5 {
+    font-size: 15px;
+    margin: 0;
+  }
+  .user-hover span {
+    font-size: 12px;
+  }
+  .list-user-control {
+    position: absolute;
+    top: 55px;
+    left: -75px;
+    width: 200px;
+    border-radius: 10px;
+    z-index: 99;
+    visibility: hidden;
+    display: none;
+  }
+  .list-user-control td {
+    border-bottom: 0px !important;
+  }
+  .list-user-control td a {
+    text-decoration: none;
+  }
+  .list-user-control tr:nth-child(2) {
+    color: red;
+  }
+  .user-hover:hover .list-user-control {
+    visibility: visible !important;
   }
 }

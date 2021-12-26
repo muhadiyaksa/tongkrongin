@@ -142,20 +142,20 @@ function formatRupiah(angka, prefix) {
   return prefix == undefined ? rupiah : rupiah ? "Rp. " + rupiah : "";
 }
 
-const tanggalPesan = document.querySelector("input.tanggal-pesan");
-const wadahTanggal = document.querySelector("span.wadah-tanggal");
+// const tanggalPesan = document.querySelector("input.tanggal-pesan");
+// const wadahTanggal = document.querySelector("span.wadah-tanggal");
 
-function ubahTanggal(tanggal) {
-  if (wadahTanggal !== null) {
-    let arr = tanggal.value.split("-");
-    let bulan = ["", "januari", "februari", "maret", "april", "mei", "juni", "juli", "agustus", "september", "oktober", "november", "desember"];
-    let bulanIndex = arr[1];
+// function ubahTanggal(tanggal) {
+//   if (wadahTanggal !== null) {
+//     let arr = tanggal.value.split("-");
+//     let bulan = ["", "januari", "februari", "maret", "april", "mei", "juni", "juli", "agustus", "september", "oktober", "november", "desember"];
+//     let bulanIndex = arr[1];
 
-    wadahTanggal.innerHTML = `${arr[2]} ${bulan[bulanIndex]} ${arr[0]}`;
-  }
-}
+//     wadahTanggal.innerHTML = `${arr[2]} ${bulan[bulanIndex]} ${arr[0]}`;
+//   }
+// }
 
-ubahTanggal(tanggalPesan);
+// ubahTanggal(tanggalPesan);
 
 const waktuPesan = document.querySelector("input.waktu-pesan");
 const jamPesan = document.querySelector("input.jam-pesan");

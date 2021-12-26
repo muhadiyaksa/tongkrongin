@@ -20,19 +20,31 @@ const Checkout = mongoose.model("Checkout", {
   total: {
     type: String,
   },
-  tanggal: {
-    type: String,
-  },
-  bulan: {
-    type: String,
-  },
-  tahun: {
+  tanggalPesan: {
     type: String,
   },
   jamPesan: {
     type: String,
   },
+  kodeInv: {
+    type: String,
+  },
+  kodeBooking: {
+    type: String,
+  },
+  tanggalBayar: {
+    type: String,
+  },
+  jamBayar: {
+    type: String,
+  },
+  namaBank: { type: String },
+  nomorRekening: { type: String },
+  namaRekening: { type: String },
   status: {
+    type: String,
+  },
+  fileImage: {
     type: String,
   },
 });

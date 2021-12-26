@@ -8,7 +8,7 @@
         </div>
         <div class="col-md-6 my-auto">
           <h1 class="fw-bold text-secondary">Ups!, Data User tersebut Tidak Ada!</h1>
-          <h4 class="text-secondary mb-4">kamu aboleh akses akun user lain yaa!^_^</h4>
+          <h4 class="text-secondary mb-4">kamu gaboleh akses akun user lain yaa!^_^</h4>
           <a href="/user/<?= dataUser.id ?>" class="fw-bold text-secondary">Kembali Ke Halaman</a>.
         </div>
       </div>
@@ -20,7 +20,7 @@
     <a href="/home" class="text-dark">
       <h2 class="fw-bold"><i class="bi bi-arrow-left-circle-fill"></i></h2>
     </a>
-    <h2 class="fw-bold">Profile</h2>
+    <h2 class="fw-bold ">Profile</h2>
 
     <? if(msg.length !== 0) {?>
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -35,13 +35,17 @@
           <div class="col-4 image">
             <img src="/img/user/<?= user.fotoprofil ?>" alt="Foto Profile" class="img-fluid" />
           </div>
-          <div class="col-8">
+          <div class="col">
             <h3 class="text-capitalize"><?= user.nama ?></h3>
             <h5><?= user.email ?></h5>
+            <form action="/logout?_method=DELETE" method="post">
+              <button class="btn btn-outline-0 text-danger m-0 p-0" type="submit"><i class="bi bi-box-arrow-right me-2"></i>Logout</button>
+            </form>
           </div>
         </div>
       </div>
       <div class="col-md button">
+
         <a href="/user/update/<?= user.id?>"> <button class="btn btn-dark rounded-pill edit">Edit Profile</button></a>
         <a href="/user/password/<?= user.id?>"> <button class="btn btn-dark rounded-pill edit">Edit Password</button></a>
       </div>
@@ -52,28 +56,33 @@
 <section class="riwayat">
   <div class="container">
     <h2 class="fw-bold">Riwayat Transaksi</h2>
-    <div class="riwayat-user">
-      <div class="row">
-        <div class="col-md">
-          <h3>Seatap Coffe</h3>
-          <p>Arundina, Jl. Lap. Tembak No.A10, RT.1/RW.11, Cibubur, Kec. Ciracas, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13720</p>
+    <? if(formCheckout.length === 0){ ?>
+      <div class="riwayat-user">
+        <h2>Kamu Belum melakukan Pesanan sama sekali</h2>
+      </div>
+    <? } else{ ?>
+    <? formCheckout.forEach((el, i)=>{ ?>
+
+      <div class="riwayat-user">
+        <!-- <a href class="overlay"></a> -->
+        <div class="image">
+          <img src="/img/cafe/<?= caves[i].gambar[1].namaGambar ?>" alt="Janji Jiwa" class="img-fluid">
         </div>
-        <div class="col-md tanggal">
-          <p>17 Oktober 2021</p>
+        <div class="nama">
+          <h3><?= caves[i].nama ?></h3>
+          <p><?= caves[i].alamat ?></p>
+          <p class="fw-bold mt-2">Kapasitas <?= formCap[i].kapKategori ?> Orang</p>
+        </div>
+        <div class="tanggal">
+          <input type="hidden" class="status-pesanan" value="<?= el.status ?>">
+          <h5 class="status-loc"><?= el.status ?></h5>
+          <p><?= el.tanggalPesan ?></p>
         </div>
       </div>
+      <? }) ?>
+      <? } ?>
     </div>
-    <div class="riwayat-user">
-      <div class="row">
-        <div class="col-md">
-          <h3>Seatap Coffe</h3>
-          <p>Arundina, Jl. Lap. Tembak No.A10, RT.1/RW.11, Cibubur, Kec. Ciracas, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13720</p>
-        </div>
-        <div class="col-md tanggal">
-          <p>17 Oktober 2021</p>
-        </div>
-      </div>
-    </div>
+    
   </div>
 </section>
 <? } ?>

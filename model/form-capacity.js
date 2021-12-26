@@ -17,6 +17,9 @@ const FormCapacity = mongoose.model("FormCapacity", {
   namaPemesan: {
     type: String,
   },
+  waktu: {
+    type: String,
+  },
   tanggalPesan: {
     type: String,
   },
@@ -24,6 +27,9 @@ const FormCapacity = mongoose.model("FormCapacity", {
     type: String,
   },
   harga: {
+    type: String,
+  },
+  status: {
     type: String,
   },
 });
